@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using app.Services;
@@ -14,6 +15,8 @@ namespace app
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
+            DependencyService.Register<APIService>();
+
             MainPage = new AppShell();
         }
 

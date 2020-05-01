@@ -11,6 +11,7 @@
             <Entry Placeholder="Name" Text="{Binding Name}" />
             <Editor Placeholder="Description" Text="{Binding Description}"></Editor>
 
+            <Entry Placeholder="Code" Text="{Binding Code}" />
             <Button Text="Submit"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"

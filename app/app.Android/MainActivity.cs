@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using System.Net;
+using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
@@ -12,12 +13,14 @@ namespace app.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-
+            
             base.OnCreate(savedInstanceState);
 
             global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, 
