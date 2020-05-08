@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "app.Android", "app\app.Android\app.Android.csproj", "{22FC7700-4D13-4FDA-8CEF-6CABED59C4DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gametrove.Android", "gametrove\gametrove.Android\gametrove.Android.csproj", "{22FC7700-4D13-4FDA-8CEF-6CABED59C4DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "app", "app\app\app.csproj", "{91F65D18-8D77-4B3B-810C-96F61963AF8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gametrove.Core", "gametrove\gametrove.core\gametrove.core.csproj", "{91F65D18-8D77-4B3B-810C-96F61963AF8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

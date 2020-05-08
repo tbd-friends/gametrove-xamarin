@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sf="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
+             mc:Ignorable="d"
+             Title="Register Game"
+             x:Class="Gametrove.Core.Views.RegisterGamePage">
+    <ContentPage.Content>
+        <StackLayout Style="{StaticResource FormInput}">
+            <Entry Placeholder="Name" Text="{Binding Name}" />
+            <Editor Placeholder="Description" Text="{Binding Description}" />
+            <sf:SfAutoComplete Watermark="Platform" 
+                               TextSize="Large"
+                               DisplayMemberPath="Name"
+                               DataSource="{Binding Platforms}"
+                               AutoCompleteMode="Suggest"
+                               SelectionChanged="SfAutoComplete_OnSelectionChanged"
+                               />
+            <Entry Placeholder="Code" Text="{Binding Code}" />
+            <Button Text="Register" 
+                    Style="{StaticResource PrimaryButton}" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Fill"
+                    Margin="10,0"
+                    Command="{Binding RegisterGame}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
