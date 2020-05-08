@@ -24,7 +24,14 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Fill"
                     Margin="10,0"
-                    Command="{Binding RegisterGame}" />
+                    Command="{Binding RegisterGame}" 
+                    CommandParameter="False" />
+            <Button Text="Register and Scan"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Fill" 
+                    Margin="10,0"
+                    Command="{Binding RegisterGame}" 
+                    CommandParameter="True" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

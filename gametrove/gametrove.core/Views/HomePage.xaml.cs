@@ -6,6 +6,7 @@ using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Services;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels;
+using Gametrove.Core.ViewModels.Results;
 using Scandit.BarcodePicker.Unified;
 using Scandit.BarcodePicker.Unified.Abstractions;
 using Xamarin.Essentials;
@@ -27,6 +28,12 @@ namespace Gametrove.Core.Views
             BindingContext = _viewModel = new HomeViewModel();
 
             ScanditService.ScanditLicense.AppKey = AppSettings.Configuration.Scandit;
+
+            MessagingCenter.Subscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered",
+                async (sender, result) =>
+                {
+                    if (result.ShouldScan) await StartScanning();
+                });
         }
 
         private async void AddItem_Clicked(object sender, EventArgs e)
@@ -42,6 +49,11 @@ namespace Gametrove.Core.Views
         }
 
         private async void ScanCode_Clicked(object sender, EventArgs e)
+        {
+            await StartScanning();
+        }
+
+        private async Task StartScanning()
         {
             await CheckIfICanUseTheCamera();
 

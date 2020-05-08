@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Services;
 using Gametrove.Core.Services.Models;
+using Gametrove.Core.ViewModels.Results;
 using Xamarin.Forms;
 
 namespace Gametrove.Core.ViewModels
@@ -91,7 +92,7 @@ namespace Gametrove.Core.ViewModels
 
         public ObservableCollection<PlatformModel> Platforms { get; set; }
 
-        public Command RegisterGame { get; }
+        public Command<string> RegisterGame { get; }
         public Command GetPlatformsCommand { get; }
 
         private readonly APIService _service;
@@ -102,7 +103,7 @@ namespace Gametrove.Core.ViewModels
 
             Platforms = new ObservableCollection<PlatformModel>();
 
-            RegisterGame = new Command(async () => await RegisterNewGame());
+            RegisterGame = new Command<string>(async (scan) => await RegisterNewGame(bool.Parse(scan)));
             GetPlatformsCommand = new Command(async () => await GetPlatforms());
         }
 
@@ -111,11 +112,11 @@ namespace Gametrove.Core.ViewModels
             Code = code;
         }
 
-        private async Task RegisterNewGame()
+        private async Task RegisterNewGame(bool scan)
         {
             var added = await _service.RegisterNewGame(Name, Description, Code, Platform);
 
-            MessagingCenter.Send(this, "Game:Registered", added);
+            MessagingCenter.Send(this, "Game:Registered", new RegistrationResult { Model = added, ShouldScan = scan });
         }
 
         private async Task GetPlatforms()

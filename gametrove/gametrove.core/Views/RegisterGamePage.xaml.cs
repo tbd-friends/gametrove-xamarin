@@ -2,6 +2,7 @@
 using Gametrove.Core.Services;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels;
+using Gametrove.Core.ViewModels.Results;
 using Syncfusion.SfAutoComplete.XForms;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -23,8 +24,8 @@ namespace Gametrove.Core.Views
 
             BindingContext = _vm = vm;
 
-            MessagingCenter.Subscribe<RegisterGameViewModel, GameModel>(this, "Game:Registered",
-                async (sender, game) => { await Navigation.PopAsync(true); });
+            MessagingCenter.Subscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered",
+                async (sender, result) => { await Navigation.PopAsync(true); });
         }
 
         protected override void OnAppearing()
