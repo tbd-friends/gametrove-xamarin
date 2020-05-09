@@ -9,6 +9,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Edit" Clicked="EditGame_Clicked" />
+        <ToolbarItem Text="Photo" Clicked="TakePhoto_Clicked" />
     </ContentPage.ToolbarItems>
 
     <StackLayout Spacing="10" Padding="15">

@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Xamarin.Forms;
 
 namespace Gametrove.Core.Views
@@ -30,6 +32,25 @@ namespace Gametrove.Core.Views
         {
             await Navigation.PushModalAsync(
                 new EditGamePage(_vm.Id));
+        }
+
+        public async void TakePhoto_Clicked(object sender, EventArgs e)
+        {
+            await CrossMedia.Current.Initialize();
+
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+            {
+                await DisplayAlert("No Camera", "No camera available", "OK");
+
+                return;
+            }
+
+            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+            {
+                Directory = "my_images"
+            });
+
+            await _vm.UploadImageForGame(file.GetStreamWithImageRotatedForExternalStorage());
         }
     }
 }

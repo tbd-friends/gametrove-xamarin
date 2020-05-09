@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Gametrove.Core.Infrastructure;
@@ -125,6 +127,29 @@ namespace Gametrove.Core.Services
             }
 
             return null;
+        }
+
+        public async Task<bool> UploadImageForGame(Guid id, Stream image, string fileName)
+        {
+            HttpContent fileStreamContent = new StreamContent(image);
+
+            fileStreamContent.Headers.ContentDisposition =
+                new ContentDispositionHeaderValue("form-data")
+                {
+                    Name = "file",
+                    FileName = fileName
+                };
+
+            fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+
+            using (var formData = new MultipartFormDataContent())
+            {
+                formData.Add(fileStreamContent);
+
+                var response = await _client.PostAsync($"images/{id}", formData);
+
+                return response.IsSuccessStatusCode;
+            }
         }
 
         private async Task<PermissionStatus> CheckIfICanUseTheInternet()
