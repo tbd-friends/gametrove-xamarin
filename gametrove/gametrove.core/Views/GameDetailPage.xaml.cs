@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels;
 using Xamarin.Forms;
 
@@ -9,13 +11,25 @@ namespace Gametrove.Core.Views
     [DesignTimeVisible(false)]
     public partial class GameDetailPage : ContentPage
     {
-        private readonly GameViewModel _viewModel;
+        private readonly GameViewModel _vm;
 
         public GameDetailPage(GameViewModel viewModel)
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = viewModel;
+            BindingContext = _vm = viewModel;
+
+            MessagingCenter.Subscribe<EditGameViewModel, GameModel>(this, "Game:Updated", (vm, game) =>
+            {
+                viewModel.Name = game.Name;
+                viewModel.Description = game.Description;
+            });
+        }
+
+        public async void EditGame_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(
+                new EditGamePage(_vm.Id));
         }
     }
 }

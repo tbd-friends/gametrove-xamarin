@@ -80,6 +80,19 @@ namespace Gametrove.Core.Services
                     : null;
         }
 
+        public async Task<GameModel> UpdateGame(GameModel model)
+        {
+            await CheckIfICanUseTheInternet();
+
+            var response = await _client.PutAsync($"games/{model.Id}",
+                    model.AsStringContent(Encoding.UTF8))
+                .ConfigureAwait(false);
+
+            return response.IsSuccessStatusCode
+                ? JsonConvert.DeserializeObject<GameModel>(await response.Content.ReadAsStringAsync())
+                : null;
+        }
+
         public async Task<IEnumerable<SearchResultItem>> SearchForGame(string text)
         {
             await CheckIfICanUseTheInternet();
@@ -129,6 +142,20 @@ namespace Gametrove.Core.Services
 
     public static class JsonExtensions
     {
+        public static StringContent AsStringContent<T>(this T @object, Encoding encoding, string mediaType = "application/json") where T : class
+        {
+            StringContent result;
+
+            switch (mediaType)
+            {
+                case "application/json":
+                default:
+                    result = new StringContent(@object.AsJson(), encoding, mediaType);
+                    break;
+            }
+
+            return result;
+        }
         public static string AsJson<T>(this T @object)
         {
             return JsonConvert.SerializeObject(@object,

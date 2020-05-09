@@ -7,6 +7,10 @@
              x:Class="Gametrove.Core.Views.GameDetailPage">
 
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Edit" Clicked="EditGame_Clicked" />
+    </ContentPage.ToolbarItems>
+
     <StackLayout Spacing="10" Padding="15">
         <Label Style="{StaticResource HeaderLabel}" Text="{Binding Name}" />
         <Label Text="{Binding Description}" d:Text="description" Margin="10,5" />

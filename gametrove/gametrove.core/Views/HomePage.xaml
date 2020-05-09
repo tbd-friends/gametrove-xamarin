@@ -4,6 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:handlers="clr-namespace:Gametrove.Core.Handlers;assembly=gametrove.core"
+             xmlns:sf="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              mc:Ignorable="d"
              x:Class="Gametrove.Core.Views.HomePage"
              Title="GameTrackr">
@@ -12,14 +13,14 @@
         <ToolbarItem Text="Add" Clicked="AddItem_Clicked" />
         <ToolbarItem Text="Scan" Clicked="ScanCode_Clicked" />
     </ContentPage.ToolbarItems>
-    
+
     <Shell.SearchHandler>
         <handlers:SearchGameHandler Placeholder="Enter search term"
                                       ShowsResults="true">
             <handlers:SearchGameHandler.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="5,10" Margin="0,5">
-                        <Label FontSize="18" Text="{Binding Name}"></Label>
+                    <StackLayout Padding="2,5" Margin="0,5">
+                        <Label FontSize="15" Text="{Binding Name}" />
                     </StackLayout>
                 </DataTemplate>
             </handlers:SearchGameHandler.ItemTemplate>
@@ -29,21 +30,28 @@
     <StackLayout>
         <Label Style="{StaticResource HeaderLabel}" Text="Recently added" />
         <RefreshView Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView ItemsSource="{Binding Games}"
-                        EmptyView="No games added" 
-                        SelectionMode="Single" 
-                        SelectionChanged="SelectableItemsView_OnSelectionChanged"
-                        >
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Label FontSize="22" 
-                           Text="{Binding Name}" 
-                           Padding="10,0" 
-                           Margin="0,10"
-                           VerticalTextAlignment="Center" />
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </RefreshView>
+            <sf:SfListView ItemsSource="{Binding Games}" 
+                           ItemSize="70"
+                           SelectionMode="Single" 
+                           SelectionChanged="SfListView_OnSelectionChanged">
+                <sf:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Label FontSize="22" 
+                                   Text="{Binding Name}" 
+                                   Padding="10,0" 
+                                   VerticalTextAlignment="Center" 
+                                   FontAttributes="Bold" />
+                            <Label FontSize="16"
+                                   Padding="20,0"
+                                   Text="{Binding Platform}"
+                                   VerticalTextAlignment="Center"
+                                   HorizontalTextAlignment="Start"
+                                   />
+                        </StackLayout>
+                    </DataTemplate>
+                </sf:SfListView.ItemTemplate>
+            </sf:SfListView>
+        </RefreshView>
     </StackLayout>
 </ContentPage>

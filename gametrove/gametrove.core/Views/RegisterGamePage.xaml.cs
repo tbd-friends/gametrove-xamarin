@@ -12,7 +12,7 @@ namespace Gametrove.Core.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RegisterGamePage : ContentPage
     {
-        private RegisterGameViewModel _vm;
+        private readonly RegisterGameViewModel _vm;
 
         public RegisterGamePage() : this(new RegisterGameViewModel())
         { }

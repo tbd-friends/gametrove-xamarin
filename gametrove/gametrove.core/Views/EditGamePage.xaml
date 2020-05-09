@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Gametrove.Core.Views.EditGamePage"
+             Title="{Binding Name}">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Style="{StaticResource HeaderLabel}" Text="Edit Game" />
+            <Entry Text="{Binding Name, Mode=TwoWay}" />
+            <Editor Text="{Binding Description, Mode=TwoWay}" />
+            <Button Text="Save" 
+                    Style="{StaticResource PrimaryButton}"
+                    Command="{Binding UpdateGameCommand}" />
+            <Button Text="Cancel" 
+                    Clicked="Button_OnClicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

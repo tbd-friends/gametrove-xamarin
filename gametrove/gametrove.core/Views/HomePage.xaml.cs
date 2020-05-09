@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels;
 using Gametrove.Core.ViewModels.Results;
+using Syncfusion.ListView.XForms;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using ZXing;
@@ -37,9 +38,9 @@ namespace Gametrove.Core.Views
             await Navigation.PushAsync(new RegisterGamePage());
         }
 
-        private async void SelectableItemsView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void SfListView_OnSelectionChanged(object sender, ItemSelectionChangedEventArgs e)
         {
-            var selectedItem = (sender as CollectionView).SelectedItem as GameModel;
+            var selectedItem = (sender as SfListView).SelectedItem as GameModel;
 
             await Navigation.PushAsync(new GameDetailPage(new GameViewModel(selectedItem)), true);
         }
