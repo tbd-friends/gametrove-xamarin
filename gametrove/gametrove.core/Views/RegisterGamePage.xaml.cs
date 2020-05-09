@@ -1,5 +1,4 @@
 ﻿using System;
-using Gametrove.Core.Services;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels;
 using Gametrove.Core.ViewModels.Results;
@@ -25,7 +24,10 @@ namespace Gametrove.Core.Views
             BindingContext = _vm = vm;
 
             MessagingCenter.Subscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered",
-                async (sender, result) => { await Navigation.PopAsync(true); });
+                async (sender, result) =>
+                {
+                    await Navigation.PopAsync(true);
+                });
         }
 
         protected override void OnAppearing()
@@ -38,6 +40,10 @@ namespace Gametrove.Core.Views
             if ((sender as SfAutoComplete).SelectedItem is PlatformModel selectedValue)
             {
                 _vm.Platform = selectedValue.Id;
+            }
+            else
+            {
+                _vm.Platform = Guid.Empty;
             }
         }
     }

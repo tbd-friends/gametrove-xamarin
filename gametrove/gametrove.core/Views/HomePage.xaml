@@ -32,7 +32,8 @@
         <CollectionView ItemsSource="{Binding Games}"
                         EmptyView="No games added" 
                         SelectionMode="Single" 
-                        SelectionChanged="SelectableItemsView_OnSelectionChanged">
+                        SelectionChanged="SelectableItemsView_OnSelectionChanged"
+                        >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Label FontSize="22" 

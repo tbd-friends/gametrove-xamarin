@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Services;
 using Gametrove.Core.Services.Models;
+using Gametrove.Core.ViewModels.Results;
 using Xamarin.Forms;
 
 namespace Gametrove.Core.ViewModels
@@ -37,8 +38,11 @@ namespace Gametrove.Core.ViewModels
 
             _api = DependencyService.Resolve<APIService>();
 
-            MessagingCenter.Subscribe<RegisterGameViewModel, GameModel>(this, "Game:Registered",
-                (vm, game) => { Games.Insert(0,  game); });
+            MessagingCenter.Subscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered",
+                (vm, result) =>
+                {
+                    Games.Insert(0, result.Model);
+                });
         }
 
         public async Task<GameModel> LoadGameByCode(string code)

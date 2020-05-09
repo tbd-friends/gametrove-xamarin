@@ -2,32 +2,28 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Gametrove.Core.Infrastructure;
-using Gametrove.Core.Services;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels;
 using Gametrove.Core.ViewModels.Results;
-using Scandit.BarcodePicker.Unified;
-using Scandit.BarcodePicker.Unified.Abstractions;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using ZXing;
+using ZXing.Mobile;
+using ZXing.Net.Mobile.Forms;
 
 namespace Gametrove.Core.Views
 {
-    // Learn more about making custom code visible in the Xamarin.Forms previewer
-    // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
     public partial class HomePage : ContentPage
     {
         private readonly HomeViewModel _viewModel;
+        private ZXingScannerPage _scanner;
 
         public HomePage()
         {
             InitializeComponent();
 
             BindingContext = _viewModel = new HomeViewModel();
-
-            ScanditService.ScanditLicense.AppKey = AppSettings.Configuration.Scandit;
 
             MessagingCenter.Subscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered",
                 async (sender, result) =>
@@ -57,37 +53,25 @@ namespace Gametrove.Core.Views
         {
             await CheckIfICanUseTheCamera();
 
-            // Configure the barcode picker through a scan settings instance by defining which
-            // symbologies should be enabled.
-            var settings = ScanditService.BarcodePicker.GetDefaultScanSettings();
+            _scanner = new ZXingScannerPage();
 
-            // prefer backward facing camera over front-facing cameras.
-            settings.CameraPositionPreference = CameraPosition.Back;
+            _scanner.OnScanResult += BarcodePickerOnDidScan;
 
-            // Enable symbologies that you want to scan.
-            settings.EnableSymbology(Symbology.Ean13);
-            settings.EnableSymbology(Symbology.Upca);
-            settings.EnableSymbology(Symbology.Qr);
-
-            ScanditService.BarcodePicker.DidScan += BarcodePickerOnDidScan;
-
-            await ScanditService.BarcodePicker.ApplySettingsAsync(settings);
-
-            // Start the scanning process.
-            await ScanditService.BarcodePicker.StartScanningAsync();
+            await Navigation.PushModalAsync(_scanner);
         }
 
-        private void BarcodePickerOnDidScan(ScanSession session)
+        private void BarcodePickerOnDidScan(Result result)
         {
-            ScanditService.BarcodePicker.DidScan -= BarcodePickerOnDidScan;
-
             Device.BeginInvokeOnMainThread(async () =>
             {
-                await ScanditService.BarcodePicker.StopScanningAsync();
+                _scanner.IsScanning = false;
+                _scanner.OnScanResult -= BarcodePickerOnDidScan;
 
-                if (session.AllRecognizedCodes.Any())
+                await Navigation.PopModalAsync();
+
+                if (!string.IsNullOrEmpty(result.Text))
                 {
-                    string scannedCode = session.AllRecognizedCodes.Last().Data;
+                    string scannedCode = result.Text;
 
                     var game = await _viewModel.LoadGameByCode(scannedCode);
 

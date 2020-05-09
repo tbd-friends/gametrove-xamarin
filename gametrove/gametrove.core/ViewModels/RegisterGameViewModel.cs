@@ -40,6 +40,8 @@ namespace Gametrove.Core.ViewModels
                     _name = value;
 
                     OnPropertyChanged();
+
+                    IsRegistrationPermitted = IsValid;
                 }
             }
         }
@@ -86,7 +88,24 @@ namespace Gametrove.Core.ViewModels
                     _platform = value;
 
                     OnPropertyChanged();
+
+                    IsRegistrationPermitted = IsValid;
                 }
+            }
+        }
+
+        private bool _isRegistrationPermitted;
+
+        public bool IsRegistrationPermitted
+        {
+            get => _isRegistrationPermitted;
+            set
+            {
+                _isRegistrationPermitted = value;
+
+                RegisterGame.ChangeCanExecute();
+
+                OnPropertyChanged();
             }
         }
 
@@ -96,6 +115,7 @@ namespace Gametrove.Core.ViewModels
         public Command GetPlatformsCommand { get; }
 
         private readonly APIService _service;
+        private bool IsValid => Platform != Guid.Empty && !string.IsNullOrEmpty(Name);
 
         public RegisterGameViewModel()
         {
@@ -103,7 +123,10 @@ namespace Gametrove.Core.ViewModels
 
             Platforms = new ObservableCollection<PlatformModel>();
 
-            RegisterGame = new Command<string>(async (scan) => await RegisterNewGame(bool.Parse(scan)));
+            RegisterGame = new Command<string>(async (scan) =>
+                    await RegisterNewGame(bool.Parse(scan)),
+                _ => IsValid);
+
             GetPlatformsCommand = new Command(async () => await GetPlatforms());
         }
 

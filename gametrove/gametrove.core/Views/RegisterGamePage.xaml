@@ -17,7 +17,7 @@
                                DataSource="{Binding Platforms}"
                                AutoCompleteMode="Suggest"
                                SelectionChanged="SfAutoComplete_OnSelectionChanged"
-                               />
+            />
             <Entry Placeholder="Code" Text="{Binding Code}" />
             <Button Text="Register" 
                     Style="{StaticResource PrimaryButton}" 
@@ -26,12 +26,12 @@
                     Margin="10,0"
                     Command="{Binding RegisterGame}" 
                     CommandParameter="False" />
-            <Button Text="Register and Scan"
+            <Button Text="Register and Scan Next"
                     VerticalOptions="Center"
                     HorizontalOptions="Fill" 
                     Margin="10,0"
                     Command="{Binding RegisterGame}" 
-                    CommandParameter="True" />
+                    CommandParameter="True"  />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
