@@ -21,7 +21,6 @@ namespace Gametrove.Core.Infrastructure
 
         public class Settings
         {
-            public string Scandit { get; set; }
             public string Syncfusion { get; set; }
             public ApiConfiguration Api { get; set; }
 

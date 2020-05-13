@@ -16,20 +16,6 @@ namespace Gametrove.Core.ViewModels
     {
         private string _name;
 
-        private bool _isBusy;
-        public bool IsBusy
-        {
-            get => _isBusy;
-            set
-            {
-                if (value == _isBusy) return;
-
-                _isBusy = value;
-
-                OnPropertyChanged();
-            }
-        }
-
         public string Name
         {
             get => _name;

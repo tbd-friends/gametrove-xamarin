@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -150,6 +151,23 @@ namespace Gametrove.Core.Services
 
                 return response.IsSuccessStatusCode;
             }
+        }
+
+        public async Task<IEnumerable<string>> GetImagesForGame(Guid id)
+        {
+            await CheckIfICanUseTheInternet();
+
+            var response = await _client.GetAsync($"games/images/{id}").ConfigureAwait(false);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var results =
+                    JsonConvert.DeserializeObject<IEnumerable<string>>(await response.Content.ReadAsStringAsync());
+
+                return results.Select(i => $"{i}?size=Large");
+            }
+
+            return null;
         }
 
         private async Task<PermissionStatus> CheckIfICanUseTheInternet()

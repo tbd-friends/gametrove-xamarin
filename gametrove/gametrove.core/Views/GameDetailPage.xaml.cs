@@ -13,18 +13,18 @@ namespace Gametrove.Core.Views
     [DesignTimeVisible(false)]
     public partial class GameDetailPage : ContentPage
     {
-        private readonly GameViewModel _vm;
+        private readonly GameDetailViewModel _vm;
 
-        public GameDetailPage(GameViewModel viewModel)
+        public GameDetailPage(GameDetailViewModel detailViewModel)
         {
             InitializeComponent();
 
-            BindingContext = _vm = viewModel;
+            BindingContext = _vm = detailViewModel;
 
             MessagingCenter.Subscribe<EditGameViewModel, GameModel>(this, "Game:Updated", (vm, game) =>
             {
-                viewModel.Name = game.Name;
-                viewModel.Description = game.Description;
+                detailViewModel.Name = game.Name;
+                detailViewModel.Description = game.Description;
             });
         }
 
@@ -51,6 +51,14 @@ namespace Gametrove.Core.Views
             });
 
             await _vm.UploadImageForGame(file.GetStreamWithImageRotatedForExternalStorage());
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (_vm.Images.Count == 0)
+                _vm.IsBusy = true;
         }
     }
 }

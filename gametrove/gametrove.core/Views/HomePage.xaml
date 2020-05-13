@@ -5,13 +5,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:handlers="clr-namespace:Gametrove.Core.Handlers;assembly=gametrove.core"
              xmlns:sf="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:bi="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             xmlns:icons="clr-namespace:Gametrove.Core.Infrastructure;assembly=gametrove.core"
              mc:Ignorable="d"
              x:Class="Gametrove.Core.Views.HomePage"
              Title="GameTrackr">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Clicked="AddItem_Clicked" />
-        <ToolbarItem Text="Scan" Clicked="ScanCode_Clicked" />
+        <ToolbarItem Clicked="AddItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    FontFamily="{StaticResource FontAwesomeSolidFree}"
+                    Glyph="{x:Static icons:FontAwesome.Add}"
+                    Size="{StaticResource ToolbarIconImageSourceSize}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
 
     <Shell.SearchHandler>
@@ -26,32 +34,38 @@
             </handlers:SearchGameHandler.ItemTemplate>
         </handlers:SearchGameHandler>
     </Shell.SearchHandler>
-
-    <StackLayout>
-        <Label Style="{StaticResource HeaderLabel}" Text="Recently added" />
-        <RefreshView Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-            <sf:SfListView ItemsSource="{Binding Games}" 
-                           ItemSize="70"
-                           SelectionMode="Single" 
-                           SelectionChanged="SfListView_OnSelectionChanged">
-                <sf:SfListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout>
-                            <Label FontSize="22" 
-                                   Text="{Binding Name}" 
-                                   Padding="10,0" 
-                                   VerticalTextAlignment="Center" 
-                                   FontAttributes="Bold" />
-                            <Label FontSize="16"
-                                   Padding="20,0"
-                                   Text="{Binding Platform}"
-                                   VerticalTextAlignment="Center"
-                                   HorizontalTextAlignment="Start"
-                                   />
-                        </StackLayout>
-                    </DataTemplate>
-                </sf:SfListView.ItemTemplate>
-            </sf:SfListView>
-        </RefreshView>
-    </StackLayout>
+    <ContentPage.Content>
+        <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <RefreshView Command="{Binding LoadGamesCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                <sf:SfListView ItemsSource="{Binding Games}" 
+                               AutoFitMode="Height"
+                               ItemSpacing="5"
+                               SelectionMode="Single" 
+                               SelectionChanged="SfListView_OnSelectionChanged">
+                    <sf:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Label FontSize="24" 
+                               Text="{Binding Name}" 
+                               Padding="10,0" 
+                               VerticalTextAlignment="Center" 
+                               FontAttributes="Bold" />
+                                <Label FontSize="28"
+                               Padding="20,0,20,10"
+                               Margin="0,-10"
+                               Text="{Binding Platform}"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="End"
+                               Opacity="0.5"
+                               />
+                            </StackLayout>
+                        </DataTemplate>
+                    </sf:SfListView.ItemTemplate>
+                </sf:SfListView>
+            </RefreshView>
+            <Button AbsoluteLayout.LayoutFlags="PositionProportional"
+                    AbsoluteLayout.LayoutBounds="1, 1, AutoSize, AutoSize"
+                    Style="{StaticResource ScanButton}" Clicked="ScanCode_Clicked"  />
+        </AbsoluteLayout>
+    </ContentPage.Content>
 </ContentPage>

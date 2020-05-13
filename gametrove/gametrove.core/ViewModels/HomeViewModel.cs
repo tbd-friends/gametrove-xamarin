@@ -10,23 +10,8 @@ namespace Gametrove.Core.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {
-        private bool _isBusy;
-
-        public bool IsBusy
-        {
-            get => _isBusy;
-            set
-            {
-                if (value == _isBusy) return;
-
-                _isBusy = value;
-
-                OnPropertyChanged();
-            }
-        }
-
         public ObservableCollection<GameModel> Games { get; set; }
-        public Command LoadItemsCommand { get; set; }
+        public Command LoadGamesCommand { get; set; }
 
         private readonly APIService _api;
 
@@ -34,7 +19,7 @@ namespace Gametrove.Core.ViewModels
         {
             Games = new ObservableCollection<GameModel>();
 
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            LoadGamesCommand = new Command(async () => await ExecuteLoadGamesCommand(), () => true);
 
             _api = DependencyService.Resolve<APIService>();
 
@@ -50,7 +35,7 @@ namespace Gametrove.Core.ViewModels
             return await _api.GetGameByCode(code);
         }
 
-        private async Task ExecuteLoadItemsCommand()
+        private async Task ExecuteLoadGamesCommand()
         {
             IsBusy = true;
 

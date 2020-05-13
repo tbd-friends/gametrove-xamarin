@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels;
@@ -9,7 +8,6 @@ using Syncfusion.ListView.XForms;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using ZXing;
-using ZXing.Mobile;
 using ZXing.Net.Mobile.Forms;
 
 namespace Gametrove.Core.Views
@@ -29,7 +27,10 @@ namespace Gametrove.Core.Views
             MessagingCenter.Subscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered",
                 async (sender, result) =>
                 {
-                    if (result.ShouldScan) await StartScanning();
+                    if (result.ShouldScan)
+                    {
+                        await StartScanning();
+                    }
                 });
         }
 
@@ -40,9 +41,14 @@ namespace Gametrove.Core.Views
 
         private async void SfListView_OnSelectionChanged(object sender, ItemSelectionChangedEventArgs e)
         {
-            var selectedItem = (sender as SfListView).SelectedItem as GameModel;
+            if (!(sender is SfListView listView)) 
+                return;
 
-            await Navigation.PushAsync(new GameDetailPage(new GameViewModel(selectedItem)), true);
+            var selectedItem = listView.SelectedItem as GameModel;
+
+            await Navigation.PushAsync(new GameDetailPage(new GameDetailViewModel(selectedItem)), true);
+
+            listView.SelectedItem = null;
         }
 
         private async void ScanCode_Clicked(object sender, EventArgs e)
@@ -70,21 +76,21 @@ namespace Gametrove.Core.Views
 
                 await Navigation.PopModalAsync();
 
-                if (!string.IsNullOrEmpty(result.Text))
+                if (string.IsNullOrEmpty(result.Text)) 
+                    return;
+
+                string scannedCode = result.Text;
+
+                var game = await _viewModel.LoadGameByCode(scannedCode);
+
+                if (game == null)
                 {
-                    string scannedCode = result.Text;
-
-                    var game = await _viewModel.LoadGameByCode(scannedCode);
-
-                    if (game == null)
-                    {
-                        await Navigation.PushAsync(
-                            new RegisterGamePage(new RegisterGameViewModel(scannedCode)), true);
-                    }
-                    else
-                    {
-                        await Navigation.PushAsync(new GameDetailPage(new GameViewModel(game)), true);
-                    }
+                    await Navigation.PushAsync(
+                        new RegisterGamePage(new RegisterGameViewModel(scannedCode)), true);
+                }
+                else
+                {
+                    await Navigation.PushAsync(new GameDetailPage(new GameDetailViewModel(game)), true);
                 }
             });
         }

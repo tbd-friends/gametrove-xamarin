@@ -3,18 +3,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sf="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:cvt="clr-namespace:Gametrove.Core.Converters;assembly=gametrove.core"
+             xmlns:icons="clr-namespace:Gametrove.Core.Infrastructure;assembly=gametrove.core"
              mc:Ignorable="d"
              x:Class="Gametrove.Core.Views.GameDetailPage">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <cvt:ImageSourceConverter x:Key="imageConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Edit" Clicked="EditGame_Clicked" />
-        <ToolbarItem Text="Photo" Clicked="TakePhoto_Clicked" />
+        <ToolbarItem Clicked="EditGame_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    FontFamily="{StaticResource FontAwesomeSolidFree}"
+                    Glyph="{x:Static icons:FontAwesome.Edit}"
+                    Size="{StaticResource ToolbarIconImageSourceSize}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem Clicked="TakePhoto_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    FontFamily="{StaticResource FontAwesomeSolidFree}"
+                    Glyph="{x:Static icons:FontAwesome.Photo}"
+                    Size="{StaticResource ToolbarIconImageSourceSize}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
 
     <StackLayout Spacing="10" Padding="15">
-        <Label Style="{StaticResource HeaderLabel}" Text="{Binding Name}" />
+        <Label Style="{StaticResource HeaderLabel}" FontSize="30" Text="{Binding Name}" />
+        <Label Text="{Binding Platform}" Style="{StaticResource SubLabel}" FontSize="42" Opacity="0.4" VerticalTextAlignment="Center" Margin="0,-20" />
         <Label Text="{Binding Description}" d:Text="description" Margin="10,5" />
+        <RefreshView Command="{Binding LoadImagesCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <sf:SfListView AutoFitMode="DynamicHeight" 
+                       ItemsSource="{Binding Images}"
+                       SelectionMode="None">
+                <sf:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding Url, Converter={StaticResource imageConverter}}" Margin="5,5"  
+                           VerticalOptions="Fill"
+                           HorizontalOptions="Fill"/>
+                    </DataTemplate>
+                </sf:SfListView.ItemTemplate>
+            </sf:SfListView>
+        </RefreshView>
     </StackLayout>
 
 </ContentPage>

@@ -39,7 +39,7 @@ namespace Gametrove.Core.Handlers
                 {
                     var game = await _service.GetGameById(result.Id);
 
-                    await Shell.Current.Navigation.PushAsync(new GameDetailPage(new GameViewModel(game)));
+                    await Shell.Current.Navigation.PushAsync(new GameDetailPage(new GameDetailViewModel(game)));
                 });
             }
         }
