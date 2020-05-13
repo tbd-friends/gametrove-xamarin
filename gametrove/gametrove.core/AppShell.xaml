@@ -12,28 +12,28 @@
 
     </Shell.Resources>
 
-    <Shell.MenuItemTemplate>
+    <Shell.ItemTemplate>
         <DataTemplate>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.2*" />
                     <ColumnDefinition Width="0.8*" />
                 </Grid.ColumnDefinitions>
-                <Image Source="{Binding Icon}"
-                       Margin="5"
-                       HeightRequest="45" />
+                <Label Style="{StaticResource FlyoutItemIcon}" Text="{Binding Icon}" />
                 <Label Grid.Column="1"
-                       Text="{Binding Text}"
+                       Text="{Binding Title}"
                        VerticalTextAlignment="Center" />
             </Grid>
         </DataTemplate>
-    </Shell.MenuItemTemplate>
+    </Shell.ItemTemplate>
 
-    <ShellContent ContentTemplate="{DataTemplate local:HomePage}" Route="default" />
-    <ShellContent ContentTemplate="{DataTemplate local:GameDetailPage}" Route="detail" />
-    <ShellContent ContentTemplate="{DataTemplate local:RegisterGamePage}" Route="register" />
+    <FlyoutItem Title="Home" Icon="{StaticResource HomeIcon}">
+        <ShellContent ContentTemplate="{DataTemplate local:HomePage}" Route="default" />
+        <ShellContent ContentTemplate="{DataTemplate local:GameDetailPage}" Route="detail" />
+        <ShellContent ContentTemplate="{DataTemplate local:RegisterGamePage}" Route="register" />
+    </FlyoutItem>
 
-    <FlyoutItem Route="configuration" Title="Configuration">
+    <FlyoutItem Title="Configuration" Icon="{StaticResource CogIcon}">
         <ShellContent ContentTemplate="{DataTemplate local:ConfigurationPage}" Route="configuration" />
     </FlyoutItem>
 </Shell>

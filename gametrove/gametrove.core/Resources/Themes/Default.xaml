@@ -59,12 +59,23 @@
     </Style>
 
     <!-- Font Awesome -->
-    <!-- Default Sizes -->
+
+    <!-- Named values -->
     <x:Double x:Key="ToolbarIconImageSourceSize">30</x:Double>
+    <x:String x:Key="CogIcon">&#xf013;</x:String>
+    <x:String x:Key="HomeIcon">&#xf015;</x:String>
 
     <OnPlatform x:Key="FontAwesomeSolidFree" x:TypeArguments="x:String">
         <On Platform="Android" Value="FA-Free-Solid-900.otf#FontAwesomeSolidFree" />
     </OnPlatform>
+
+    <Style x:Key="FlyoutItemIcon" BasedOn="{StaticResource BaseStyle}" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolidFree}" />
+        <Setter Property="FontSize" Value="32" />
+        <Setter Property="Margin" Value="15,5" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HeightRequest" Value="45" />
+    </Style>
 
     <!--- https://stackoverflow.com/questions/57395091/how-to-add-font-icon-in-toolbar-item-in-xamarin-forms-->
 
