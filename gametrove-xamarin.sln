@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gametrove.Android", "gametrove\gametrove.Android\gametrove.Android.csproj", "{22FC7700-4D13-4FDA-8CEF-6CABED59C4DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gametrove.Core", "gametrove\gametrove.core\gametrove.core.csproj", "{91F65D18-8D77-4B3B-810C-96F61963AF8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gametrove.core", "gametrove\gametrove.core\gametrove.core.csproj", "{91F65D18-8D77-4B3B-810C-96F61963AF8A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2AB54288-339F-4787-833A-5A6498B2537E}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

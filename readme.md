@@ -1,4 +1,4 @@
-﻿### Requirements
+### Requirements
 
 - Need free Syncfusion Community license for Xamarin Forms
 
