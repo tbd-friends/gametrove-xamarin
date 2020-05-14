@@ -7,9 +7,17 @@
              xmlns:sf="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:bi="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:icons="clr-namespace:Gametrove.Core.Infrastructure;assembly=gametrove.core"
+             xmlns:converters="clr-namespace:Gametrove.Core.Converters;assembly=gametrove.core"
              mc:Ignorable="d"
              x:Class="Gametrove.Core.Views.HomePage"
              Title="GameTrackr">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ScanButtonPositionToRectangleConverter x:Key="FabPositionConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Clicked="AddItem_Clicked">
@@ -64,7 +72,7 @@
                 </sf:SfListView>
             </RefreshView>
             <Button AbsoluteLayout.LayoutFlags="PositionProportional"
-                    AbsoluteLayout.LayoutBounds="1, 1, AutoSize, AutoSize"
+                    AbsoluteLayout.LayoutBounds="{Binding ScanButtonOrientation, Converter={StaticResource FabPositionConverter}}"
                     Style="{StaticResource ScanButton}" Clicked="ScanCode_Clicked"  />
         </AbsoluteLayout>
     </ContentPage.Content>

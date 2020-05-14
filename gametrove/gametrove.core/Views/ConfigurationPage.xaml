@@ -3,13 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:converters="clr-namespace:Gametrove.Core.Converters;assembly=gametrove.core"
              mc:Ignorable="d"
              x:Class="Gametrove.Core.Views.ConfigurationPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:LeftRightToIsCheckedConverter x:Key="IsCheckedConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="Scan Button Orientation" />
+            <buttons:SfRadioGroup>
+                <buttons:SfRadioButton 
+                    Text="Left" 
+                    IsChecked="{Binding ScanButtonOrientation, Converter={StaticResource IsCheckedConverter}, ConverterParameter=Left}" 
+                    StateChanged="ToggleButton_OnStateChanged" />
+                <buttons:SfRadioButton 
+                    Text="Right" 
+                    IsChecked="{Binding ScanButtonOrientation, Converter={StaticResource IsCheckedConverter}, ConverterParameter=Right}" 
+                    StateChanged="ToggleButton_OnStateChanged" />
+            </buttons:SfRadioGroup>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

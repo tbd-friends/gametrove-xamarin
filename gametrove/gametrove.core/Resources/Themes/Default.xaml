@@ -87,9 +87,10 @@
         <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
         <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
         <Setter Property="Padding" Value="15"/>
-        <Setter Property="Margin" Value="0,0,10,25"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
         <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolidFree}" />
         <Setter Property="FontSize" Value="32" />
+        <Setter Property="Opacity" Value="0.75" />
         <Setter Property="Text" Value="&#xf02a;" />
     </Style>
 

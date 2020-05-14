@@ -4,6 +4,7 @@ using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Services;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels.Results;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Gametrove.Core.ViewModels
@@ -12,6 +13,22 @@ namespace Gametrove.Core.ViewModels
     {
         public ObservableCollection<GameModel> Games { get; set; }
         public Command LoadGamesCommand { get; set; }
+
+        private string _scanButtonOrientation;
+
+        public string ScanButtonOrientation
+        {
+            get => _scanButtonOrientation;
+            set
+            {
+                if (value != _scanButtonOrientation)
+                {
+                    _scanButtonOrientation = value;
+
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private readonly APIService _api;
 
@@ -23,10 +40,17 @@ namespace Gametrove.Core.ViewModels
 
             _api = DependencyService.Resolve<APIService>();
 
+            _scanButtonOrientation = Preferences.Get(AppPreferences.ScanButtonOrientation, "Right");
+
             MessagingCenter.Subscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered",
                 (vm, result) =>
                 {
                     Games.Insert(0, result.Model);
+                });
+
+            MessagingCenter.Subscribe<ConfigurationViewModel>(this, "Preferences:Changed", _ =>
+                {
+                    ScanButtonOrientation = Preferences.Get(AppPreferences.ScanButtonOrientation, "Right");
                 });
         }
 
