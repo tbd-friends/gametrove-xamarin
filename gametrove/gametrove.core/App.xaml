@@ -36,10 +36,11 @@
         </Style>
 
         <Style TargetType="Button">
-            <Setter Property="BackgroundColor" Value="{DynamicResource ButtonSecondary}"></Setter>
+            <Setter Property="BackgroundColor" Value="{DynamicResource ButtonSecondary}" />
         </Style>
         <Style x:Key="PrimaryButton" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="{DynamicResource ButtonPrimary}"></Setter>
+            <Setter Property="BackgroundColor" Value="{DynamicResource ButtonPrimary}" />
+            <Setter Property="TextColor" Value="{DynamicResource HeaderTextColor}" />
         </Style>
 
         <Style TargetType="FontImageSource">
@@ -49,9 +50,7 @@
         <!-- Font Awesome -->
 
         <!-- Named values -->
-        <x:Double x:Key="ToolbarIconImageSourceSize">30</x:Double>
-        <x:String x:Key="CogIcon">&#xf013;</x:String>
-        <x:String x:Key="HomeIcon">&#xf015;</x:String>
+        <x:Double x:Key="ToolbarIconImageSourceSize">24</x:Double>
 
         <OnPlatform x:Key="FontAwesomeSolidFree" x:TypeArguments="x:String">
             <On Platform="Android" Value="FA-Free-Solid-900.otf#FontAwesomeSolidFree" />

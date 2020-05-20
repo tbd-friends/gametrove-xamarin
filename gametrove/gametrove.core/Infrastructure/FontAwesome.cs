@@ -7,6 +7,7 @@
         public const string Edit = "\uf044";
         public const string Expand = "\uf065";
         public const string Heart = "\uf004";
+        public const string Home = "\uf015";
         public const string Photo = "\uf030";
         public const string Plus = "\uf067";
         public const string Scan = "\uf02a";

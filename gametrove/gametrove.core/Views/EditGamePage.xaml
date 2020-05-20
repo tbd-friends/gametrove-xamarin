@@ -7,7 +7,7 @@
              x:Class="Gametrove.Core.Views.EditGamePage"
              Title="{Binding Name}">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Style="{DynamicResource FormInput}">
             <Label Style="{DynamicResource HeaderLabel}" Text="Edit Game" />
             <Entry Text="{Binding Name, Mode=TwoWay}" />
             <Editor Text="{Binding Description, Mode=TwoWay}" />

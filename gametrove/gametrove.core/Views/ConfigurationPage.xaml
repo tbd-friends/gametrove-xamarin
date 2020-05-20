@@ -9,7 +9,8 @@
              xmlns:system="clr-namespace:System;assembly=netstandard"
              xmlns:infrastructure="clr-namespace:Gametrove.Core.Infrastructure;assembly=gametrove.core"
              mc:Ignorable="d"
-             x:Class="Gametrove.Core.Views.ConfigurationPage">
+             x:Class="Gametrove.Core.Views.ConfigurationPage"
+             Title="Configuration">
 
     <ContentPage.Resources>
         <ResourceDictionary>

@@ -10,15 +10,34 @@
              xmlns:converters="clr-namespace:Gametrove.Core.Converters;assembly=gametrove.core"
              mc:Ignorable="d"
              x:Class="Gametrove.Core.Views.HomePage"
-             Title="GameTrackr"
+             Title="GameTrove"
              Visual="Material">
 
 
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:ScanButtonPositionToRectangleConverter x:Key="FabPositionConverter" />
+            <FontImageSource x:Key="SearchIcon" 
+                             FontFamily="{StaticResource FontAwesomeSolidFree}"
+                             Glyph="{x:Static icons:FontAwesome.Edit}"
+                             Size="12" />
         </ResourceDictionary>
     </ContentPage.Resources>
+
+    <Shell.SearchHandler>
+        <handlers:SearchGameHandler Placeholder="Enter search term"
+                                    QueryIcon="tab_gamepad.png"
+                                    SearchBoxVisibility="Collapsible"
+                                    x:Name="SearchGames">
+            <!--<handlers:SearchGameHandler.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="2,5" Margin="0,5">
+                        <Label FontSize="15" Text="{Binding Name}" />
+                    </StackLayout>
+                </DataTemplate>
+            </handlers:SearchGameHandler.ItemTemplate>-->
+        </handlers:SearchGameHandler>
+    </Shell.SearchHandler>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Clicked="AddItem_Clicked">
@@ -31,18 +50,6 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <Shell.SearchHandler>
-        <handlers:SearchGameHandler Placeholder="Enter search term"
-                                      ShowsResults="true">
-            <handlers:SearchGameHandler.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Padding="2,5" Margin="0,5">
-                        <Label FontSize="15" Text="{Binding Name}" />
-                    </StackLayout>
-                </DataTemplate>
-            </handlers:SearchGameHandler.ItemTemplate>
-        </handlers:SearchGameHandler>
-    </Shell.SearchHandler>
     <ContentPage.Content>
         <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <RefreshView Command="{Binding LoadGamesCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">

@@ -9,7 +9,7 @@
              xmlns:car="clr-namespace:Syncfusion.SfCarousel.XForms;assembly=Syncfusion.SfCarousel.XForms"
              mc:Ignorable="d"
              x:Class="Gametrove.Core.Views.GameDetailPage"
-             Title="{Binding Name}"
+             Title="Game Details"
              Visual="Material">
 
     <ContentPage.Resources>
@@ -38,24 +38,68 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <StackLayout Spacing="5" Padding="15,0" VerticalOptions="StartAndExpand">
-        <StackLayout>
-                <car:SfCarousel ItemsSource="{Binding Images}"
-                                HeightRequest="250"
-                                ItemHeight="200"
-                                ItemSpacing="0"
-                                ViewMode="Linear">
-                    <car:SfCarousel.ItemTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding Url, Converter={StaticResource imageConverter}}" 
-                                   Aspect="AspectFit" />
-                        </DataTemplate>
-                    </car:SfCarousel.ItemTemplate>
-                </car:SfCarousel>
-            <Label Style="{DynamicResource HeaderLabel}" FontSize="30" Text="{Binding Name}" />
-            <Label Text="{Binding Platform}" Style="{StaticResource SubLabel}" FontSize="42" Opacity="0.4" VerticalTextAlignment="Center" Margin="0,-20" />
-            <Label Text="{Binding Description}" d:Text="description" Margin="10,5" />
-        </StackLayout>
+    <StackLayout Spacing="10" Padding="5,5" VerticalOptions="StartAndExpand">
+            <StackLayout>
+                    <car:SfCarousel ItemsSource="{Binding Images}"
+                                    HeightRequest="250"
+                                    ItemHeight="200"
+                                    ItemSpacing="0"
+                                    ViewMode="Linear">
+                        <car:SfCarousel.ItemTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Url, Converter={StaticResource imageConverter}}" 
+                                       Aspect="AspectFit" />
+                            </DataTemplate>
+                        </car:SfCarousel.ItemTemplate>
+                    </car:SfCarousel>
+                <Label Style="{DynamicResource HeaderLabel}" FontSize="30" Text="{Binding Name}" />
+                <Label Text="{Binding Platform}" Style="{StaticResource SubLabel}" FontSize="42" Opacity="0.4" VerticalTextAlignment="Center" Margin="0,-20" />
+                <Label Text="{Binding Description}" d:Text="description" Margin="10,5" />
+            </StackLayout>
+        <Label Text="Copies" Style="{DynamicResource HeaderLabel}" />
+        <BoxView HeightRequest="0.5" Color="{DynamicResource ListSeparator}"></BoxView>
+        <Frame Padding="0" HasShadow="True">
+            <StackLayout Padding="5,0" Margin="0, 5">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                    <Frame CornerRadius="8" Padding="0" BackgroundColor="{DynamicResource Background}" HasShadow="False">
+                        <Label Text="New" FontSize="18" TextColor="{DynamicResource HeaderTextColor}" Padding="5,3" />
+                    </Frame>
+                    <Frame CornerRadius="8" Padding="0" BackgroundColor="{DynamicResource Background}" HasShadow="False">
+                        <Label Text="Limited Edition" FontSize="18" TextColor="{DynamicResource HeaderTextColor}" Padding="5,3" />
+                    </Frame>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Label Text="Purchased 1/1/2020" FontSize="18" />
+                    <Label Text="$18.99" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="End" FontSize="18" />
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+        <Frame Padding="0" HasShadow="True">
+            <StackLayout Padding="5,0" Margin="0, 5">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                    <Frame CornerRadius="8" Padding="0" BackgroundColor="{DynamicResource Background}" HasShadow="False">
+                        <Label Text="Second Hand" FontSize="18" TextColor="{DynamicResource HeaderTextColor}" Padding="5,3" />
+                    </Frame>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Label Text="Purchased 1/1/2020" FontSize="18" />
+                    <Label Text="$12.99" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="End" FontSize="18" />
+                </StackLayout>
+            </StackLayout>
+        </Frame>
     </StackLayout>
+    <!-- 
+    <Frame
+CornerRadius="15"
+Padding="0"
+BackgroundColor="AntiqueWhite"
+Margin="15,10,15,10" 
+HasShadow="False"
+    >
+    <Label Margin="5" 
+        HorizontalOptions="Center" 
+        BackgroundColor="Transparent" 
+        Text="My rounded label" />
+    </Frame>-->
 
 </ContentPage>
