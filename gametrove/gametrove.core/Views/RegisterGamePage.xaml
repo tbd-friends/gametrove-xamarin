@@ -8,11 +8,10 @@
              Title="Register Game"
              x:Class="Gametrove.Core.Views.RegisterGamePage">
     <ContentPage.Content>
-        <StackLayout Style="{StaticResource FormInput}">
+        <StackLayout Style="{DynamicResource FormInput}">
             <Entry Placeholder="Name" Text="{Binding Name}" />
             <Editor Placeholder="Description" Text="{Binding Description}" />
             <sf:SfAutoComplete Watermark="Platform" 
-                               TextSize="Large"
                                DisplayMemberPath="Name"
                                DataSource="{Binding Platforms}"
                                AutoCompleteMode="Suggest"
@@ -20,7 +19,7 @@
             />
             <Entry Placeholder="Code" Text="{Binding Code}" />
             <Button Text="Register" 
-                    Style="{StaticResource PrimaryButton}" 
+                    Style="{DynamicResource PrimaryButton}" 
                     VerticalOptions="Center"
                     HorizontalOptions="Fill"
                     Margin="10,0"

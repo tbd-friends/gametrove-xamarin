@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Gametrove.Core.Resources.Themes.Junicus">
+    <Color x:Key="NavigationPrimary">#18227C</Color>
+    <Color x:Key="NavigationSecondary">#263238</Color>
+    <Color x:Key="HeaderTextColor">White</Color>
+    <Color x:Key="Foreground">Black</Color>
+    <Color x:Key="Background">#534BAE</Color>
+    <Color x:Key="ButtonPrimary">#18227C</Color>
+    <Color x:Key="ButtonSecondary">#263238</Color>
+    <Color x:Key="ListSeparator">#4f4f4f</Color>
+</ResourceDictionary>

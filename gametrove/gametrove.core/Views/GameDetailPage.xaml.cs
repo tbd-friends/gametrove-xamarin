@@ -58,7 +58,11 @@ namespace Gametrove.Core.Views
             base.OnAppearing();
 
             if (_vm.Images.Count == 0)
+            {
+                _vm.LoadImagesCommand.Execute(this);
+
                 _vm.IsBusy = true;
+            }
         }
     }
 }

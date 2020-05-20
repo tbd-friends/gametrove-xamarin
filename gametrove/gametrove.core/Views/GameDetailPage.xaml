@@ -6,12 +6,16 @@
              xmlns:sf="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:cvt="clr-namespace:Gametrove.Core.Converters;assembly=gametrove.core"
              xmlns:icons="clr-namespace:Gametrove.Core.Infrastructure;assembly=gametrove.core"
+             xmlns:car="clr-namespace:Syncfusion.SfCarousel.XForms;assembly=Syncfusion.SfCarousel.XForms"
              mc:Ignorable="d"
-             x:Class="Gametrove.Core.Views.GameDetailPage">
+             x:Class="Gametrove.Core.Views.GameDetailPage"
+             Title="{Binding Name}"
+             Visual="Material">
 
     <ContentPage.Resources>
         <ResourceDictionary>
             <cvt:ImageSourceConverter x:Key="imageConverter" />
+            <cvt:GameImageToSfCarouselConverter x:Key="CarouselConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -19,38 +23,39 @@
         <ToolbarItem Clicked="EditGame_Clicked">
             <ToolbarItem.IconImageSource>
                 <FontImageSource
-                    FontFamily="{StaticResource FontAwesomeSolidFree}"
+                    FontFamily="{DynamicResource FontAwesomeSolidFree}"
                     Glyph="{x:Static icons:FontAwesome.Edit}"
-                    Size="{StaticResource ToolbarIconImageSourceSize}" />
+                    Size="{DynamicResource ToolbarIconImageSourceSize}" />
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
         <ToolbarItem Clicked="TakePhoto_Clicked">
             <ToolbarItem.IconImageSource>
                 <FontImageSource
-                    FontFamily="{StaticResource FontAwesomeSolidFree}"
+                    FontFamily="{DynamicResource FontAwesomeSolidFree}"
                     Glyph="{x:Static icons:FontAwesome.Photo}"
-                    Size="{StaticResource ToolbarIconImageSourceSize}" />
+                    Size="{DynamicResource ToolbarIconImageSourceSize}" />
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <StackLayout Spacing="10" Padding="15">
-        <Label Style="{StaticResource HeaderLabel}" FontSize="30" Text="{Binding Name}" />
-        <Label Text="{Binding Platform}" Style="{StaticResource SubLabel}" FontSize="42" Opacity="0.4" VerticalTextAlignment="Center" Margin="0,-20" />
-        <Label Text="{Binding Description}" d:Text="description" Margin="10,5" />
-        <RefreshView Command="{Binding LoadImagesCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-            <sf:SfListView AutoFitMode="DynamicHeight" 
-                       ItemsSource="{Binding Images}"
-                       SelectionMode="None">
-                <sf:SfListView.ItemTemplate>
-                    <DataTemplate>
-                        <Image Source="{Binding Url, Converter={StaticResource imageConverter}}" Margin="5,5"  
-                           VerticalOptions="Fill"
-                           HorizontalOptions="Fill"/>
-                    </DataTemplate>
-                </sf:SfListView.ItemTemplate>
-            </sf:SfListView>
-        </RefreshView>
+    <StackLayout Spacing="5" Padding="15,0" VerticalOptions="StartAndExpand">
+        <StackLayout>
+                <car:SfCarousel ItemsSource="{Binding Images}"
+                                HeightRequest="250"
+                                ItemHeight="200"
+                                ItemSpacing="0"
+                                ViewMode="Linear">
+                    <car:SfCarousel.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Url, Converter={StaticResource imageConverter}}" 
+                                   Aspect="AspectFit" />
+                        </DataTemplate>
+                    </car:SfCarousel.ItemTemplate>
+                </car:SfCarousel>
+            <Label Style="{DynamicResource HeaderLabel}" FontSize="30" Text="{Binding Name}" />
+            <Label Text="{Binding Platform}" Style="{StaticResource SubLabel}" FontSize="42" Opacity="0.4" VerticalTextAlignment="Center" Margin="0,-20" />
+            <Label Text="{Binding Description}" d:Text="description" Margin="10,5" />
+        </StackLayout>
     </StackLayout>
 
 </ContentPage>

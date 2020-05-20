@@ -6,7 +6,9 @@
        xmlns:local="clr-namespace:Gametrove.Core.Views;assembly=gametrove.core"
        mc:Ignorable="d"
        Title="app"
-       x:Class="Gametrove.Core.AppShell">
+       x:Class="Gametrove.Core.AppShell"
+       NavBarHasShadow="True"
+       TabBarIsVisible="False">
 
     <Shell.Resources>
 

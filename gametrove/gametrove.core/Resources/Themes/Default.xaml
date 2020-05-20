@@ -1,97 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                    xmlns:fa="clr-namespace:Gametrove.Core.Infrastructure;assembly=gametrove.core">
+                    xmlns:fa="clr-namespace:Gametrove.Core.Infrastructure;assembly=gametrove.core"
+                    x:Class="Gametrove.Core.Resources.Themes.Default">
     <!-- Color definitions -->
     <Color x:Key="NavigationPrimary">#2499FF</Color>
     <Color x:Key="NavigationSecondary">#124C80</Color>
-    <Color x:Key="Foreground">White</Color>
+    <Color x:Key="HeaderTextColor">White</Color>
+    <Color x:Key="Foreground">Black</Color>
     <Color x:Key="Background">#1D7ACC</Color>
     <Color x:Key="ButtonPrimary">#70BCFF</Color>
     <Color x:Key="ButtonSecondary">#385E80</Color>
-
-    <!-- Shell defaults -->
-    <Style x:Key="BaseStyle" TargetType="Element">
-        <Setter Property="Shell.BackgroundColor" Value="{StaticResource NavigationPrimary}" />
-        <Setter Property="Shell.ForegroundColor" Value="{StaticResource Foreground}" />
-        <Setter Property="Shell.TitleColor" Value="{StaticResource Foreground}" />
-        <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
-        <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
-    </Style>
-
-    <!-- Custom styles -->
-    <Style TargetType="ShellItem" BasedOn="{StaticResource BaseStyle}" />
-    <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
-
-    <Style x:Key="HeaderLabel" TargetType="Label" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="TextColor" Value="{StaticResource NavigationPrimary}" />
-        <Setter Property="FontAttributes" Value="Bold" />
-        <Setter Property="FontSize" Value="28" />
-        <Setter Property="Padding" Value="5,0" />
-    </Style>
-
-    <Style x:Key="SubLabel" TargetType="Label" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="TextColor" Value="{StaticResource NavigationSecondary}" />
-        <Setter Property="FontAttributes" Value="Bold" />
-        <Setter Property="FontSize" Value="25" />
-        <Setter Property="Padding" Value="5,0" />
-        <Setter Property="Opacity" Value="0.5" />
-    </Style>
-
-    <Style x:Key="FormInput" TargetType="StackLayout">
-        <Setter Property="Padding" Value="0, 15" />
-        <Setter Property="Margin" Value="5, 10" />
-    </Style>
-    <Style TargetType="Entry" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="FontSize" Value="Large"></Setter>
-    </Style>
-
-    <Style TargetType="Editor" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="FontSize" Value="Large"></Setter>
-        <Setter Property="AutoSize" Value="1"></Setter>
-    </Style>
-
-    <Style TargetType="Button">
-        <Setter Property="BackgroundColor" Value="{StaticResource ButtonSecondary}"></Setter>
-    </Style>
-    <Style x:Key="PrimaryButton" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="{StaticResource ButtonPrimary}"></Setter>
-    </Style>
-
-    <!-- Font Awesome -->
-
-    <!-- Named values -->
-    <x:Double x:Key="ToolbarIconImageSourceSize">30</x:Double>
-    <x:String x:Key="CogIcon">&#xf013;</x:String>
-    <x:String x:Key="HomeIcon">&#xf015;</x:String>
-
-    <OnPlatform x:Key="FontAwesomeSolidFree" x:TypeArguments="x:String">
-        <On Platform="Android" Value="FA-Free-Solid-900.otf#FontAwesomeSolidFree" />
-    </OnPlatform>
-
-    <Style x:Key="FlyoutItemIcon" BasedOn="{StaticResource BaseStyle}" TargetType="Label">
-        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolidFree}" />
-        <Setter Property="FontSize" Value="32" />
-        <Setter Property="Margin" Value="15,5" />
-        <Setter Property="VerticalTextAlignment" Value="Center" />
-        <Setter Property="HeightRequest" Value="45" />
-    </Style>
-
-    <!--- https://stackoverflow.com/questions/57395091/how-to-add-font-icon-in-toolbar-item-in-xamarin-forms-->
-
-    <Style x:Key="ScanButton" TargetType="Button">
-        <Setter Property="CornerRadius" Value="100"/>
-        <Setter Property="BackgroundColor" Value="{StaticResource ButtonSecondary}"/>
-        <Setter Property="HeightRequest" Value="80"/>
-        <Setter Property="WidthRequest" Value="80"/>
-        <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
-        <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
-        <Setter Property="Padding" Value="15"/>
-        <Setter Property="Margin" Value="10,0,10,0"/>
-        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolidFree}" />
-        <Setter Property="FontSize" Value="32" />
-        <Setter Property="Opacity" Value="0.75" />
-        <Setter Property="Text" Value="&#xf02a;" />
-    </Style>
-
+    <Color x:Key="ListSeparator">#4f4f4f</Color>
 </ResourceDictionary>

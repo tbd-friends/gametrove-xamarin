@@ -16,13 +16,16 @@ namespace Gametrove.Core.Views
     public partial class HomePage : ContentPage
     {
         private readonly HomeViewModel _viewModel;
-        private ZXingScannerPage _scanner;
+        private readonly ZXingScannerPage _scanner;
 
         public HomePage()
         {
             InitializeComponent();
 
             BindingContext = _viewModel = new HomeViewModel();
+
+            _scanner = new ZXingScannerPage();
+            _scanner.OnScanResult += BarcodePickerOnDidScan;
 
             MessagingCenter.Subscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered",
                 async (sender, result) =>
@@ -36,7 +39,10 @@ namespace Gametrove.Core.Views
 
         private async void AddItem_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new RegisterGamePage());
+            if (await CheckIfICanUseTheCamera())
+            {
+                await Navigation.PushAsync(new RegisterGamePage());
+            }
         }
 
         private async void SfListView_OnSelectionChanged(object sender, ItemSelectionChangedEventArgs e)
@@ -58,12 +64,6 @@ namespace Gametrove.Core.Views
 
         private async Task StartScanning()
         {
-            await CheckIfICanUseTheCamera();
-
-            _scanner = new ZXingScannerPage();
-
-            _scanner.OnScanResult += BarcodePickerOnDidScan;
-
             await Navigation.PushModalAsync(_scanner);
         }
 
@@ -72,7 +72,6 @@ namespace Gametrove.Core.Views
             Device.BeginInvokeOnMainThread(async () =>
             {
                 _scanner.IsScanning = false;
-                _scanner.OnScanResult -= BarcodePickerOnDidScan;
 
                 await Navigation.PopModalAsync();
 
@@ -95,7 +94,7 @@ namespace Gametrove.Core.Views
             });
         }
 
-        private async Task<PermissionStatus> CheckIfICanUseTheCamera()
+        private async Task<bool> CheckIfICanUseTheCamera()
         {
             var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
 
@@ -104,7 +103,7 @@ namespace Gametrove.Core.Views
                 status = await Permissions.RequestAsync<Permissions.Camera>();
             }
 
-            return status;
+            return status == PermissionStatus.Granted;
         }
 
         protected override void OnAppearing()

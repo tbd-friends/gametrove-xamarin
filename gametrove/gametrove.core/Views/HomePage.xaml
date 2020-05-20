@@ -10,7 +10,8 @@
              xmlns:converters="clr-namespace:Gametrove.Core.Converters;assembly=gametrove.core"
              mc:Ignorable="d"
              x:Class="Gametrove.Core.Views.HomePage"
-             Title="GameTrackr">
+             Title="GameTrackr"
+             Visual="Material">
 
 
     <ContentPage.Resources>
@@ -24,7 +25,7 @@
             <ToolbarItem.IconImageSource>
                 <FontImageSource
                     FontFamily="{StaticResource FontAwesomeSolidFree}"
-                    Glyph="{x:Static icons:FontAwesome.Add}"
+                    Glyph="{x:Static icons:FontAwesome.Plus}"
                     Size="{StaticResource ToolbarIconImageSourceSize}" />
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
@@ -53,19 +54,26 @@
                     <sf:SfListView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
-                                <Label FontSize="24" 
-                               Text="{Binding Name}" 
-                               Padding="10,0" 
-                               VerticalTextAlignment="Center" 
-                               FontAttributes="Bold" />
-                                <Label FontSize="28"
-                               Padding="20,0,20,10"
-                               Margin="0,-10"
-                               Text="{Binding Platform}"
-                               VerticalTextAlignment="Center"
-                               HorizontalTextAlignment="End"
-                               Opacity="0.5"
-                               />
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout Orientation="Vertical">
+                                        <Label 
+                                        FontSize="18"
+                                        FontAttributes="Bold"
+                                        Opacity="0.8"
+                                        Text="{Binding Name}"
+                                        TextColor="{DynamicResource Foreground}" />
+                                        <Label FontSize="14"
+                                           Text="{Binding Platform}"
+                                           TextColor="{DynamicResource Foreground}" 
+                                           Opacity="0.75"
+                                    />
+                                    </StackLayout>
+                                    <Label Style="{StaticResource InlineIconButton}" Text="{x:Static icons:FontAwesome.Heart}"
+                                         HorizontalOptions="FillAndExpand"
+                                         HorizontalTextAlignment="End"
+                                         Margin="0,0,5,0"/>
+                                </StackLayout>
+                                <BoxView HeightRequest="0.5" Color="{DynamicResource ListSeparator}"></BoxView>
                             </StackLayout>
                         </DataTemplate>
                     </sf:SfListView.ItemTemplate>

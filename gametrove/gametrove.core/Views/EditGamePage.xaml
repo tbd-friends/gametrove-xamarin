@@ -8,11 +8,11 @@
              Title="{Binding Name}">
     <ContentPage.Content>
         <StackLayout>
-            <Label Style="{StaticResource HeaderLabel}" Text="Edit Game" />
+            <Label Style="{DynamicResource HeaderLabel}" Text="Edit Game" />
             <Entry Text="{Binding Name, Mode=TwoWay}" />
             <Editor Text="{Binding Description, Mode=TwoWay}" />
             <Button Text="Save" 
-                    Style="{StaticResource PrimaryButton}"
+                    Style="{DynamicResource PrimaryButton}"
                     Command="{Binding UpdateGameCommand}" />
             <Button Text="Cancel" 
                     Clicked="Button_OnClicked"/>

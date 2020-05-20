@@ -7,7 +7,6 @@ namespace Gametrove.Core
 {
     public partial class App : Application
     {
-
         public App()
         {
             InitializeComponent();
@@ -15,6 +14,8 @@ namespace Gametrove.Core
             DependencyService.Register<APIService>();
 
             SyncfusionLicenseProvider.RegisterLicense(AppSettings.Configuration.Syncfusion);
+
+            Resources.SetCurrentTheme();
 
             MainPage = new AppShell();
         }
@@ -29,6 +30,7 @@ namespace Gametrove.Core
 
         protected override void OnResume()
         {
+           
         }
     }
 }
