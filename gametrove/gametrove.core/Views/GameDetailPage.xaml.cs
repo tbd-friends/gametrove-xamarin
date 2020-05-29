@@ -26,6 +26,13 @@ namespace Gametrove.Core.Views
                 detailViewModel.Name = game.Name;
                 detailViewModel.Description = game.Description;
             });
+
+            MessagingCenter.Subscribe<RegisterCopyViewModel>(this, "Copy:Added", _ =>
+            {
+                Navigation.PopAsync(true);
+
+                // ViewModel.GetCopies
+            });
         }
 
         public async void EditGame_Clicked(object sender, EventArgs e)
@@ -60,9 +67,14 @@ namespace Gametrove.Core.Views
             if (_vm.Images.Count == 0)
             {
                 _vm.LoadImagesCommand.Execute(this);
-
-                _vm.IsBusy = true;
             }
+
+            _vm.LoadCopiesCommand.Execute(this);
+        }
+
+        private void Button_OnClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new RegisterCopyPage(_vm.Id));
         }
     }
 }

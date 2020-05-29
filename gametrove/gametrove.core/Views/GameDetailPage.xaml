@@ -39,67 +39,68 @@
     </ContentPage.ToolbarItems>
 
     <StackLayout Spacing="10" Padding="5,5" VerticalOptions="StartAndExpand">
-            <StackLayout>
-                    <car:SfCarousel ItemsSource="{Binding Images}"
+        <StackLayout>
+            <car:SfCarousel ItemsSource="{Binding Images}"
                                     HeightRequest="250"
                                     ItemHeight="200"
                                     ItemSpacing="0"
                                     ViewMode="Linear">
-                        <car:SfCarousel.ItemTemplate>
-                            <DataTemplate>
-                                <Image Source="{Binding Url, Converter={StaticResource imageConverter}}" 
+                <car:SfCarousel.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding Url, Converter={StaticResource imageConverter}}" 
                                        Aspect="AspectFit" />
-                            </DataTemplate>
-                        </car:SfCarousel.ItemTemplate>
-                    </car:SfCarousel>
-                <Label Style="{DynamicResource HeaderLabel}" FontSize="30" Text="{Binding Name}" />
-                <Label Text="{Binding Platform}" Style="{StaticResource SubLabel}" FontSize="42" Opacity="0.4" VerticalTextAlignment="Center" Margin="0,-20" />
-                <Label Text="{Binding Description}" d:Text="description" Margin="10,5" />
-            </StackLayout>
-        <Label Text="Copies" Style="{DynamicResource HeaderLabel}" />
+                    </DataTemplate>
+                </car:SfCarousel.ItemTemplate>
+            </car:SfCarousel>
+            <Label Style="{DynamicResource HeaderLabel}" FontSize="30" Text="{Binding Name}" />
+            <Label Text="{Binding Platform}" Style="{StaticResource SubLabel}" FontSize="42" Opacity="0.4" VerticalTextAlignment="Center" Margin="0,-20" />
+            <Label Text="{Binding Description}" d:Text="description" Margin="10,5" />
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Copies" Style="{DynamicResource HeaderLabel}" VerticalTextAlignment="Center" />
+            <Button HorizontalOptions="EndAndExpand" 
+                    Text="{x:Static icons:FontAwesome.Add}" 
+                    TextColor="{DynamicResource ButtonPrimary}"
+                    FontSize="32"
+                    Padding="0"
+                    Margin="0"
+                    BackgroundColor="White"
+                    WidthRequest="48"
+                    FontFamily="{DynamicResource FontAwesomeSolidFree}"
+                    Clicked="Button_OnClicked"></Button>
+        </StackLayout>
         <BoxView HeightRequest="0.5" Color="{DynamicResource ListSeparator}"></BoxView>
-        <Frame Padding="0" HasShadow="True">
-            <StackLayout Padding="5,0" Margin="0, 5">
-                <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                    <Frame CornerRadius="8" Padding="0" BackgroundColor="{DynamicResource Background}" HasShadow="False">
-                        <Label Text="New" FontSize="18" TextColor="{DynamicResource HeaderTextColor}" Padding="5,3" />
-                    </Frame>
-                    <Frame CornerRadius="8" Padding="0" BackgroundColor="{DynamicResource Background}" HasShadow="False">
-                        <Label Text="Limited Edition" FontSize="18" TextColor="{DynamicResource HeaderTextColor}" Padding="5,3" />
-                    </Frame>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                    <Label Text="Purchased 1/1/2020" FontSize="18" />
-                    <Label Text="$18.99" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="End" FontSize="18" />
-                </StackLayout>
-            </StackLayout>
-        </Frame>
-        <Frame Padding="0" HasShadow="True">
-            <StackLayout Padding="5,0" Margin="0, 5">
-                <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                    <Frame CornerRadius="8" Padding="0" BackgroundColor="{DynamicResource Background}" HasShadow="False">
-                        <Label Text="Second Hand" FontSize="18" TextColor="{DynamicResource HeaderTextColor}" Padding="5,3" />
-                    </Frame>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                    <Label Text="Purchased 1/1/2020" FontSize="18" />
-                    <Label Text="$12.99" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="End" FontSize="18" />
-                </StackLayout>
-            </StackLayout>
-        </Frame>
+        <RefreshView Command="{Binding LoadCopiesCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <sf:SfListView ItemsSource="{Binding Copies}" 
+                           AutoFitMode="Height"
+                           ItemSpacing="5"
+                           SelectionMode="None">
+                <sf:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Frame Padding="0,10,0,0" HasShadow="True">
+                                <StackLayout Padding="5,0" Margin="0, 5">
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                                        <Frame CornerRadius="8" Padding="0" BackgroundColor="{DynamicResource Background}" HasShadow="False">
+                                            <CollectionView ItemsSource="{Binding Tags, Mode=OneWay}" HeightRequest="35" ItemsLayout="HorizontalList">
+                                                <CollectionView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Label Text="{Binding}" FontSize="18" TextColor="{DynamicResource HeaderTextColor}" Padding="5,3" />
+                                                    </DataTemplate>
+                                                </CollectionView.ItemTemplate>
+                                            </CollectionView>
+                                        </Frame>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                        <Label Text="{Binding Purchased,StringFormat='{0:MMMM dd, yyyy}'}" FontSize="18" />
+                                        <Label Text="{Binding Cost}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="End" FontSize="18" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </sf:SfListView.ItemTemplate>
+            </sf:SfListView>
+        </RefreshView>
     </StackLayout>
-    <!-- 
-    <Frame
-CornerRadius="15"
-Padding="0"
-BackgroundColor="AntiqueWhite"
-Margin="15,10,15,10" 
-HasShadow="False"
-    >
-    <Label Margin="5" 
-        HorizontalOptions="Center" 
-        BackgroundColor="Transparent" 
-        Text="My rounded label" />
-    </Frame>-->
-
 </ContentPage>

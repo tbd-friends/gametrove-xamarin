@@ -20,7 +20,9 @@ namespace Gametrove.Core.ViewModels
         private readonly APIService _api;
 
         public ObservableCollection<GameImage> Images { get; }
+        public ObservableCollection<CopyModel> Copies { get; }
         public Command LoadImagesCommand { get; }
+        public Command LoadCopiesCommand { get; }
 
         public GameDetailViewModel(GameModel source)
         {
@@ -30,7 +32,10 @@ namespace Gametrove.Core.ViewModels
             Platform = source.Platform;
             Registered = source.RegisteredDate;
             Images = new ObservableCollection<GameImage>();
+            Copies = new ObservableCollection<CopyModel>();
+
             LoadImagesCommand = new Command(async () => await LoadImages());
+            LoadCopiesCommand = new Command(LoadCopies);
 
             _api = DependencyService.Get<APIService>();
         }
@@ -54,6 +59,25 @@ namespace Gametrove.Core.ViewModels
             }
 
             IsBusy = false;
+        }
+
+        public void LoadCopies()
+        {
+            Task.Run(async () =>
+            {
+                IsBusy = true;
+
+                var copies = await _api.GetCopies(Id);
+
+                Copies.Clear();
+
+                foreach (var copy in copies)
+                {
+                    Copies.Add(copy);
+                }
+
+                IsBusy = false;
+            });
         }
 
         public class GameImage

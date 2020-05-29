@@ -10,7 +10,6 @@ using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Models;
 using Gametrove.Core.Services.Models;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Xamarin.Essentials;
 
 namespace Gametrove.Core.Services
@@ -170,6 +169,43 @@ namespace Gametrove.Core.Services
             return null;
         }
 
+        public async Task<Guid> RegisterGameCopy(Guid gameId, string[] tags, decimal? cost, DateTime? purchased)
+        {
+            await CheckIfICanUseTheInternet();
+
+            var response =
+                await _client.PostAsync($"copies/{gameId}", new StringContent(new
+                {
+                    Tags = tags,
+                    Cost = cost,
+                    Purchased = purchased
+                }.AsJson(), Encoding.UTF8, "application/json"));
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<Guid>(await response.Content.ReadAsStringAsync());
+            }
+
+            return Guid.Empty;
+        }
+
+        public async Task<IEnumerable<CopyModel>> GetCopies(Guid gameId)
+        {
+            await CheckIfICanUseTheInternet();
+
+            var response = await _client.GetAsync($"copies/{gameId}").ConfigureAwait(false);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var results =
+                    JsonConvert.DeserializeObject<IEnumerable<CopyModel>>(await response.Content.ReadAsStringAsync());
+
+                return results;
+            }
+
+            return null;
+        }
+
         private async Task<PermissionStatus> CheckIfICanUseTheInternet()
         {
             var status = await Permissions.CheckStatusAsync<Permissions.NetworkState>();
@@ -180,29 +216,6 @@ namespace Gametrove.Core.Services
             }
 
             return status;
-        }
-    }
-
-    public static class JsonExtensions
-    {
-        public static StringContent AsStringContent<T>(this T @object, Encoding encoding, string mediaType = "application/json") where T : class
-        {
-            StringContent result;
-
-            switch (mediaType)
-            {
-                case "application/json":
-                default:
-                    result = new StringContent(@object.AsJson(), encoding, mediaType);
-                    break;
-            }
-
-            return result;
-        }
-        public static string AsJson<T>(this T @object)
-        {
-            return JsonConvert.SerializeObject(@object,
-                new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
         }
     }
 }
