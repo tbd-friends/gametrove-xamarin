@@ -32,15 +32,15 @@ namespace Gametrove.Core.ViewModels
             }
         }
 
-        private string _description;
-        public string Description
+        private string _subtitle;
+        public string Subtitle
         {
-            get => _description;
+            get => _subtitle;
             set
             {
-                if (!value.Equals(_description))
+                if (!value.Equals(_subtitle))
                 {
-                    _description = value;
+                    _subtitle = value;
 
                     OnPropertyChanged();
                 }
@@ -123,7 +123,7 @@ namespace Gametrove.Core.ViewModels
 
         private async Task RegisterNewGame(bool scan)
         {
-            var added = await _service.RegisterNewGame(Name, Description, Code, Platform);
+            var added = await _service.RegisterNewGame(Name, Subtitle, Code, Platform);
 
             MessagingCenter.Send(this, "Game:Registered", new RegistrationResult { Model = added, ShouldScan = scan });
         }

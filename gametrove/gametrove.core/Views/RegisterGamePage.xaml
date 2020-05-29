@@ -10,7 +10,7 @@
     <ContentPage.Content>
         <StackLayout Style="{DynamicResource FormInput}">
             <Entry Placeholder="Name" Text="{Binding Name}" />
-            <Editor Placeholder="Description" Text="{Binding Description}" />
+            <Editor Placeholder="Subtitle" Text="{Binding Subtitle}" />
             <sf:SfAutoComplete Watermark="Platform" 
                                DisplayMemberPath="Name"
                                DataSource="{Binding Platforms}"

@@ -29,13 +29,13 @@
                                     QueryIcon="tab_gamepad.png"
                                     SearchBoxVisibility="Collapsible"
                                     x:Name="SearchGames">
-            <!--<handlers:SearchGameHandler.ItemTemplate>
+            <handlers:SearchGameHandler.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="2,5" Margin="0,5">
+                    <StackLayout Padding="2,5" Margin="0,5" HeightRequest="30">
                         <Label FontSize="15" Text="{Binding Name}" />
                     </StackLayout>
                 </DataTemplate>
-            </handlers:SearchGameHandler.ItemTemplate>-->
+            </handlers:SearchGameHandler.ItemTemplate>
         </handlers:SearchGameHandler>
     </Shell.SearchHandler>
 
