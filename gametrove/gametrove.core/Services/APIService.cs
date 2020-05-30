@@ -26,7 +26,7 @@ namespace Gametrove.Core.Services
             };
         }
 
-        public async Task<GameModel> RegisterNewGame(string name, string description, string code, Guid platform)
+        public async Task<GameModel> RegisterNewGame(string name, string subtitle, string code, Guid platform)
         {
             await CheckIfICanUseTheInternet();
 
@@ -34,7 +34,7 @@ namespace Gametrove.Core.Services
                 await _client.PostAsync("games", new StringContent(new
                 {
                     Name = name,
-                    Description = description,
+                    Subtitle = subtitle,
                     Code = code,
                     Platform = platform
                 }.AsJson(), Encoding.UTF8, "application/json"));
