@@ -122,7 +122,15 @@ namespace Gametrove.Core.ViewModels
         {
             var added = await _service.RegisterNewGame(Name, Subtitle, Code, Platform);
 
-            MessagingCenter.Send(this, "Game:Registered", new RegistrationResult { Model = added, ShouldScan = scan });
+            if (added != null)
+            {
+                MessagingCenter.Send(this, "Game:Registered",
+                    new RegistrationResult
+                    {
+                        Model = added, 
+                        ShouldScan = scan
+                    });
+            }
         }
 
         private async Task GetPlatforms()
