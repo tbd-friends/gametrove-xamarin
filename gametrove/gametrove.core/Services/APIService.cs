@@ -82,16 +82,27 @@ namespace Gametrove.Core.Services
                     : null;
         }
 
-        public async Task<GameModel> UpdateGame(GameModel model)
+        public async Task<TitleModel> GetTitleForGame(Guid gameId)
         {
             await CheckIfICanUseTheInternet();
 
-            var response = await _client.PutAsync($"games/{model.Id}",
+            var response = await _client.GetAsync($"games/{gameId}/title").ConfigureAwait(false);
+
+            return response.IsSuccessStatusCode
+                ? JsonConvert.DeserializeObject<TitleModel>(await response.Content.ReadAsStringAsync())
+                : null;
+        }
+
+        public async Task<TitleModel> UpdateTitle(TitleModel model)
+        {
+            await CheckIfICanUseTheInternet();
+
+            var response = await _client.PutAsync($"titles/{model.Id}",
                     model.AsStringContent(Encoding.UTF8))
                 .ConfigureAwait(false);
 
             return response.IsSuccessStatusCode
-                ? JsonConvert.DeserializeObject<GameModel>(await response.Content.ReadAsStringAsync())
+                ? JsonConvert.DeserializeObject<TitleModel>(await response.Content.ReadAsStringAsync())
                 : null;
         }
 

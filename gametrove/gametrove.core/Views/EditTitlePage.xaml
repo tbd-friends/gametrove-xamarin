@@ -4,16 +4,16 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Gametrove.Core.Views.EditGamePage"
+             x:Class="Gametrove.Core.Views.EditTitlePage"
              Title="{Binding Name}">
     <ContentPage.Content>
         <StackLayout Style="{DynamicResource FormInput}">
-            <Label Style="{DynamicResource HeaderLabel}" Text="Edit Game" />
+            <Label Style="{DynamicResource HeaderLabel}" Text="Edit Title" />
             <Entry Text="{Binding Name, Mode=TwoWay}" />
-            <Editor Text="{Binding Description, Mode=TwoWay}" />
+            <Editor Text="{Binding Subtitle, Mode=TwoWay}" />
             <Button Text="Save" 
                     Style="{DynamicResource PrimaryButton}"
-                    Command="{Binding UpdateGameCommand}" />
+                    Command="{Binding UpdateTitleCommand}" />
             <Button Text="Cancel" 
                     Clicked="Button_OnClicked"/>
         </StackLayout>

@@ -7,30 +7,20 @@ using Xamarin.Forms.Xaml;
 namespace Gametrove.Core.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class EditGamePage : ContentPage
+    public partial class EditTitlePage : ContentPage
     {
-        private readonly Guid _id;
-        private readonly EditGameViewModel _vm;
+        private readonly EditTitleViewModel _vm;
 
-        public EditGamePage(Guid id)
+        public EditTitlePage(Guid gameId)
         {
             InitializeComponent();
 
-            _id = id;
+            BindingContext = _vm = new EditTitleViewModel(gameId);
 
-            BindingContext = _vm = new EditGameViewModel();
-
-            MessagingCenter.Subscribe<EditGameViewModel, GameModel>(this, "Game:Updated", async (vm, game) =>
+            MessagingCenter.Subscribe<EditTitleViewModel, TitleModel>(this, "Title:Updated", async (vm, game) =>
                 {
                     await Navigation.PopModalAsync(true);
                 });
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            _vm.LoadGameCommand.Execute(_id);
         }
 
         private async void Button_OnClicked(object sender, EventArgs e)

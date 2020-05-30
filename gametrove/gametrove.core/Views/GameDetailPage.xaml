@@ -20,7 +20,7 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Clicked="EditGame_Clicked">
+        <ToolbarItem Clicked="EditTitle_Clicked">
             <ToolbarItem.IconImageSource>
                 <FontImageSource
                     FontFamily="{DynamicResource FontAwesomeSolidFree}"

@@ -34,6 +34,9 @@
     <Compile Update="Resources\Themes\SuperNintendo.xaml.cs">
       <DependentUpon>SuperNintendo.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\EditTitlePage.xaml.cs">
+      <DependentUpon>EditTitlePage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\GameDetailPage.xaml.cs">
       <DependentUpon>GameDetailPage.xaml</DependentUpon>
     </Compile>
@@ -55,7 +58,7 @@
     <EmbeddedResource Update="Views\ConfigurationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\EditGamePage.xaml">
+    <EmbeddedResource Update="Views\EditTitlePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\RegisterCopyPage.xaml">

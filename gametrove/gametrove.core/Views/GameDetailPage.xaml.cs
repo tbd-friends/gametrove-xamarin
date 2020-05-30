@@ -21,10 +21,10 @@ namespace Gametrove.Core.Views
 
             BindingContext = _vm = detailViewModel;
 
-            MessagingCenter.Subscribe<EditGameViewModel, GameModel>(this, "Game:Updated", (vm, game) =>
+            MessagingCenter.Subscribe<EditTitleViewModel, TitleModel>(this, "Title:Updated", (vm, title) =>
             {
-                detailViewModel.Name = game.Name;
-                detailViewModel.Description = game.Description;
+                detailViewModel.Name = title.Name;
+                detailViewModel.Subtitle = title.Subtitle;
             });
 
             MessagingCenter.Subscribe<RegisterCopyViewModel>(this, "Copy:Added", _ =>
@@ -35,10 +35,10 @@ namespace Gametrove.Core.Views
             });
         }
 
-        public async void EditGame_Clicked(object sender, EventArgs e)
+        public async void EditTitle_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(
-                new EditGamePage(_vm.Id));
+                new EditTitlePage(_vm.Id));
         }
 
         public async void TakePhoto_Clicked(object sender, EventArgs e)

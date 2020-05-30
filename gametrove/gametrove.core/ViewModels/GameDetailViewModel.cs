@@ -13,7 +13,7 @@ namespace Gametrove.Core.ViewModels
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string Subtitle { get; set; }
         public string Platform { get; set; }
         public DateTime Registered { get; set; }
 
@@ -28,7 +28,7 @@ namespace Gametrove.Core.ViewModels
         {
             Id = source.Id;
             Name = source.Name;
-            Description = source.Description;
+            Subtitle = source.Description;
             Platform = source.Platform;
             Registered = source.RegisteredDate;
             Images = new ObservableCollection<GameImage>();
