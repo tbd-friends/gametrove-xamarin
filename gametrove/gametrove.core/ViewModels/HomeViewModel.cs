@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Services;
+using Gametrove.Core.Services.Actions;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels.Results;
 using Xamarin.Essentials;
@@ -30,7 +31,7 @@ namespace Gametrove.Core.ViewModels
             }
         }
 
-        private readonly APIService _api;
+        private readonly APIActionService _api;
 
         public HomeViewModel()
         {
@@ -38,7 +39,7 @@ namespace Gametrove.Core.ViewModels
 
             LoadGamesCommand = new Command(async () => await ExecuteLoadGamesCommand(), () => true);
 
-            _api = DependencyService.Resolve<APIService>();
+            _api = DependencyService.Resolve<APIActionService>();
 
             _scanButtonOrientation = Preferences.Get(AppPreferences.ScanButtonOrientation, "Right");
 
@@ -56,7 +57,7 @@ namespace Gametrove.Core.ViewModels
 
         public async Task<GameModel> LoadGameByCode(string code)
         {
-            return await _api.GetGameByCode(code);
+            return await _api.Execute(new GetGameByCodeAction(code));
         }
 
         private async Task ExecuteLoadGamesCommand()
@@ -65,7 +66,7 @@ namespace Gametrove.Core.ViewModels
 
             Games.Clear();
 
-            foreach (var game in await _api.GetRecentlyAddedGames())
+            foreach (var game in await _api.Execute(new GetRecentlyAddedGamesAction()))
             {
                 Games.Add(game);
             }

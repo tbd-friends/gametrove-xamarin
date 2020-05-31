@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Services;
+using Gametrove.Core.Services.Actions;
 using Gametrove.Core.Services.Models;
 using Xamarin.Forms;
 
@@ -18,13 +19,13 @@ namespace Gametrove.Core.ViewModels
         public DateTime Registered { get; set; }
         public bool IsFavorite { get; set; }
 
-        private readonly APIService _api;
+        private readonly APIActionService _api;
 
         public ObservableCollection<GameImage> Images { get; }
         public ObservableCollection<CopyModel> Copies { get; }
         public Command LoadImagesCommand { get; }
         public Command LoadCopiesCommand { get; }
-        public Command MarkAsFavoriteCommand { get; }
+        public Command ToggleFavoriteCommand { get; }
 
         public GameDetailViewModel(GameModel source)
         {
@@ -39,21 +40,21 @@ namespace Gametrove.Core.ViewModels
 
             LoadImagesCommand = new Command(async () => await LoadImages());
             LoadCopiesCommand = new Command(LoadCopies);
-            MarkAsFavoriteCommand = new Command(MarkAsFavorite);
+            ToggleFavoriteCommand = new Command(ToggleFavorite);
 
-            _api = DependencyService.Get<APIService>();
+            _api = DependencyService.Get<APIActionService>();
         }
 
         public async Task UploadImageForGame(Stream content)
         {
-            await _api.UploadImageForGame(Id, content, $"{Name}_{DateTime.UtcNow:s}.jpg");
+            await _api.Execute(new UploadImageForGameAction(Id, content, $"{Name}_{DateTime.UtcNow:s}.jpg"));
         }
 
         public async Task LoadImages()
         {
             IsBusy = true;
 
-            var images = await _api.GetImagesForGame(Id);
+            var images = await _api.Execute(new GetImagesForGameAction(Id));
 
             Images.Clear();
 
@@ -71,7 +72,7 @@ namespace Gametrove.Core.ViewModels
             {
                 IsBusy = true;
 
-                var copies = await _api.GetCopies(Id);
+                var copies = await _api.Execute(new GetCopiesAction(Id));
 
                 Copies.Clear();
 
@@ -84,9 +85,19 @@ namespace Gametrove.Core.ViewModels
             });
         }
 
-        public void MarkAsFavorite()
+        public void ToggleFavorite()
         {
-            Task.Run(async () => { await _api.MarkGameAsFavorite(Id); });
+            Task.Run(async () =>
+            {
+                if (IsFavorite)
+                {
+                    await _api.Execute(new MarkGameAsNotFavoriteAction(Id));
+                }
+                else
+                {
+                    await _api.Execute(new MarkGameAsFavoriteAction(Id));
+                }
+            });
         }
 
         public class GameImage

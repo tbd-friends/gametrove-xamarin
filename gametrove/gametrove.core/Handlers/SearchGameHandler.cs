@@ -1,5 +1,6 @@
 ﻿using Gametrove.Core.Models;
 using Gametrove.Core.Services;
+using Gametrove.Core.Services.Actions;
 using Gametrove.Core.ViewModels;
 using Gametrove.Core.Views;
 using Xamarin.Forms;
@@ -8,11 +9,11 @@ namespace Gametrove.Core.Handlers
 {
     public class SearchGameHandler : SearchHandler
     {
-        private readonly APIService _service;
+        private readonly APIActionService _service;
 
         public SearchGameHandler()
         {
-            _service = DependencyService.Resolve<APIService>();
+            _service = DependencyService.Resolve<APIActionService>();
         }
 
         protected override void OnQueryChanged(string oldValue, string newValue)
@@ -25,7 +26,7 @@ namespace Gametrove.Core.Handlers
             }
             else
             {
-                ItemsSource = _service.SearchForGame(newValue).GetAwaiter().GetResult();
+                ItemsSource = _service.Execute(new SearchForGameAction(newValue)).GetAwaiter().GetResult();
             }
         }
 
@@ -37,7 +38,7 @@ namespace Gametrove.Core.Handlers
             {
                 Dispatcher.BeginInvokeOnMainThread(async () =>
                 {
-                    var game = await _service.GetGameById(result.Id);
+                    var game = await _service.Execute(new GetGameByIdAction(result.Id));
 
                     await Shell.Current.Navigation.PushAsync(new GameDetailPage(new GameDetailViewModel(game)));
                 });

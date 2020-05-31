@@ -49,7 +49,7 @@
                     WidthRequest="48"
                     Text="{x:Static icons:FontAwesome.Heart}"
                     FontFamily="{Binding IsFavorite, Converter={StaticResource fontConverter}}"
-                    Command="{Binding MarkAsFavoriteCommand}" />
+                    Command="{Binding ToggleFavoriteCommand}" />
 
             <car:SfCarousel ItemsSource="{Binding Images}"
                                 HeightRequest="250"

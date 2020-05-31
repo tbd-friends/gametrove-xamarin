@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Services;
+using Gametrove.Core.Services.Actions;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels.Results;
 using Xamarin.Forms;
@@ -97,12 +98,12 @@ namespace Gametrove.Core.ViewModels
         public Command<string> RegisterGame { get; }
         public Command GetPlatformsCommand { get; }
 
-        private readonly APIService _service;
+        private readonly APIActionService _service;
         private bool IsValid => Platform != Guid.Empty && !string.IsNullOrEmpty(Name);
 
         public RegisterGameViewModel()
         {
-            _service = DependencyService.Resolve<APIService>();
+            _service = DependencyService.Resolve<APIActionService>();
 
             Platforms = new ObservableCollection<PlatformModel>();
 
@@ -120,14 +121,14 @@ namespace Gametrove.Core.ViewModels
 
         private async Task RegisterNewGame(bool scan)
         {
-            var added = await _service.RegisterNewGame(Name, Subtitle, Code, Platform);
+            var added = await _service.Execute(new RegisterNewGameAction(Name, Subtitle, Code, Platform));
 
             if (added != null)
             {
                 MessagingCenter.Send(this, "Game:Registered",
                     new RegistrationResult
                     {
-                        Model = added, 
+                        Model = added,
                         ShouldScan = scan
                     });
             }
@@ -135,7 +136,7 @@ namespace Gametrove.Core.ViewModels
 
         private async Task GetPlatforms()
         {
-            var platforms = await _service.GetPlatforms();
+            var platforms = await _service.Execute(new GetPlatformsAction());
 
             IsBusy = true;
 

@@ -11,7 +11,7 @@ namespace Gametrove.Core
         {
             InitializeComponent();
 
-            DependencyService.Register<APIService>();
+            DependencyService.Register<APIActionService>();
 
             SyncfusionLicenseProvider.RegisterLicense(AppSettings.Configuration.Syncfusion);
 
@@ -30,7 +30,7 @@ namespace Gametrove.Core
 
         protected override void OnResume()
         {
-           
+
         }
     }
 }

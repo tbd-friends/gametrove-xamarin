@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Services;
+using Gametrove.Core.Services.Actions;
 using Xamarin.Forms;
 
 namespace Gametrove.Core.ViewModels
@@ -46,7 +47,7 @@ namespace Gametrove.Core.ViewModels
 
         public Command RegisterCopyCommand { get; private set; }
 
-        private readonly APIService _api;
+        private readonly APIActionService _api;
 
         public RegisterCopyViewModel(Guid id)
         {
@@ -61,12 +62,12 @@ namespace Gametrove.Core.ViewModels
                 MessagingCenter.Send(this, "Copy:Added");
             });
 
-            _api = DependencyService.Get<APIService>();
+            _api = DependencyService.Get<APIActionService>();
         }
 
         private void RegisterCopy()
         {
-            Task.Run(() => _api.RegisterGameCopy(Id, Tags.ToArray(), Cost, Purchased));
+            Task.Run(() => _api.Execute(new RegisterGameCopyAction(Id, Tags.ToArray(), Cost, Purchased)));
         }
 
         public void AddTag(string tag)
