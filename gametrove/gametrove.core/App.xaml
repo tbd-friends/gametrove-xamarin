@@ -56,6 +56,10 @@
             <On Platform="Android" Value="FA-Free-Solid-900.otf#FontAwesomeSolidFree" />
         </OnPlatform>
 
+        <OnPlatform x:Key="FontAwesomeRegularFree" x:TypeArguments="x:String">
+            <On Platform="Android" Value="FA-Free-Regular-900.otf#FontAwesomeRegularFree" />
+        </OnPlatform>
+
         <Style x:Key="FlyoutItemIcon" TargetType="Label">
             <Setter Property="FontFamily" Value="{DynamicResource FontAwesomeSolidFree}" />
             <Setter Property="FontSize" Value="32" />

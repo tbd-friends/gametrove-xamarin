@@ -123,6 +123,16 @@ namespace Gametrove.Core.Services
             return null;
         }
 
+        public async Task<bool> MarkGameAsFavorite(Guid id)
+        {
+            await CheckIfICanUseTheInternet();
+
+            var response = await _client.PostAsync($"games/favorite/{id}", new StringContent(string.Empty))
+                .ConfigureAwait(false);
+
+            return response.IsSuccessStatusCode;
+        }
+
         public async Task<IEnumerable<GameModel>> GetRecentlyAddedGames()
         {
             await CheckIfICanUseTheInternet();

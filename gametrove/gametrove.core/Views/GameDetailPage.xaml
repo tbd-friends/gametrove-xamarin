@@ -15,7 +15,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <cvt:ImageSourceConverter x:Key="imageConverter" />
-            <cvt:GameImageToSfCarouselConverter x:Key="CarouselConverter" />
+            <cvt:FontIsSolidConverter x:Key="fontConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -40,11 +40,22 @@
 
     <StackLayout Spacing="10" Padding="5,5" VerticalOptions="StartAndExpand">
         <StackLayout>
+            <Button HorizontalOptions="EndAndExpand" 
+                    TextColor="{DynamicResource ButtonPrimary}"
+                    FontSize="32"
+                    Padding="0"
+                    Margin="0"
+                    BackgroundColor="White"
+                    WidthRequest="48"
+                    Text="{x:Static icons:FontAwesome.Heart}"
+                    FontFamily="{Binding IsFavorite, Converter={StaticResource fontConverter}}"
+                    Command="{Binding MarkAsFavoriteCommand}" />
+
             <car:SfCarousel ItemsSource="{Binding Images}"
-                                    HeightRequest="250"
-                                    ItemHeight="200"
-                                    ItemSpacing="0"
-                                    ViewMode="Linear">
+                                HeightRequest="250"
+                                ItemHeight="200"
+                                ItemSpacing="0"
+                                ViewMode="Linear">
                 <car:SfCarousel.ItemTemplate>
                     <DataTemplate>
                         <Image Source="{Binding Url, Converter={StaticResource imageConverter}}" 
@@ -54,7 +65,7 @@
             </car:SfCarousel>
             <Label Style="{DynamicResource HeaderLabel}" FontSize="30" Text="{Binding Name}" />
             <Label Text="{Binding Platform}" Style="{StaticResource SubLabel}" FontSize="42" Opacity="0.4" VerticalTextAlignment="Center" Margin="0,-20" />
-            <Label Text="{Binding Description}" d:Text="description" Margin="10,5" />
+            <Label Text="{Binding Subtitle}" d:Text="subtitle" Margin="10,5" />
         </StackLayout>
         <StackLayout Orientation="Horizontal">
             <Label Text="Copies" Style="{DynamicResource HeaderLabel}" VerticalTextAlignment="Center" />

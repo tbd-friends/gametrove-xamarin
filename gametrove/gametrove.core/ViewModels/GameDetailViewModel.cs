@@ -16,6 +16,7 @@ namespace Gametrove.Core.ViewModels
         public string Subtitle { get; set; }
         public string Platform { get; set; }
         public DateTime Registered { get; set; }
+        public bool IsFavorite { get; set; }
 
         private readonly APIService _api;
 
@@ -23,19 +24,22 @@ namespace Gametrove.Core.ViewModels
         public ObservableCollection<CopyModel> Copies { get; }
         public Command LoadImagesCommand { get; }
         public Command LoadCopiesCommand { get; }
+        public Command MarkAsFavoriteCommand { get; }
 
         public GameDetailViewModel(GameModel source)
         {
             Id = source.Id;
             Name = source.Name;
-            Subtitle = source.Description;
+            Subtitle = source.Subtitle;
             Platform = source.Platform;
             Registered = source.RegisteredDate;
+            IsFavorite = source.IsFavorite;
             Images = new ObservableCollection<GameImage>();
             Copies = new ObservableCollection<CopyModel>();
 
             LoadImagesCommand = new Command(async () => await LoadImages());
             LoadCopiesCommand = new Command(LoadCopies);
+            MarkAsFavoriteCommand = new Command(MarkAsFavorite);
 
             _api = DependencyService.Get<APIService>();
         }
@@ -78,6 +82,11 @@ namespace Gametrove.Core.ViewModels
 
                 IsBusy = false;
             });
+        }
+
+        public void MarkAsFavorite()
+        {
+            Task.Run(async () => { await _api.MarkGameAsFavorite(Id); });
         }
 
         public class GameImage
