@@ -36,7 +36,7 @@ namespace Gametrove.Core.Services.Actions
             {
                 formData.Add(fileStreamContent);
 
-                var response = await service.Client.PostAsync($"images/{_id}", formData);
+                var response = await service.Client.PostAsync($"games/{_id}/images", formData);
 
                 return response.IsSuccessStatusCode;
             }

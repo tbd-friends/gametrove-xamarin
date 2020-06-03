@@ -15,7 +15,7 @@ namespace Gametrove.Core.Services.Actions
 
         public async Task<GameModel> DoAsync(APIActionService service)
         {
-            var response = await service.Client.GetAsync($"games/codes/{_code}").ConfigureAwait(false);
+            var response = await service.Client.GetAsync($"games/{_code}").ConfigureAwait(false);
 
             return response.IsSuccessStatusCode
                 ? JsonConvert.DeserializeObject<GameModel>(await response.Content.ReadAsStringAsync())

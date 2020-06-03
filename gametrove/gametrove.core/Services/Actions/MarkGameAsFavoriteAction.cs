@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
+using Gametrove.Core.Infrastructure;
 
 namespace Gametrove.Core.Services.Actions
 {
@@ -15,7 +17,8 @@ namespace Gametrove.Core.Services.Actions
 
         public async Task<bool> DoAsync(APIActionService service)
         {
-            var response = await service.Client.PostAsync($"games/favorite/{_id}", new StringContent(string.Empty))
+            var response = await service
+                .Client.PostAsync("games/favorites", new { GameId = _id }.AsStringContent(Encoding.UTF8))
                 .ConfigureAwait(false);
 
             return response.IsSuccessStatusCode;

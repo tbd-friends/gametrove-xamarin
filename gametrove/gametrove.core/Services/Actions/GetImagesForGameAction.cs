@@ -18,7 +18,7 @@ namespace Gametrove.Core.Services.Actions
 
         public async Task<IEnumerable<string>> DoAsync(APIActionService service)
         {
-            var response = await service.Client.GetAsync($"games/images/{_id}").ConfigureAwait(false);
+            var response = await service.Client.GetAsync($"games/{_id}/images").ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
             {

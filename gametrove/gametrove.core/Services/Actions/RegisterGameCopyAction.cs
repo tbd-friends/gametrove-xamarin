@@ -25,7 +25,7 @@ namespace Gametrove.Core.Services.Actions
         public async Task<Guid> DoAsync(APIActionService service)
         {
             var response =
-                await service.Client.PostAsync($"copies/{_gameId}", new StringContent(new
+                await service.Client.PostAsync($"{_gameId}/copies", new StringContent(new
                 {
                     Tags = _tags,
                     Cost = _cost,
