@@ -47,7 +47,7 @@ namespace Gametrove.Core.ViewModels
             Name = source.Name;
             Subtitle = source.Subtitle;
             Platform = source.Platform;
-            Registered = source.RegisteredDate;
+            Registered = source.Registered;
             IsFavorite = source.IsFavorite;
             Images = new ObservableCollection<GameImage>();
             Copies = new ObservableCollection<CopyModel>();

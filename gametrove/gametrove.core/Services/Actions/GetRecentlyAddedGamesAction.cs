@@ -7,19 +7,9 @@ namespace Gametrove.Core.Services.Actions
 {
     public class GetRecentlyAddedGamesAction : IApiAction<IEnumerable<GameModel>>
     {
-        public async Task<IEnumerable<GameModel>> DoAsync(APIActionService service)
+        public Task<IEnumerable<GameModel>> DoAsync(APIActionService service)
         {
-            var response = await service.Client.GetAsync($"games/last/10").ConfigureAwait(false);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var results =
-                    JsonConvert.DeserializeObject<IEnumerable<GameModel>>(await response.Content.ReadAsStringAsync());
-
-                return results;
-            }
-
-            return null;
+            return service.Execute(new SearchForGameAction(string.Empty, 10));
         }
     }
 }

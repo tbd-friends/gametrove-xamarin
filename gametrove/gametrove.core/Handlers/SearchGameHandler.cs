@@ -1,6 +1,7 @@
-﻿using Gametrove.Core.Models;
+﻿using System.Threading.Tasks;
 using Gametrove.Core.Services;
 using Gametrove.Core.Services.Actions;
+using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels;
 using Gametrove.Core.Views;
 using Xamarin.Forms;
@@ -16,7 +17,7 @@ namespace Gametrove.Core.Handlers
             _service = DependencyService.Resolve<APIActionService>();
         }
 
-        protected override void OnQueryChanged(string oldValue, string newValue)
+        protected override async void OnQueryChanged(string oldValue, string newValue)
         {
             base.OnQueryChanged(oldValue, newValue);
 
@@ -26,7 +27,7 @@ namespace Gametrove.Core.Handlers
             }
             else
             {
-                ItemsSource = _service.Execute(new SearchForGameAction(newValue)).GetAwaiter().GetResult();
+                ItemsSource = await _service.Execute(new SearchForGameAction(newValue));
             }
         }
 
@@ -34,7 +35,7 @@ namespace Gametrove.Core.Handlers
         {
             base.OnItemSelected(item);
 
-            if (item is SearchResultItem result)
+            if (item is GameModel result)
             {
                 Dispatcher.BeginInvokeOnMainThread(async () =>
                 {

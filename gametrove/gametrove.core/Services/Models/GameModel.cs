@@ -9,7 +9,7 @@ namespace Gametrove.Core.Services.Models
         public string Subtitle { get; set; }
         public string Code { get; set; }
         public string Platform { get; set; }
-        public DateTime RegisteredDate { get; set; }
+        public DateTime Registered { get; set; }
         public bool IsFavorite { get; set; }
     }
 }
