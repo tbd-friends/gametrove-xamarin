@@ -31,7 +31,7 @@ namespace Gametrove.Core.Views
             {
                 Navigation.PopAsync(true);
 
-                // ViewModel.GetCopies
+                _vm.LoadCopiesCommand.Execute(this);
             });
         }
 

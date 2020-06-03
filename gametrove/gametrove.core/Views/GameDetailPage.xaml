@@ -63,9 +63,9 @@
                     </DataTemplate>
                 </car:SfCarousel.ItemTemplate>
             </car:SfCarousel>
-            <Label Style="{DynamicResource HeaderLabel}" FontSize="30" Text="{Binding Name}" />
-            <Label Text="{Binding Platform}" Style="{StaticResource SubLabel}" FontSize="42" Opacity="0.4" VerticalTextAlignment="Center" Margin="0,-20" />
-            <Label Text="{Binding Subtitle}" d:Text="subtitle" Margin="10,5" />
+            <Label Style="{DynamicResource HeaderLabel}" FontSize="30" Text="{Binding Name}" d:Text="title"/>
+            <Label Text="{Binding Subtitle}" d:Text="subtitle" FontSize="20" Padding="5,0" Margin="0,-10"/>
+            <Label Text="{Binding Platform}" Style="{StaticResource SubLabel}" FontSize="42" Opacity="0.4" VerticalTextAlignment="Center" Margin="0,-10" />
         </StackLayout>
         <StackLayout Orientation="Horizontal">
             <Label Text="Copies" Style="{DynamicResource HeaderLabel}" VerticalTextAlignment="Center" />

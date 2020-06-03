@@ -17,7 +17,21 @@ namespace Gametrove.Core.ViewModels
         public string Subtitle { get; set; }
         public string Platform { get; set; }
         public DateTime Registered { get; set; }
-        public bool IsFavorite { get; set; }
+
+        private bool _isFavorite;
+        public bool IsFavorite
+        {
+            get => _isFavorite;
+            set
+            {
+                if (value != _isFavorite)
+                {
+                    _isFavorite = value;
+
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private readonly APIActionService _api;
 
@@ -48,6 +62,8 @@ namespace Gametrove.Core.ViewModels
         public async Task UploadImageForGame(Stream content)
         {
             await _api.Execute(new UploadImageForGameAction(Id, content, $"{Name}_{DateTime.UtcNow:s}.jpg"));
+
+            await LoadImages();
         }
 
         public async Task LoadImages()
@@ -97,6 +113,8 @@ namespace Gametrove.Core.ViewModels
                 {
                     await _api.Execute(new MarkGameAsFavoriteAction(Id));
                 }
+
+                IsFavorite = !IsFavorite;
             });
         }
 
