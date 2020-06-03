@@ -18,7 +18,7 @@ namespace Gametrove.Core.Services.Actions
 
         public async Task<IEnumerable<CopyModel>> DoAsync(APIActionService service)
         {
-            var response = await service.Client.GetAsync($"{_gameId}/copies").ConfigureAwait(false);
+            var response = await service.Client.GetAsync($"games/{_gameId}/copies").ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
             {
