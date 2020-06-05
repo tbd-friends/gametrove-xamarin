@@ -24,6 +24,7 @@ namespace Gametrove.Core.Views
                 _vm.AddTag(entry.Text);
 
                 entry.Text = string.Empty;
+                entry.Focus();
             }
         }
     }

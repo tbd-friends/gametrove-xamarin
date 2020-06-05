@@ -20,7 +20,10 @@
             <buttons:SfChipGroup 
                 ItemsSource="{Binding Tags}">
                 <buttons:SfChipGroup.InputView>
-                    <Entry Margin="10,10,0,0" WidthRequest="110" Completed="Entry_OnCompleted" />
+                    <Entry Margin="0,0,0,0"
+                           FontSize="Medium"
+                           WidthRequest="120"
+                           VerticalOptions="Center" Completed="Entry_OnCompleted" />
                 </buttons:SfChipGroup.InputView>
                 <buttons:SfChipGroup.ChipLayout>
                     <FlexLayout 
@@ -30,7 +33,7 @@
                         Wrap="Wrap" 
                         JustifyContent="Start" 
                         AlignContent="Start" 
-                        AlignItems="Start"/>
+                        AlignItems="Start" />
                 </buttons:SfChipGroup.ChipLayout>
             </buttons:SfChipGroup>
             <Label Text="Cost" Style="{DynamicResource SubLabel}" />
