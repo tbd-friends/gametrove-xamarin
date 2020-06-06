@@ -1,8 +1,10 @@
 ﻿using System;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels;
+using Syncfusion.SfAutoComplete.XForms;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using SelectionChangedEventArgs = Syncfusion.SfAutoComplete.XForms.SelectionChangedEventArgs;
 
 namespace Gametrove.Core.Views
 {
@@ -27,7 +29,7 @@ namespace Gametrove.Core.Views
         {
             base.OnAppearing();
 
-            await _vm.LoadTitleFromGame();
+            await _vm.Initialize();
         }
 
         private async void Button_OnClicked(object sender, EventArgs e)
@@ -37,9 +39,20 @@ namespace Gametrove.Core.Views
 
         private void Entry_OnCompleted(object sender, EventArgs e)
         {
-            if (sender is Entry entry && !string.IsNullOrEmpty(entry.Text))
+            if (sender is SfAutoComplete entry && !string.IsNullOrEmpty(entry.Text))
             {
                 _vm.Genres.Add(entry.Text);
+
+                entry.Text = string.Empty;
+                entry.Focus();
+            }
+        }
+
+        private void SfAutoComplete_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is SfAutoComplete entry && entry.SelectedIndex > -1)
+            {
+                _vm.Genres.Add((string)entry.SelectedItem);
 
                 entry.Text = string.Empty;
                 entry.Focus();
