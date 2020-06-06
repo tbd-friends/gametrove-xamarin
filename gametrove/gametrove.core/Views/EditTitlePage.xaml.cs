@@ -23,9 +23,27 @@ namespace Gametrove.Core.Views
                 });
         }
 
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            await _vm.LoadTitleFromGame();
+        }
+
         private async void Button_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PopModalAsync(true);
+        }
+
+        private void Entry_OnCompleted(object sender, EventArgs e)
+        {
+            if (sender is Entry entry && !string.IsNullOrEmpty(entry.Text))
+            {
+                _vm.Genres.Add(entry.Text);
+
+                entry.Text = string.Empty;
+                entry.Focus();
+            }
         }
     }
 }

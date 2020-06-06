@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Services;
@@ -42,18 +44,22 @@ namespace Gametrove.Core.ViewModels
             }
         }
 
+        public ObservableCollection<string> Genres { get; set; }
+
         public Command UpdateTitleCommand { get; set; }
 
         private readonly APIActionService _api;
         private Guid _id;
+        private Guid _gameId;
 
         public EditTitleViewModel(Guid gameId)
         {
+            _gameId = gameId;
             _api = DependencyService.Get<APIActionService>();
 
-            UpdateTitleCommand = new Command(async () => await UpdateTitle());
+            Genres = new ObservableCollection<string>();
 
-            LoadTitleFromGameId(gameId);
+            UpdateTitleCommand = new Command(async () => await UpdateTitle());
         }
 
         private async Task UpdateTitle()
@@ -62,22 +68,27 @@ namespace Gametrove.Core.ViewModels
             {
                 Id = _id,
                 Name = Name,
-                Subtitle = Subtitle
+                Subtitle = Subtitle,
+                Genres = Genres
             }));
 
             MessagingCenter.Send(this, "Title:Updated", result);
         }
 
-        private void LoadTitleFromGameId(Guid id)
+        public async Task LoadTitleFromGame()
         {
-            Task.Run(async () =>
-            {
-                var title = await _api.Execute(new GetTitleForGameAction(id));
+            var title = await _api.Execute(new GetTitleForGameAction(_gameId));
 
-                _id = title.Id;
-                Name = title.Name;
-                Subtitle = title.Subtitle;
-            });
+            _id = title.Id;
+            Name = title.Name;
+            Subtitle = title.Subtitle;
+
+            Genres.Clear();
+
+            foreach (var genre in title.Genres)
+            {
+                Genres.Add(genre);
+            }
         }
     }
 }
