@@ -60,16 +60,16 @@ namespace Gametrove.Core.Views
             await _vm.UploadImageForGame(file.GetStreamWithImageRotatedForExternalStorage());
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
             if (_vm.Images.Count == 0)
             {
-                _vm.LoadImagesCommand.Execute(this);
+                await _vm.LoadImages();
             }
 
-            _vm.LoadCopiesCommand.Execute(this);
+            await _vm.LoadCopies();
         }
 
         private void Button_OnClicked(object sender, EventArgs e)

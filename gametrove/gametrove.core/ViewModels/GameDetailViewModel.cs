@@ -53,7 +53,7 @@ namespace Gametrove.Core.ViewModels
             Copies = new ObservableCollection<CopyModel>();
 
             LoadImagesCommand = new Command(async () => await LoadImages());
-            LoadCopiesCommand = new Command(LoadCopies);
+            LoadCopiesCommand = new Command(async () => await LoadCopies());
             ToggleFavoriteCommand = new Command(ToggleFavorite);
 
             _api = DependencyService.Get<APIActionService>();
@@ -82,23 +82,20 @@ namespace Gametrove.Core.ViewModels
             IsBusy = false;
         }
 
-        public void LoadCopies()
+        public async Task LoadCopies()
         {
-            Task.Run(async () =>
+            IsBusy = true;
+
+            var copies = await _api.Execute(new GetCopiesAction(Id));
+
+            Copies.Clear();
+
+            foreach (var copy in copies)
             {
-                IsBusy = true;
+                Copies.Add(copy);
+            }
 
-                var copies = await _api.Execute(new GetCopiesAction(Id));
-
-                Copies.Clear();
-
-                foreach (var copy in copies)
-                {
-                    Copies.Add(copy);
-                }
-
-                IsBusy = false;
-            });
+            IsBusy = false;
         }
 
         public void ToggleFavorite()
