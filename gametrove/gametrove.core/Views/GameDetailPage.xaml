@@ -7,6 +7,8 @@
              xmlns:cvt="clr-namespace:Gametrove.Core.Converters;assembly=gametrove.core"
              xmlns:icons="clr-namespace:Gametrove.Core.Infrastructure;assembly=gametrove.core"
              xmlns:car="clr-namespace:Syncfusion.SfCarousel.XForms;assembly=Syncfusion.SfCarousel.XForms"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:xForms="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
              mc:Ignorable="d"
              x:Class="Gametrove.Core.Views.GameDetailPage"
              Title="Game Details"
@@ -19,43 +21,38 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Clicked="EditTitle_Clicked">
-            <ToolbarItem.IconImageSource>
-                <FontImageSource
-                    FontFamily="{DynamicResource FontAwesomeSolidFree}"
-                    Glyph="{x:Static icons:FontAwesome.Edit}"
-                    Size="{DynamicResource ToolbarIconImageSourceSize}" />
-            </ToolbarItem.IconImageSource>
-        </ToolbarItem>
-        <ToolbarItem Clicked="TakePhoto_Clicked">
-            <ToolbarItem.IconImageSource>
-                <FontImageSource
-                    FontFamily="{DynamicResource FontAwesomeSolidFree}"
-                    Glyph="{x:Static icons:FontAwesome.Photo}"
-                    Size="{DynamicResource ToolbarIconImageSourceSize}" />
-            </ToolbarItem.IconImageSource>
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
-
     <StackLayout Spacing="10" Padding="5,5" VerticalOptions="StartAndExpand">
         <StackLayout>
-            <Button HorizontalOptions="EndAndExpand" 
-                    TextColor="{DynamicResource ButtonPrimary}"
-                    FontSize="32"
-                    Padding="0"
-                    Margin="0"
-                    BackgroundColor="White"
-                    WidthRequest="48"
-                    Text="{x:Static icons:FontAwesome.Heart}"
-                    FontFamily="{Binding IsFavorite, Converter={StaticResource fontConverter}}"
-                    Command="{Binding ToggleFavoriteCommand}" />
-
+            
+            <StackLayout Orientation="Horizontal">
+                <StackLayout>
+                    <Label Style="{DynamicResource HeaderLabel}" FontSize="30" Text="{Binding Name}" d:Text="title"/>
+                    <Label Text="{Binding Subtitle}" d:Text="subtitle" FontSize="20" Padding="5,0" Margin="0,-10"/>
+                    <Label Text="{Binding Platform}" 
+                           Style="{StaticResource SubLabel}" 
+                           FontSize="42" 
+                           Opacity="0.4" 
+                           VerticalTextAlignment="Center" 
+                           HorizontalTextAlignment="Start" />
+                </StackLayout>
+                <Button HorizontalOptions="EndAndExpand" 
+                        VerticalOptions="Start"
+                        TextColor="{DynamicResource ButtonPrimary}"
+                        FontSize="34"
+                        Padding="0"
+                        Margin="0"
+                        BackgroundColor="White"
+                        WidthRequest="48"
+                        Text="{x:Static icons:FontAwesome.Heart}"
+                        FontFamily="{Binding IsFavorite, Converter={StaticResource fontConverter}}"
+                        Command="{Binding ToggleFavoriteCommand}" />
+            </StackLayout>
             <car:SfCarousel ItemsSource="{Binding Images}"
-                                HeightRequest="250"
-                                ItemHeight="200"
-                                ItemSpacing="0"
-                                ViewMode="Linear">
+                            HeightRequest="250"
+                            ItemHeight="200"
+                            ItemSpacing="0"
+                            ViewMode="Linear"
+                            HorizontalOptions="CenterAndExpand">
                 <car:SfCarousel.ItemTemplate>
                     <DataTemplate>
                         <Image Source="{Binding Url, Converter={StaticResource imageConverter}}" 
@@ -63,55 +60,31 @@
                     </DataTemplate>
                 </car:SfCarousel.ItemTemplate>
             </car:SfCarousel>
-            <Label Style="{DynamicResource HeaderLabel}" FontSize="30" Text="{Binding Name}" d:Text="title"/>
-            <Label Text="{Binding Subtitle}" d:Text="subtitle" FontSize="20" Padding="5,0" Margin="0,-10"/>
-            <Label Text="{Binding Platform}" Style="{StaticResource SubLabel}" FontSize="42" Opacity="0.4" VerticalTextAlignment="Center" Margin="0,-10" />
-        </StackLayout>
-        <StackLayout Orientation="Horizontal">
-            <Label Text="Copies" Style="{DynamicResource HeaderLabel}" VerticalTextAlignment="Center" />
-            <Button HorizontalOptions="EndAndExpand" 
-                    Text="{x:Static icons:FontAwesome.Add}" 
+            <Button HorizontalOptions="CenterAndExpand" 
+                    VerticalOptions="Start"
                     TextColor="{DynamicResource ButtonPrimary}"
-                    FontSize="32"
+                    FontSize="34"
                     Padding="0"
                     Margin="0"
                     BackgroundColor="White"
                     WidthRequest="48"
-                    FontFamily="{DynamicResource FontAwesomeSolidFree}"
-                    Clicked="Button_OnClicked"></Button>
+                    Text="{x:Static icons:FontAwesome.Photo}"
+                    FontFamily="{DynamicResource FontAwesomeSolidFree}" 
+                    Clicked="TakePhoto_Clicked">
+            </Button>
+            <buttons:SfChipGroup ItemsSource="{Binding Genres}" ChipPadding="2,5" Type="Choice">
+                <buttons:SfChipGroup.ChipLayout>
+                    <FlexLayout 
+                        HorizontalOptions="Start" 
+                        VerticalOptions="Center"
+                        Direction="Row"
+                        Wrap="Wrap" 
+                        JustifyContent="Start" 
+                        AlignContent="Start" 
+                        AlignItems="Start" 
+                    />
+                </buttons:SfChipGroup.ChipLayout>
+            </buttons:SfChipGroup>
         </StackLayout>
-        <BoxView HeightRequest="0.5" Color="{DynamicResource ListSeparator}"></BoxView>
-        <RefreshView Command="{Binding LoadCopiesCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-            <sf:SfListView ItemsSource="{Binding Copies}" 
-                           AutoFitMode="Height"
-                           ItemSpacing="5"
-                           SelectionMode="None">
-                <sf:SfListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout>
-                            <Frame Padding="0,10,0,0" HasShadow="True">
-                                <StackLayout Padding="5,0" Margin="0, 5">
-                                    <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                                        <Frame CornerRadius="8" Padding="0" BackgroundColor="{DynamicResource Background}" HasShadow="False">
-                                            <CollectionView ItemsSource="{Binding Tags, Mode=OneWay}" HeightRequest="35" ItemsLayout="HorizontalList">
-                                                <CollectionView.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <Label Text="{Binding}" FontSize="18" TextColor="{DynamicResource HeaderTextColor}" Padding="5,3" />
-                                                    </DataTemplate>
-                                                </CollectionView.ItemTemplate>
-                                            </CollectionView>
-                                        </Frame>
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                        <Label Text="{Binding Purchased,StringFormat='{0:MMMM dd, yyyy}'}" FontSize="18" />
-                                        <Label Text="{Binding Cost}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="End" FontSize="18" />
-                                    </StackLayout>
-                                </StackLayout>
-                            </Frame>
-                        </StackLayout>
-                    </DataTemplate>
-                </sf:SfListView.ItemTemplate>
-            </sf:SfListView>
-        </RefreshView>
     </StackLayout>
 </ContentPage>

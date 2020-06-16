@@ -47,12 +47,12 @@ namespace Gametrove.Core.Views
 
         private async void SfListView_OnSelectionChanged(object sender, ItemSelectionChangedEventArgs e)
         {
-            if (!(sender is SfListView listView)) 
+            if (!(sender is SfListView listView))
                 return;
 
             var selectedItem = listView.SelectedItem as GameModel;
 
-            await Navigation.PushAsync(new GameDetailPage(new GameDetailViewModel(selectedItem)), true);
+            await Navigation.PushAsync(new GameDetailMainPage(selectedItem), true);
 
             listView.SelectedItem = null;
         }
@@ -75,7 +75,7 @@ namespace Gametrove.Core.Views
 
                 await Navigation.PopModalAsync();
 
-                if (string.IsNullOrEmpty(result.Text)) 
+                if (string.IsNullOrEmpty(result.Text))
                     return;
 
                 string scannedCode = result.Text;
@@ -89,7 +89,7 @@ namespace Gametrove.Core.Views
                 }
                 else
                 {
-                    await Navigation.PushAsync(new GameDetailPage(new GameDetailViewModel(game)), true);
+                    await Navigation.PushAsync(new GameDetailMainPage(game), true);
                 }
             });
         }

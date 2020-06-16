@@ -41,7 +41,7 @@ namespace Gametrove.Core.Handlers
                 {
                     var game = await _service.Execute(new GetGameByIdAction(result.Id));
 
-                    await Shell.Current.Navigation.PushAsync(new GameDetailPage(new GameDetailViewModel(game)));
+                    await Shell.Current.Navigation.PushAsync(new GameDetailMainPage(game));
                 });
             }
         }

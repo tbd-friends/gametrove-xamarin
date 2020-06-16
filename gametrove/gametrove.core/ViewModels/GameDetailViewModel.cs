@@ -36,9 +36,10 @@ namespace Gametrove.Core.ViewModels
         private readonly APIActionService _api;
 
         public ObservableCollection<GameImage> Images { get; }
-        public ObservableCollection<CopyModel> Copies { get; }
+        public ObservableCollection<string> Genres { get; }
+
         public Command LoadImagesCommand { get; }
-        public Command LoadCopiesCommand { get; }
+
         public Command ToggleFavoriteCommand { get; }
 
         public GameDetailViewModel(GameModel source)
@@ -50,10 +51,10 @@ namespace Gametrove.Core.ViewModels
             Registered = source.Registered;
             IsFavorite = source.IsFavorite;
             Images = new ObservableCollection<GameImage>();
-            Copies = new ObservableCollection<CopyModel>();
+            Genres = new ObservableCollection<string>(source.Genres);
 
             LoadImagesCommand = new Command(async () => await LoadImages());
-            LoadCopiesCommand = new Command(async () => await LoadCopies());
+
             ToggleFavoriteCommand = new Command(ToggleFavorite);
 
             _api = DependencyService.Get<APIActionService>();
@@ -77,22 +78,6 @@ namespace Gametrove.Core.ViewModels
             foreach (var image in images)
             {
                 Images.Add(new GameImage { Url = image });
-            }
-
-            IsBusy = false;
-        }
-
-        public async Task LoadCopies()
-        {
-            IsBusy = true;
-
-            var copies = await _api.Execute(new GetCopiesAction(Id));
-
-            Copies.Clear();
-
-            foreach (var copy in copies)
-            {
-                Copies.Add(copy);
             }
 
             IsBusy = false;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels;
 using Plugin.Media;
@@ -13,32 +14,36 @@ namespace Gametrove.Core.Views
     [DesignTimeVisible(false)]
     public partial class GameDetailPage : ContentPage
     {
-        private readonly GameDetailViewModel _vm;
+        private GameDetailViewModel _vm;
 
-        public GameDetailPage(GameDetailViewModel detailViewModel)
+        public static readonly BindableProperty ModelProperty = BindableProperty.Create(
+            nameof(Model),
+            typeof(GameModel),
+            typeof(GameDetailPage),
+            default(GameModel), propertyChanged: (bindable, oldvalue, newvalue) =>
+              {
+                  if (bindable is GameDetailPage page &&
+                      newvalue is GameModel model)
+                  {
+                      page.Model = model;
+                  }
+              });
+
+        public GameModel Model
+        {
+            get => (GameModel)BindingContext;
+            set => BindingContext = _vm = new GameDetailViewModel(value);
+        }
+
+        public GameDetailPage()
         {
             InitializeComponent();
 
-            BindingContext = _vm = detailViewModel;
-
             MessagingCenter.Subscribe<EditTitleViewModel, TitleModel>(this, "Title:Updated", (vm, title) =>
             {
-                detailViewModel.Name = title.Name;
-                detailViewModel.Subtitle = title.Subtitle;
+                _vm.Name = title.Name;
+                _vm.Subtitle = title.Subtitle;
             });
-
-            MessagingCenter.Subscribe<RegisterCopyViewModel>(this, "Copy:Added", _ =>
-            {
-                Navigation.PopAsync(true);
-
-                _vm.LoadCopiesCommand.Execute(this);
-            });
-        }
-
-        public async void EditTitle_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushModalAsync(
-                new EditTitlePage(_vm.Id));
         }
 
         public async void TakePhoto_Clicked(object sender, EventArgs e)
@@ -60,21 +65,11 @@ namespace Gametrove.Core.Views
             await _vm.UploadImageForGame(file.GetStreamWithImageRotatedForExternalStorage());
         }
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
 
-            if (_vm.Images.Count == 0)
-            {
-                await _vm.LoadImages();
-            }
-
-            await _vm.LoadCopies();
-        }
-
-        private void Button_OnClicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new RegisterCopyPage(_vm.Id));
+            _vm.LoadImagesCommand.Execute(null);
         }
     }
 }

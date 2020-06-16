@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:xForms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:icons="clr-namespace:Gametrove.Core.Infrastructure;assembly=gametrove.core"
+             mc:Ignorable="d"
+             x:Class="Gametrove.Core.Views.GameCopiesPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Copies" Style="{DynamicResource HeaderLabel}" VerticalTextAlignment="Center" />
+                <Button HorizontalOptions="EndAndExpand" 
+                    Text="{x:Static icons:FontAwesome.Add}" 
+                    TextColor="{DynamicResource ButtonPrimary}"
+                    FontSize="32"
+                    Padding="0"
+                    Margin="0"
+                    BackgroundColor="White"
+                    WidthRequest="48"
+                    FontFamily="{DynamicResource FontAwesomeSolidFree}"
+                    Clicked="Button_OnClicked"></Button>
+            </StackLayout>
+            <BoxView HeightRequest="0.5" Color="{DynamicResource ListSeparator}"></BoxView>
+            <RefreshView Command="{Binding LoadCopiesCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                <xForms:SfListView ItemsSource="{Binding Copies}" 
+                           AutoFitMode="Height"
+                           ItemSpacing="5"
+                           SelectionMode="None">
+                    <xForms:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Frame Padding="0,10,0,0" HasShadow="True">
+                                    <StackLayout Padding="5,0" Margin="0, 5">
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                                            <Frame CornerRadius="8" Padding="0" BackgroundColor="{DynamicResource Background}" HasShadow="False">
+                                                <CollectionView ItemsSource="{Binding Tags, Mode=OneWay}" HeightRequest="35" ItemsLayout="HorizontalList">
+                                                    <CollectionView.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Label Text="{Binding}" FontSize="18" TextColor="{DynamicResource HeaderTextColor}" Padding="5,3" />
+                                                        </DataTemplate>
+                                                    </CollectionView.ItemTemplate>
+                                                </CollectionView>
+                                            </Frame>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                            <Label Text="{Binding Purchased,StringFormat='{0:MMMM dd, yyyy}'}" FontSize="18" />
+                                            <Label Text="{Binding Cost}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="End" FontSize="18" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </xForms:SfListView.ItemTemplate>
+                </xForms:SfListView>
+            </RefreshView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

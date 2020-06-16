@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Gametrove.Core.Services.Models
 {
@@ -11,5 +12,6 @@ namespace Gametrove.Core.Services.Models
         public string Platform { get; set; }
         public DateTime Registered { get; set; }
         public bool IsFavorite { get; set; }
+        public IEnumerable<string> Genres { get; set; }
     }
 }

@@ -37,6 +37,9 @@
     <Compile Update="Views\EditTitlePage.xaml.cs">
       <DependentUpon>EditTitlePage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\GameDetailMainPage.xaml.cs">
+      <DependentUpon>GameDetailMainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\GameDetailPage.xaml.cs">
       <DependentUpon>GameDetailPage.xaml</DependentUpon>
     </Compile>
@@ -59,6 +62,12 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\EditTitlePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\GameCopiesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\GameDetailMainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\RegisterCopyPage.xaml">
