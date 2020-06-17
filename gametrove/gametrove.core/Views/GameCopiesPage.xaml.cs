@@ -27,7 +27,7 @@ namespace Gametrove.Core.Views
         public GameModel Model
         {
             get => (GameModel)BindingContext;
-            set => BindingContext = _vm = new GameCopiesViewModel(value);
+            set => BindingContext = _vm = new GameCopiesViewModel(value) { Navigation = Navigation };
         }
 
         public GameCopiesPage()

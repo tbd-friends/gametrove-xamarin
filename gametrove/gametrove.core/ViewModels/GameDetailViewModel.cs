@@ -51,7 +51,9 @@ namespace Gametrove.Core.ViewModels
             Registered = source.Registered;
             IsFavorite = source.IsFavorite;
             Images = new ObservableCollection<GameImage>();
-            Genres = new ObservableCollection<string>(source.Genres);
+            Genres = source.Genres != null
+                ? new ObservableCollection<string>(source.Genres)
+                : new ObservableCollection<string>();
 
             LoadImagesCommand = new Command(async () => await LoadImages());
 

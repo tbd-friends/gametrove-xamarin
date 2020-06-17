@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:Gametrove.Core.Converters;assembly=gametrove.core"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             mc:Ignorable="d"
+             Title="Edit Copy"
+             x:Class="Gametrove.Core.Views.EditCopyPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DecimalConverter x:Key="DecimalConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Style="{DynamicResource HeaderLabel}" Text="Edit Copy" />
+            <Label Text="Tags" Style="{DynamicResource SubLabel}" />
+            <buttons:SfChipGroup 
+                ItemsSource="{Binding Tags}">
+                <buttons:SfChipGroup.InputView>
+                    <Entry Margin="0,0,0,0"
+                           FontSize="Medium"
+                           WidthRequest="120"
+                           VerticalOptions="Center"
+                           x:Name="TagEntry"
+                           ReturnCommand="{Binding AddTagCommand}"
+                           ReturnCommandParameter="{Binding Text, Source={RelativeSource Self}}"/>
+                </buttons:SfChipGroup.InputView>
+                <buttons:SfChipGroup.ChipLayout>
+                    <FlexLayout 
+                        HorizontalOptions="Start" 
+                        VerticalOptions="Center"
+                        Direction="Row"
+                        Wrap="Wrap" 
+                        JustifyContent="Start" 
+                        AlignContent="Start" 
+                        AlignItems="Start" />
+                </buttons:SfChipGroup.ChipLayout>
+            </buttons:SfChipGroup>
+            <Label Text="Cost" Style="{DynamicResource SubLabel}" />
+            <Entry Keyboard="Numeric" Text="{Binding Cost, Converter={StaticResource DecimalConverter}, StringFormat='{0:F}'}" />
+            <Label Text="Purchased" Style="{DynamicResource SubLabel}" />
+            <DatePicker Date="{Binding Purchased}" />
+            <Button Text="Save" 
+                    Style="{DynamicResource PrimaryButton}"
+                    Command="{Binding UpdateCopyCommand}" />
+            <Button Text="Cancel" Command="{Binding CancelCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

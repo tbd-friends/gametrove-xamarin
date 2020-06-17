@@ -5,7 +5,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:xForms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:icons="clr-namespace:Gametrove.Core.Infrastructure;assembly=gametrove.core"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              mc:Ignorable="d"
+             Title="Copies"
+             x:Name="CopiesList"
              x:Class="Gametrove.Core.Views.GameCopiesPage">
     <ContentPage.Content>
         <StackLayout>
@@ -31,25 +34,39 @@
                     <xForms:SfListView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
-                                <Frame Padding="0,10,0,0" HasShadow="True">
-                                    <StackLayout Padding="5,0" Margin="0, 5">
-                                        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                                            <Frame CornerRadius="8" Padding="0" BackgroundColor="{DynamicResource Background}" HasShadow="False">
-                                                <CollectionView ItemsSource="{Binding Tags, Mode=OneWay}" HeightRequest="35" ItemsLayout="HorizontalList">
-                                                    <CollectionView.ItemTemplate>
-                                                        <DataTemplate>
-                                                            <Label Text="{Binding}" FontSize="18" TextColor="{DynamicResource HeaderTextColor}" Padding="5,3" />
-                                                        </DataTemplate>
-                                                    </CollectionView.ItemTemplate>
-                                                </CollectionView>
-                                            </Frame>
-                                        </StackLayout>
-                                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                            <Label Text="{Binding Purchased,StringFormat='{0:MMMM dd, yyyy}'}" FontSize="18" />
-                                            <Label Text="{Binding Cost}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="End" FontSize="18" />
-                                        </StackLayout>
+                                <StackLayout Padding="5,0" Margin="0,5">
+                                    <buttons:SfChipGroup ItemsSource="{Binding Tags}" ChipPadding="2,5" Type="Choice">
+                                        <buttons:SfChipGroup.ChipLayout>
+                                            <FlexLayout 
+                                                    HorizontalOptions="Start" 
+                                                    VerticalOptions="Center"
+                                                    Direction="Row"
+                                                    Wrap="Wrap" 
+                                                    JustifyContent="Start" 
+                                                    AlignContent="Start" 
+                                                    AlignItems="Start" 
+                                                />
+                                        </buttons:SfChipGroup.ChipLayout>
+                                    </buttons:SfChipGroup>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                        <Label Text="{Binding Purchased,StringFormat='{0:MMMM dd, yyyy}'}" FontSize="18" />
+                                        <Label Text="{Binding Cost}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="End" FontSize="18" />
                                     </StackLayout>
-                                </Frame>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                        <Button HorizontalOptions="EndAndExpand" 
+                                                Text="{x:Static icons:FontAwesome.Edit}" 
+                                                TextColor="{DynamicResource ButtonPrimary}"
+                                                FontSize="22"
+                                                Padding="0"
+                                                Margin="0"
+                                                BackgroundColor="White"
+                                                WidthRequest="48"
+                                                FontFamily="{DynamicResource FontAwesomeSolidFree}"
+                                                Command="{Binding BindingContext.EditCopyCommand, Source={x:Reference CopiesList}}"
+                                                CommandParameter="{Binding}">
+                                        </Button>
+                                    </StackLayout>
+                                </StackLayout>
                             </StackLayout>
                         </DataTemplate>
                     </xForms:SfListView.ItemTemplate>
