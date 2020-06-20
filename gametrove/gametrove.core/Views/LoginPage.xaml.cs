@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
 using Gametrove.Core.Infrastructure;
+using Gametrove.Core.Services;
 using Gametrove.Core.Services.Interfaces;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace Gametrove.Core.Views
@@ -10,9 +13,13 @@ namespace Gametrove.Core.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
+        private UserAuthentication _user;
+
         public LoginPage()
         {
             InitializeComponent();
+
+            _user = DependencyService.Get<UserAuthentication>();
         }
 
         public async void Login_Clicked(object sender, EventArgs e)
@@ -22,8 +29,7 @@ namespace Gametrove.Core.Views
 
             if (!authenticationResult.IsError)
             {
-                Preferences.Set(AppPreferences.IdentityToken, authenticationResult.IdToken);
-                Preferences.Set(AppPreferences.AccessToken, authenticationResult.AccessToken);
+                _user.Initialize(authenticationResult);
 
                 Application.Current.MainPage = new AppShell();
             }

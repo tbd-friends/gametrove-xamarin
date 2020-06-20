@@ -127,11 +127,13 @@
   <ItemGroup>
     <AndroidResource Include="Resources\xml\file_paths.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\background_mobile.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadUnhandledDeviceExceptionappAndroidHideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptiongametroveAndroidHideInfoBar="True" />
+      <UserProperties XamarinHotReloadUnhandledDeviceExceptiongametroveAndroidHideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptionappAndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

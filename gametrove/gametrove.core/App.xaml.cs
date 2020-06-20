@@ -16,6 +16,7 @@ namespace Gametrove.Core
 
             DependencyService.Register<APIActionService>();
             DependencyService.Register<GenreLookup>();
+            DependencyService.Register<UserAuthentication>();
 
             SyncfusionLicenseProvider.RegisterLicense(AppSettings.Configuration.Syncfusion);
 
