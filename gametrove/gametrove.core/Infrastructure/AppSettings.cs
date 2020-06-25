@@ -19,14 +19,22 @@ namespace Gametrove.Core.Infrastructure
             }
         }
 
-        public class Settings
+        public sealed class Settings
         {
             public string Syncfusion { get; set; }
             public ApiConfiguration Api { get; set; }
+            public AuthConfiguration Auth { get; set; }
 
-            public class ApiConfiguration
+            public sealed class ApiConfiguration
             {
                 public string Url { get; set; }
+            }
+
+            public sealed class AuthConfiguration
+            {
+                public string Domain { get; set; }
+                public string ClientId { get; set; }
+                public string Audience { get; set; }
             }
         }
     }

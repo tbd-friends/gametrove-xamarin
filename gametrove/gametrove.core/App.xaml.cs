@@ -1,6 +1,9 @@
-﻿using Gametrove.Core.Infrastructure;
+﻿using System.Threading.Tasks;
+using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Services;
+using Gametrove.Core.Views;
 using Syncfusion.Licensing;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Gametrove.Core
@@ -13,25 +16,52 @@ namespace Gametrove.Core
 
             DependencyService.Register<APIActionService>();
             DependencyService.Register<GenreLookup>();
+            DependencyService.Register<UserAuthentication>();
 
             SyncfusionLicenseProvider.RegisterLicense(AppSettings.Configuration.Syncfusion);
 
             Resources.SetCurrentTheme();
 
-            MainPage = new AppShell();
+            MainPage = new LoginPage();
         }
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
+            await CheckIfICanUseTheCamera();
+
+            await CheckIfICanUseTheInternet();
         }
 
         protected override void OnSleep()
         {
         }
 
-        protected override void OnResume()
+        protected override async void OnResume()
         {
+            await CheckIfICanUseTheCamera();
 
+            await CheckIfICanUseTheInternet();
+        }
+
+
+        private async Task CheckIfICanUseTheInternet()
+        {
+            var status = await Permissions.CheckStatusAsync<Permissions.NetworkState>();
+
+            if (status != PermissionStatus.Granted)
+            {
+                await Permissions.RequestAsync<Permissions.NetworkState>();
+            }
+        }
+
+        private async Task CheckIfICanUseTheCamera()
+        {
+            var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
+
+            if (status != PermissionStatus.Granted)
+            {
+                await Permissions.RequestAsync<Permissions.Camera>();
+            }
         }
     }
 }

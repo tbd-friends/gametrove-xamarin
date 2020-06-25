@@ -39,10 +39,7 @@ namespace Gametrove.Core.Views
 
         private async void AddItem_Clicked(object sender, EventArgs e)
         {
-            if (await CheckIfICanUseTheCamera())
-            {
-                await Navigation.PushAsync(new RegisterGamePage());
-            }
+            await Navigation.PushAsync(new RegisterGamePage());
         }
 
         private async void SfListView_OnSelectionChanged(object sender, ItemSelectionChangedEventArgs e)
@@ -92,18 +89,6 @@ namespace Gametrove.Core.Views
                     await Navigation.PushAsync(new GameDetailMainPage(game), true);
                 }
             });
-        }
-
-        private async Task<bool> CheckIfICanUseTheCamera()
-        {
-            var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
-
-            if (status != PermissionStatus.Granted)
-            {
-                status = await Permissions.RequestAsync<Permissions.Camera>();
-            }
-
-            return status == PermissionStatus.Granted;
         }
 
         protected override void OnAppearing()

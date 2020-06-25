@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Gametrove.Core.Views.LoginPage"
+             BackgroundImageSource="background_mobile.png">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label x:Name="MainPageLabel" 
+                   Text="GameTracker" 
+                   FontSize="42"
+                   HorizontalOptions="Center" 
+                   VerticalOptions="CenterAndExpand" 
+                   Margin="0,0,0,0" />
+            <Button Text="Login" 
+                    Style="{DynamicResource PrimaryButton}" 
+                    TextColor="Black"
+                    VerticalOptions="EndAndExpand"
+                    Clicked="Login_Clicked"  
+                    Margin="5,10"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
