@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Auth0.OidcClient;
-using Gametrove.Core.Config;
+using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Model;
 using Gametrove.Core.Services.Interfaces;
 using gametrove.Droid.Services;
@@ -17,8 +17,8 @@ namespace gametrove.Droid.Services
         {
             _auth0Client = new Auth0Client(new Auth0ClientOptions
             {
-                Domain = AuthenticationConfig.Domain,
-                ClientId = AuthenticationConfig.ClientId
+                Domain = AppSettings.Configuration.Auth.Domain,
+                ClientId = AppSettings.Configuration.Auth.ClientId
             });
         }
 
@@ -28,7 +28,7 @@ namespace gametrove.Droid.Services
         {
             var auth0LoginResult = await _auth0Client.LoginAsync(new
             {
-                audience = AuthenticationConfig.Audience,
+                audience = AppSettings.Configuration.Auth.Audience,
                 scope = "openid email profile"
             });
 
