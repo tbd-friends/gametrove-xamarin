@@ -57,7 +57,9 @@ namespace Gametrove.Core.ViewModels
         {
             _id = model.Id;
             _gameId = gameId;
-            Tags = new ObservableCollection<string>(model.Tags);
+            Tags = model.Tags != null
+                ? new ObservableCollection<string>(model.Tags)
+                : new ObservableCollection<string>();
             Purchased = model.Purchased;
             Cost = model.Cost;
 
@@ -86,7 +88,7 @@ namespace Gametrove.Core.ViewModels
         {
             return await _api.Execute(new UpdateCopyAction(_gameId, new CopyModel
             {
-                Id = _id, 
+                Id = _id,
                 Tags = Tags,
                 Cost = Cost,
                 Purchased = Purchased
