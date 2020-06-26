@@ -46,6 +46,9 @@
     <Compile Update="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\AddCopyPage.xaml.cs">
+      <DependentUpon>AddCopyPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\RegisterGamePage.xaml.cs">
       <DependentUpon>RegisterGamePage.xaml</DependentUpon>
     </Compile>
@@ -76,7 +79,7 @@
     <EmbeddedResource Update="Views\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\RegisterCopyPage.xaml">
+    <EmbeddedResource Update="Views\AddCopyPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\RegisterGamePage.xaml">

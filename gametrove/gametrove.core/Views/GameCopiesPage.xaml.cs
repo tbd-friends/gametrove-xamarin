@@ -34,7 +34,7 @@ namespace Gametrove.Core.Views
         {
             InitializeComponent();
 
-            MessagingCenter.Subscribe<RegisterCopyViewModel>(this, "Copy:Added", _ =>
+            MessagingCenter.Subscribe<AddCopyViewModel>(this, "Copy:Added", _ =>
             {
                 Navigation.PopAsync(true);
 
@@ -51,7 +51,7 @@ namespace Gametrove.Core.Views
 
         private void Button_OnClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new RegisterCopyPage(_vm.Id));
+            Navigation.PushAsync(new AddCopyPage(_vm.Id));
         }
     }
 }

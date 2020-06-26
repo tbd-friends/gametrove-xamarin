@@ -6,7 +6,7 @@
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              xmlns:converters="clr-namespace:Gametrove.Core.Converters;assembly=gametrove.core"
              mc:Ignorable="d"
-             x:Class="Gametrove.Core.Views.RegisterCopyPage"
+             x:Class="Gametrove.Core.Views.AddCopyPage"
              Title="Register Copy"
              Visual="Material">
     <ContentPage.Resources>
@@ -40,6 +40,8 @@
             <Entry Keyboard="Numeric" Text="{Binding Cost, Converter={StaticResource DecimalConverter}, StringFormat='{0:F}'}" />
             <Label Text="Purchased" Style="{DynamicResource SubLabel}" />
             <DatePicker Date="{Binding Purchased}" />
+            <Label Text="Is Wanted" Style="{DynamicResource SubLabel}" />
+            <CheckBox IsChecked="{Binding IsWanted}" />
             <Button Text="Save" 
                     Style="{DynamicResource PrimaryButton}"
                     Command="{Binding RegisterCopyCommand}" />

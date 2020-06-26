@@ -43,6 +43,8 @@
             <Entry Keyboard="Numeric" Text="{Binding Cost, Converter={StaticResource DecimalConverter}, StringFormat='{0:F}'}" />
             <Label Text="Purchased" Style="{DynamicResource SubLabel}" />
             <DatePicker Date="{Binding Purchased}" />
+            <Label Text="Is Wanted" Style="{DynamicResource SubLabel}" />
+            <CheckBox IsChecked="{Binding IsWanted}" />
             <Button Text="Save" 
                     Style="{DynamicResource PrimaryButton}"
                     Command="{Binding UpdateCopyCommand}" />

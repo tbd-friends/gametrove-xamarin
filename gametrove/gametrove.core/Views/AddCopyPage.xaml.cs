@@ -6,15 +6,15 @@ using Xamarin.Forms.Xaml;
 namespace Gametrove.Core.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RegisterCopyPage : ContentPage
+    public partial class AddCopyPage : ContentPage
     {
-        private readonly RegisterCopyViewModel _vm;
+        private readonly AddCopyViewModel _vm;
 
-        public RegisterCopyPage(Guid id)
+        public AddCopyPage(Guid id)
         {
             InitializeComponent();
 
-            BindingContext = _vm = new RegisterCopyViewModel(id);
+            BindingContext = _vm = new AddCopyViewModel(id);
         }
 
         private void Entry_OnCompleted(object sender, EventArgs e)

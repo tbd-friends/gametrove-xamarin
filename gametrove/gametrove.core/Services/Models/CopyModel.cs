@@ -9,5 +9,6 @@ namespace Gametrove.Core.Services.Models
         public decimal? Cost { get; set; }
         public IEnumerable<string> Tags { get; set; }
         public DateTime? Purchased { get; set; }
+        public bool IsWanted { get; set; }
     }
 }

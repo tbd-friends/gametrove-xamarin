@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Services;
 using Gametrove.Core.Services.Actions;
+using Gametrove.Core.Services.Models;
 using Xamarin.Forms;
 
 namespace Gametrove.Core.ViewModels
 {
-    public class RegisterCopyViewModel : BaseViewModel
+    public class AddCopyViewModel : BaseViewModel
     {
         public Guid Id { get; }
         public ObservableCollection<string> Tags { get; }
@@ -45,11 +46,27 @@ namespace Gametrove.Core.ViewModels
             }
         }
 
+        private bool _isWanted;
+
+        public bool IsWanted
+        {
+            get => _isWanted;
+            set
+            {
+                if (_isWanted != value)
+                {
+                    _isWanted = value;
+
+                    OnPropertyChanged();
+                }
+            }
+
+        }
         public Command RegisterCopyCommand { get; private set; }
 
         private readonly APIActionService _api;
 
-        public RegisterCopyViewModel(Guid id)
+        public AddCopyViewModel(Guid id)
         {
             Id = id;
 
@@ -67,7 +84,15 @@ namespace Gametrove.Core.ViewModels
 
         private void RegisterCopy()
         {
-            Task.Run(() => _api.Execute(new RegisterGameCopyAction(Id, Tags.ToArray(), Cost, Purchased)));
+            Task.Run(() => _api.Execute(
+                new AddGameCopyAction(Id,
+                    new CopyModel
+                    {
+                        Cost = Cost,
+                        Tags = Tags,
+                        IsWanted = IsWanted,
+                        Purchased = Purchased
+                    })));
         }
 
         public void AddTag(string tag)

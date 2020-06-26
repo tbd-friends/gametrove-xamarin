@@ -43,6 +43,23 @@ namespace Gametrove.Core.ViewModels
             }
         }
 
+        private bool _isWanted;
+
+        public bool IsWanted
+        {
+            get => _isWanted;
+            set
+            {
+                if (_isWanted != value)
+                {
+                    _isWanted = value;
+
+                    OnPropertyChanged();
+                }
+            }
+
+        }
+
         public Command UpdateCopyCommand { get; }
         public Command CancelCommand { get; }
         public Command AddTagCommand { get; }
@@ -62,6 +79,7 @@ namespace Gametrove.Core.ViewModels
                 : new ObservableCollection<string>();
             Purchased = model.Purchased;
             Cost = model.Cost;
+            IsWanted = model.IsWanted;
 
             _api = DependencyService.Get<APIActionService>();
 
@@ -84,14 +102,15 @@ namespace Gametrove.Core.ViewModels
             MessagingCenter.Send(this, "Tag:Added");
         }
 
-        private async Task<CopyModel> UpdateCopy()
+        private async Task UpdateCopy()
         {
-            return await _api.Execute(new UpdateCopyAction(_gameId, new CopyModel
+            await _api.Execute(new UpdateCopyAction(_gameId, new CopyModel
             {
                 Id = _id,
                 Tags = Tags,
                 Cost = Cost,
-                Purchased = Purchased
+                Purchased = Purchased,
+                IsWanted = IsWanted
             }));
         }
     }

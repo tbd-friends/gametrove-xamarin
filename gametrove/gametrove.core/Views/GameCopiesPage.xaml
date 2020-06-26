@@ -52,7 +52,12 @@
                                         <Label Text="{Binding Purchased,StringFormat='{0:MMMM dd, yyyy}'}" FontSize="18" />
                                         <Label Text="{Binding Cost}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="End" FontSize="18" />
                                     </StackLayout>
-                                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="Wanted" 
+                                               IsVisible="{Binding IsWanted}" 
+                                               VerticalTextAlignment="Center"
+                                               HorizontalTextAlignment="Start" 
+                                               HorizontalOptions="StartAndExpand" FontSize="22" TextColor="OrangeRed"/>
                                         <Button HorizontalOptions="EndAndExpand" 
                                                 Text="{x:Static icons:FontAwesome.Edit}" 
                                                 TextColor="{DynamicResource ButtonPrimary}"
