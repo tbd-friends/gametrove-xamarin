@@ -30,14 +30,14 @@ namespace Gametrove.Core.Views
             MessagingCenter.Subscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered",
                 async (sender, result) =>
                 {
+                    await Navigation.PopAsync(true);
+
                     if (result.ShouldScan)
                     {
                         await StartScanning();
                     }
                     else
                     {
-                        await Navigation.PopAsync(true);
-
                         await Navigation.PushAsync(new GameDetailMainPage(result.Model, showCopies: true), true);
                     }
                 });
