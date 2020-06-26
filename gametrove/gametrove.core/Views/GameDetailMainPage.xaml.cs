@@ -9,13 +9,22 @@ namespace Gametrove.Core.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class GameDetailMainPage : TabbedPage
     {
-        private GameDetailMainViewModel _vm;
+        private readonly bool _showCopies;
+        private readonly GameDetailMainViewModel _vm;
 
-        public GameDetailMainPage(GameModel game)
+        public GameDetailMainPage(GameModel game, bool showCopies = false)
         {
+            _showCopies = showCopies;
             InitializeComponent();
 
             BindingContext = _vm = new GameDetailMainViewModel(game);
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            CurrentPage = _showCopies ? Children[1] : CurrentPage;
         }
 
         public async void EditTitle_Clicked(object sender, EventArgs e)

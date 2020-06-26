@@ -22,12 +22,6 @@ namespace Gametrove.Core.Views
             InitializeComponent();
 
             BindingContext = _vm = vm;
-
-            MessagingCenter.Subscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered",
-                async (sender, result) =>
-                {
-                    await Navigation.PopAsync(true);
-                });
         }
 
         protected override void OnAppearing()

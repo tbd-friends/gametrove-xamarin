@@ -34,6 +34,12 @@ namespace Gametrove.Core.Views
                     {
                         await StartScanning();
                     }
+                    else
+                    {
+                        await Navigation.PopAsync(true);
+
+                        await Navigation.PushAsync(new GameDetailMainPage(result.Model, showCopies: true), true);
+                    }
                 });
         }
 
