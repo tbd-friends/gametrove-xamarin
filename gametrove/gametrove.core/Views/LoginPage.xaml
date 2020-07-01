@@ -11,6 +11,12 @@
                    HorizontalOptions="Center" 
                    VerticalOptions="CenterAndExpand" 
                    Margin="0,0,0,0" />
+            <Label IsVisible="False" 
+                   x:Name="InvalidLogin"
+                   FontSize="32"
+                   TextColor="Red"
+                   HorizontalOptions="Center" 
+                   VerticalOptions="CenterAndExpand" Text="Unable to login" />
             <Button Text="Login" 
                     Style="{DynamicResource PrimaryButton}" 
                     TextColor="Black"
