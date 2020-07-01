@@ -2,6 +2,7 @@
 using System.Linq;
 using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Services;
+using Gametrove.Core.Services.Actions;
 using Gametrove.Core.Services.Interfaces;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -29,9 +30,14 @@ namespace Gametrove.Core.Views
 
             if (!authenticationResult.IsError)
             {
-                _user.Initialize(authenticationResult);
+                var apiService = DependencyService.Get<APIActionService>();
 
-                Application.Current.MainPage = new AppShell();
+                if (await apiService.Execute(new VerifyUserAction()))
+                {
+                    _user.Initialize(authenticationResult);
+
+                    Application.Current.MainPage = new AppShell();
+                }
             }
         }
     }
