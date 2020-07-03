@@ -17,7 +17,9 @@ namespace Gametrove.Core.ViewModels
 
         public Command LoadCopiesCommand { get; }
         public Command EditCopyCommand { get; }
+        public Command DeleteCopyCommand { get; }
         public INavigation Navigation { get; set; }
+        public IConfirmationService ConfirmationService { get; }
 
         private readonly APIActionService _api;
 
@@ -27,6 +29,9 @@ namespace Gametrove.Core.ViewModels
             Copies = new ObservableCollection<CopyModel>();
             LoadCopiesCommand = new Command(async () => await LoadCopies());
             EditCopyCommand = new Command<CopyModel>(async (m) => await EditCopy(m));
+            DeleteCopyCommand = new Command<CopyModel>(async (m) => await DeleteCopy(m));
+
+            ConfirmationService = DependencyService.Get<IConfirmationService>();
 
             _api = DependencyService.Get<APIActionService>();
         }
@@ -50,6 +55,16 @@ namespace Gametrove.Core.ViewModels
         public async Task EditCopy(CopyModel model)
         {
             await Navigation.PushModalAsync(new EditCopyPage(Id, model));
+        }
+
+        public async Task DeleteCopy(CopyModel model)
+        {
+            if (await ConfirmationService.Confirm("Are you sure you would like to delete this copy?"))
+            {
+                await _api.Execute(new DeleteCopyAction(Id, model));
+
+                await LoadCopies();
+            }
         }
     }
 }

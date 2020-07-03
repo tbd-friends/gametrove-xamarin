@@ -5,7 +5,6 @@ using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels;
 using Gametrove.Core.ViewModels.Results;
 using Syncfusion.ListView.XForms;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using ZXing;
 using ZXing.Net.Mobile.Forms;

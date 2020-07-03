@@ -58,18 +58,32 @@
                                                VerticalTextAlignment="Center"
                                                HorizontalTextAlignment="Start" 
                                                HorizontalOptions="StartAndExpand" FontSize="22" TextColor="OrangeRed"/>
-                                        <Button HorizontalOptions="EndAndExpand" 
-                                                Text="{x:Static icons:FontAwesome.Edit}" 
-                                                TextColor="{DynamicResource ButtonPrimary}"
-                                                FontSize="22"
-                                                Padding="0"
-                                                Margin="0"
-                                                BackgroundColor="White"
-                                                WidthRequest="48"
-                                                FontFamily="{DynamicResource FontAwesomeSolidFree}"
-                                                Command="{Binding BindingContext.EditCopyCommand, Source={x:Reference CopiesList}}"
-                                                CommandParameter="{Binding}">
-                                        </Button>
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                            <Button HorizontalOptions="End" 
+                                                    Text="{x:Static icons:FontAwesome.Edit}" 
+                                                    TextColor="{DynamicResource ButtonPrimary}"
+                                                    FontSize="22"
+                                                    Padding="0"
+                                                    Margin="0"
+                                                    BackgroundColor="White"
+                                                    WidthRequest="22"
+                                                    FontFamily="{DynamicResource FontAwesomeSolidFree}"
+                                                    Command="{Binding BindingContext.EditCopyCommand, Source={x:Reference CopiesList}}"
+                                                    CommandParameter="{Binding}">
+                                            </Button>
+                                            <Button HorizontalOptions="End" 
+                                                    Text="{x:Static icons:FontAwesome.Delete}" 
+                                                    TextColor="{DynamicResource ButtonPrimary}"
+                                                    FontSize="22"
+                                                    Padding="0"
+                                                    Margin="0"
+                                                    BackgroundColor="White"
+                                                    WidthRequest="22"
+                                                    FontFamily="{DynamicResource FontAwesomeSolidFree}"
+                                                    Command="{Binding BindingContext.DeleteCopyCommand, Source={x:Reference CopiesList}}"
+                                                    CommandParameter="{Binding}">
+                                            </Button>
+                                        </StackLayout>
                                     </StackLayout>
                                 </StackLayout>
                             </StackLayout>

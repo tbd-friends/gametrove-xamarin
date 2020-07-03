@@ -4,6 +4,7 @@
     {
         public const string Add = "\uf0fe";
         public const string Cog = "\uf013";
+        public const string Delete = "\uf1f8";
         public const string Edit = "\uf044";
         public const string Expand = "\uf065";
         public const string Heart = "\uf004";
