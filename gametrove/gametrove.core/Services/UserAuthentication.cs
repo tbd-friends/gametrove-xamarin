@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using Gametrove.Core.Infrastructure;
+﻿using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Model;
 using Xamarin.Essentials;
-using ZXing.Client.Result;
 
 namespace Gametrove.Core.Services
 {

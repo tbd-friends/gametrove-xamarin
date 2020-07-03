@@ -14,7 +14,7 @@ namespace Gametrove.Core.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        private UserAuthentication _user;
+        private readonly UserAuthentication _user;
 
         public LoginPage()
         {
@@ -30,12 +30,12 @@ namespace Gametrove.Core.Views
 
             if (!authenticationResult.IsError)
             {
+                _user.Initialize(authenticationResult);
+
                 var apiService = DependencyService.Get<APIActionService>();
 
                 if (await apiService.Execute(new VerifyUserAction()))
                 {
-                    _user.Initialize(authenticationResult);
-
                     Application.Current.MainPage = new AppShell();
                 }
             }

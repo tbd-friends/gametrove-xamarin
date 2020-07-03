@@ -7,23 +7,29 @@ using Xamarin.Essentials;
 namespace Gametrove.Core.Services
 {
 
-    public class APIActionService 
+    public class APIActionService
     {
-        public HttpClient Client { get; }
+        private HttpClient _client;
+        public HttpClient Client => _client;
 
-        public APIActionService()
+        private void Initialize()
         {
-            Client = new HttpClient(new HttpClientHandler())
+            _client = new HttpClient(new HttpClientHandler())
             {
                 BaseAddress = new Uri(AppSettings.Configuration.Api.Url),
             };
 
-            Client.DefaultRequestHeaders.Add("Authorization",
+            _client.DefaultRequestHeaders.Add("Authorization",
                 $"Bearer {Preferences.Get(AppPreferences.IdentityToken, "invalid")}");
         }
 
         public async Task<TResult> Execute<TResult>(IApiAction<TResult> action)
         {
+            if (_client == null)
+            {
+                Initialize();
+            }
+
             return await action.DoAsync(this);
         }
     }
