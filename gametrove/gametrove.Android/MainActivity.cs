@@ -7,7 +7,7 @@ using Gametrove.Core;
 
 namespace gametrove.Droid
 {
-    [Activity(Label = "app", Icon = "@mipmap/icon", Theme = "@style/MainTheme",
+    [Activity(Label = "GameTrove", Icon = "@mipmap/icon", Theme = "@style/MainTheme",
         MainLauncher = true,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
         LaunchMode = LaunchMode.SingleTask)]
