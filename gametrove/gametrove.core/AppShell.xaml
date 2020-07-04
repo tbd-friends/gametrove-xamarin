@@ -39,4 +39,8 @@
     <FlyoutItem Title="Configuration" Icon="{x:Static ins:FontAwesome.Cog}">
         <ShellContent ContentTemplate="{DataTemplate local:ConfigurationPage}" Route="configuration" />
     </FlyoutItem>
+
+    <FlyoutItem Title="Invite" Icon="{x:Static ins:FontAwesome.Users}">
+        <ShellContent ContentTemplate="{DataTemplate local:InviteTokenPage}" Route="invite" />
+    </FlyoutItem>
 </Shell>

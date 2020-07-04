@@ -12,5 +12,6 @@
         public const string Photo = "\uf030";
         public const string Plus = "\uf067";
         public const string Scan = "\uf02a";
+        public const string Users = "\uf0c0";
     }
 }

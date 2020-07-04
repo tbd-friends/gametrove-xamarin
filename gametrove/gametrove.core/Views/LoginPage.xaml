@@ -22,7 +22,7 @@
                     TextColor="Black"
                     VerticalOptions="EndAndExpand"
                     Clicked="Login_Clicked"  
-                    Margin="5,10"/>
+                    Margin="5,10" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
