@@ -12,8 +12,6 @@
              x:Class="Gametrove.Core.Views.HomePage"
              Title="GameTrove"
              Visual="Material">
-
-
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:ScanButtonPositionToRectangleConverter x:Key="FabPositionConverter" />

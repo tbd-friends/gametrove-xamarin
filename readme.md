@@ -1,11 +1,9 @@
 ### Requirements
 
 - Need free Syncfusion Community license for Xamarin Forms
-
-Create settings file ```settings.json``` in gametrove.core containing;
-
 - Need free Auth0 account, configure an application and API
 
+Create settings file ```settings.json``` in gametrove.core containing;
 ```
 {
   "syncfusion": "<syncfusion license here>",
@@ -19,3 +17,5 @@ Create settings file ```settings.json``` in gametrove.core containing;
   }
 }
 ```
+
+Copy the settings file as settings.Debug.json, this version will be included when you are in Debug mode. 

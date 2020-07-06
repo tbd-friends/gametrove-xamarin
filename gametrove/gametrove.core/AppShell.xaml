@@ -3,9 +3,8 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-       xmlns:local="clr-namespace:Gametrove.Core.Views;assembly=gametrove.core"
        xmlns:ins="clr-namespace:Gametrove.Core.Infrastructure;assembly=gametrove.core"
-       mc:Ignorable="d"
+       xmlns:local="clr-namespace:Gametrove.Core.Views;assembly=gametrove.core"
        Title="GameTrove"
        x:Class="Gametrove.Core.AppShell"
        NavBarHasShadow="True"
@@ -30,6 +29,25 @@
         </DataTemplate>
     </Shell.ItemTemplate>
 
+    <Shell.MenuItemTemplate>
+        <DataTemplate>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.8*" />
+                </Grid.ColumnDefinitions>
+                <Label 
+                    Grid.Column="0"
+                    Style="{StaticResource FlyoutItemIcon}" 
+                    Text="{Binding Icon}" />
+                <Label Grid.Column="1"
+                       Margin="0,0,0,0"            
+                       Text="{Binding Text}"
+                       VerticalTextAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.MenuItemTemplate>
+
     <FlyoutItem Title="Home" Icon="{x:Static ins:FontAwesome.Home}">
         <ShellContent ContentTemplate="{DataTemplate local:HomePage}" Route="default" />
         <ShellContent ContentTemplate="{DataTemplate local:GameDetailPage}" Route="detail" />
@@ -39,4 +57,13 @@
     <FlyoutItem Title="Configuration" Icon="{x:Static ins:FontAwesome.Cog}">
         <ShellContent ContentTemplate="{DataTemplate local:ConfigurationPage}" Route="configuration" />
     </FlyoutItem>
+
+    <FlyoutItem Title="Invite" Icon="{x:Static ins:FontAwesome.Users}">
+        <ShellContent ContentTemplate="{DataTemplate local:InviteTokenPage}" Route="invite" />
+    </FlyoutItem>
+
+    <MenuItem Text="Logout" IconImageSource="{x:Static ins:FontAwesome.Exit}" 
+              Command="{Binding LogoutCommand}">
+
+    </MenuItem>
 </Shell>

@@ -1,28 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Gametrove.Core.Converters;assembly=gametrove.core"
+             xmlns:viewModels="clr-namespace:Gametrove.Core.ViewModels;assembly=gametrove.core"
              x:Class="Gametrove.Core.Views.LoginPage"
              BackgroundImageSource="background_mobile.png">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:IsTrueOnEnumConverter x:Key="EnumTrueConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <Label x:Name="MainPageLabel" 
                    Text="GameTracker" 
-                   FontSize="42"
-                   HorizontalOptions="Center" 
+                   FontAttributes="Bold"
+                   FontSize="46"
+                   HorizontalOptions="CenterAndExpand" 
                    VerticalOptions="CenterAndExpand" 
-                   Margin="0,0,0,0" />
+                   Margin="0,20"
+                   />
             <Label IsVisible="False" 
                    x:Name="InvalidLogin"
                    FontSize="32"
                    TextColor="Red"
                    HorizontalOptions="Center" 
                    VerticalOptions="CenterAndExpand" Text="Unable to login" />
+            <ActivityIndicator
+                Color="DarkBlue"
+                VerticalOptions="Start"
+                IsRunning="{Binding Status, Converter={StaticResource EnumTrueConverter}, ConverterParameter={x:Static viewModels:LoginStatus.LoggingIn}}"
+            />
             <Button Text="Login" 
                     Style="{DynamicResource PrimaryButton}" 
+                    IsVisible="{Binding Status, Converter={StaticResource EnumTrueConverter}, ConverterParameter={x:Static viewModels:LoginStatus.AllowingLogin}}"
                     TextColor="Black"
-                    VerticalOptions="EndAndExpand"
+                    VerticalOptions="Center"
                     Clicked="Login_Clicked"  
-                    Margin="5,10"/>
+                    Margin="60,5" />
+            <Button Text="Login with Invite" 
+                    TextColor="White"
+                    IsVisible="{Binding Status, Converter={StaticResource EnumTrueConverter}, ConverterParameter={x:Static viewModels:LoginStatus.AllowingLogin}}"
+                    Clicked="UseToken_Clicked"
+                    VerticalOptions="Center"
+                    Margin="60,5"
+                    />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

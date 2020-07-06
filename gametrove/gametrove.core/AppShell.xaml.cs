@@ -1,10 +1,14 @@
-﻿namespace Gametrove.Core
+﻿using Gametrove.Core.ViewModels;
+
+namespace Gametrove.Core
 {
-    public partial class AppShell : Xamarin.Forms.Shell
+    public partial class AppShell
     {
         public AppShell()
         {
             InitializeComponent();
+
+            BindingContext = new AppShellViewModel();
         }
     }
 }
