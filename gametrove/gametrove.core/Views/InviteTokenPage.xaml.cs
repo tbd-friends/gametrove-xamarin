@@ -7,7 +7,7 @@ namespace Gametrove.Core.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class InviteTokenPage : ContentPage
     {
-        private InviteTokenViewModel _vm;
+        private readonly InviteTokenViewModel _vm;
 
         public InviteTokenPage()
         {

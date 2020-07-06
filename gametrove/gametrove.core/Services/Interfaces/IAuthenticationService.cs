@@ -6,6 +6,8 @@ namespace Gametrove.Core.Services.Interfaces
     public interface IAuthenticationService
     {
         Task<AuthenticationResult> Authenticate();
-        AuthenticationResult AuthenticationResult { get; }
+        Task<bool> ShouldRefresh();
+        Task<AuthenticationResult> Refresh();
+        Task<bool> Logout();
     }
 }

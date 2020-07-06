@@ -1,9 +1,11 @@
-﻿using Android.App;
+﻿using System;
+using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Gametrove.Core;
+using Xamarin.Essentials;
 
 namespace gametrove.Droid
 {
@@ -21,6 +23,8 @@ namespace gametrove.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -35,7 +39,12 @@ namespace gametrove.Droid
             LoadApplication(new App());
         }
 
-        protected override async void OnNewIntent(Intent intent)
+        private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            SecureStorage.RemoveAll();
+        }
+
+        protected override void OnNewIntent(Intent intent)
         {
             base.OnNewIntent(intent);
 

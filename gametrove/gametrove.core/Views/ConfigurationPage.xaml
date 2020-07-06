@@ -6,8 +6,6 @@
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              xmlns:converters="clr-namespace:Gametrove.Core.Converters;assembly=gametrove.core"
              xmlns:comboBox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
-             xmlns:system="clr-namespace:System;assembly=netstandard"
-             xmlns:infrastructure="clr-namespace:Gametrove.Core.Infrastructure;assembly=gametrove.core"
              mc:Ignorable="d"
              x:Class="Gametrove.Core.Views.ConfigurationPage"
              Title="Configuration">
@@ -15,7 +13,6 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:LeftRightToIsCheckedConverter x:Key="IsCheckedConverter" />
-            <converters:EnumConverter x:Key="EnumConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 

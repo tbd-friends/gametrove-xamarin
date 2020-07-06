@@ -6,6 +6,7 @@
         public const string Cog = "\uf013";
         public const string Delete = "\uf1f8";
         public const string Edit = "\uf044";
+        public const string Exit = "\uf2f5";
         public const string Expand = "\uf065";
         public const string Heart = "\uf004";
         public const string Home = "\uf015";
