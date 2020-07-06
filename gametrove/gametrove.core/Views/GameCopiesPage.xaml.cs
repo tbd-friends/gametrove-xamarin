@@ -34,6 +34,7 @@ namespace Gametrove.Core.Views
         {
             InitializeComponent();
 
+            MessagingCenter.Unsubscribe<AddCopyViewModel>(this, "Copy:Added");
             MessagingCenter.Subscribe<AddCopyViewModel>(this, "Copy:Added", _ =>
             {
                 Navigation.PopAsync(true);

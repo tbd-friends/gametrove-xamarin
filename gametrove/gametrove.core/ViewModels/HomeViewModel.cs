@@ -43,12 +43,14 @@ namespace Gametrove.Core.ViewModels
 
             _scanButtonOrientation = Preferences.Get(AppPreferences.ScanButtonOrientation, "Right");
 
+            MessagingCenter.Unsubscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered");
             MessagingCenter.Subscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered",
                 (vm, result) =>
                 {
                     Games.Insert(0, result.Model);
                 });
 
+            MessagingCenter.Unsubscribe<ConfigurationViewModel>(this, "Preferences:Changed");
             MessagingCenter.Subscribe<ConfigurationViewModel>(this, "Preferences:Changed", _ =>
                 {
                     ScanButtonOrientation = Preferences.Get(AppPreferences.ScanButtonOrientation, "Right");

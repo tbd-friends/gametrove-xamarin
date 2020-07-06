@@ -39,6 +39,7 @@ namespace Gametrove.Core.Views
         {
             InitializeComponent();
 
+            MessagingCenter.Unsubscribe<EditTitleViewModel, TitleModel>(this, "Title:Updated");
             MessagingCenter.Subscribe<EditTitleViewModel, TitleModel>(this, "Title:Updated", (vm, title) =>
             {
                 _vm.Name = title.Name;

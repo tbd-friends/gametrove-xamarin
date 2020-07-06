@@ -19,6 +19,7 @@ namespace Gametrove.Core.Views
 
             BindingContext = _vm = new EditTitleViewModel(gameId);
 
+            MessagingCenter.Unsubscribe<EditTitleViewModel, TitleModel>(this, "Title:Updated");
             MessagingCenter.Subscribe<EditTitleViewModel, TitleModel>(this, "Title:Updated", async (vm, game) =>
                 {
                     await Navigation.PopModalAsync(true);

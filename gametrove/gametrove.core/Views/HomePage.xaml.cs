@@ -26,6 +26,7 @@ namespace Gametrove.Core.Views
             _scanner = new ZXingScannerPage();
             _scanner.OnScanResult += BarcodePickerOnDidScan;
 
+            MessagingCenter.Unsubscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered");
             MessagingCenter.Subscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered",
                 async (sender, result) =>
                 {
