@@ -16,6 +16,9 @@
                                DisplayMemberPath="Name"
                                DataSource="{Binding Platforms}"
                                AutoCompleteMode="Suggest"
+                               SuggestionMode="Contains"
+                               TextHighlightMode="FirstOccurrence"
+                               HighlightedTextColor="OrangeRed"
                                SelectionChanged="SfAutoComplete_OnSelectionChanged"
             />
             <Entry Placeholder="Code" Text="{Binding Code}" />
