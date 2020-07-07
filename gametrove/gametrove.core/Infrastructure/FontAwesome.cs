@@ -3,6 +3,7 @@
     public class FontAwesome
     {
         public const string Add = "\uf0fe";
+        public const string ChartPie = "\uf200";
         public const string Cog = "\uf013";
         public const string Delete = "\uf1f8";
         public const string Edit = "\uf044";

@@ -62,8 +62,11 @@
         <ShellContent ContentTemplate="{DataTemplate local:InviteTokenPage}" Route="invite" />
     </FlyoutItem>
 
+    <FlyoutItem Title="Statistics" Icon="{x:Static ins:FontAwesome.ChartPie}">
+        <ShellContent ContentTemplate="{DataTemplate local:StatisticsPage}" Route="statistics" />
+    </FlyoutItem>
+
     <MenuItem Text="Logout" IconImageSource="{x:Static ins:FontAwesome.Exit}" 
               Command="{Binding LogoutCommand}">
-
     </MenuItem>
 </Shell>
