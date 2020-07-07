@@ -29,8 +29,11 @@
                                     x:Name="SearchGames">
             <handlers:SearchGameHandler.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="2,5" Margin="0,5" HeightRequest="30">
-                        <Label FontSize="15" Text="{Binding Name}" />
+                    <StackLayout 
+                        Padding="2,5" 
+                        Margin="0,5" >
+                        <Label FontSize="16" FontAttributes="Bold" Text="{Binding Name}"  />
+                        <Label FontSize="15" Text="{Binding Platform}" HorizontalOptions="End" />
                     </StackLayout>
                 </DataTemplate>
             </handlers:SearchGameHandler.ItemTemplate>
