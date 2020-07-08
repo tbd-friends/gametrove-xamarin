@@ -20,5 +20,12 @@ namespace Gametrove.Core.Views
 
             BindingContext = _vm = new StatisticsViewModel();
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            _vm.LoadStatisticsCommand.Execute(null);
+        }
     }
 }

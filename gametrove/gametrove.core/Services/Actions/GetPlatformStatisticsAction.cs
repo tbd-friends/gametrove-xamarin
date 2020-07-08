@@ -10,7 +10,7 @@ namespace Gametrove.Core.Services.Actions
     {
         public async Task<IEnumerable<PlatformStatistic>> DoAsync(APIActionService service)
         {
-            var response = await service.Client.GetAsync($"platforms/statistics").ConfigureAwait(false);
+            var response = await service.Client.GetAsync($"platforms/summary").ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
             {

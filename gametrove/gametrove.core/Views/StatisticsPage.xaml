@@ -9,10 +9,15 @@
     <ContentPage.Content>
         <StackLayout>
             <charts:SfChart>
+                <charts:SfChart.Legend>
+                    <charts:ChartLegend OverflowMode="Wrap" />
+                </charts:SfChart.Legend>
                 <charts:DoughnutSeries
                     ItemsSource="{Binding Statistics}" 
                     XBindingPath="Name"
-                    YBindingPath="NumberOfGames">
+                    YBindingPath="NumberOfGames"
+                    DataMarker="NumberOfGames"
+                    DataMarkerPosition="OutsideExtended">
                 </charts:DoughnutSeries>
             </charts:SfChart>
         </StackLayout>
