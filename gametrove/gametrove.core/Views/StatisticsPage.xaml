@@ -16,7 +16,6 @@
                     ItemsSource="{Binding Statistics}" 
                     XBindingPath="Name"
                     YBindingPath="NumberOfGames"
-                    DataMarker="NumberOfGames"
                     DataMarkerPosition="OutsideExtended">
                 </charts:DoughnutSeries>
             </charts:SfChart>
