@@ -13,5 +13,7 @@ namespace Gametrove.Core.Services.Models
         public DateTime Registered { get; set; }
         public bool IsFavorite { get; set; }
         public IEnumerable<string> Genres { get; set; }
+        public decimal? CompleteInBoxPrice { get; set; }
+        public decimal? LoosePrice { get; set; }
     }
 }

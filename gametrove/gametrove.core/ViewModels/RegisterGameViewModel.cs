@@ -6,6 +6,7 @@ using Gametrove.Core.Services;
 using Gametrove.Core.Services.Actions;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels.Results;
+using Syncfusion.DataSource.Extensions;
 using Xamarin.Forms;
 
 namespace Gametrove.Core.ViewModels

@@ -13,6 +13,7 @@ namespace Gametrove.Core.ViewModels
     public class GameCopiesViewModel : BaseViewModel
     {
         public Guid Id { get; }
+        public GameModel Game { get; }
         public ObservableCollection<CopyModel> Copies { get; }
 
         public Command LoadCopiesCommand { get; }
@@ -27,6 +28,7 @@ namespace Gametrove.Core.ViewModels
         {
             Id = model.Id;
             Copies = new ObservableCollection<CopyModel>();
+            Game = model;
             LoadCopiesCommand = new Command(async () => await LoadCopies());
             EditCopyCommand = new Command<CopyModel>(async (m) => await EditCopy(m));
             DeleteCopyCommand = new Command<CopyModel>(async (m) => await DeleteCopy(m));
