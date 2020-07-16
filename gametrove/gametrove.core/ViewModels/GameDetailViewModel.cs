@@ -17,6 +17,8 @@ namespace Gametrove.Core.ViewModels
         public string Subtitle { get; set; }
         public string Platform { get; set; }
         public DateTime Registered { get; set; }
+        public decimal CompleteInBoxPrice { get; set; }
+        public decimal LoosePrice { get; set; }
 
         private bool _isFavorite;
         public bool IsFavorite
@@ -50,6 +52,8 @@ namespace Gametrove.Core.ViewModels
             Platform = source.Platform;
             Registered = source.Registered;
             IsFavorite = source.IsFavorite;
+            CompleteInBoxPrice = source.CompleteInBoxPrice ?? 0;
+            LoosePrice = source.LoosePrice ?? 0;
             Images = new ObservableCollection<GameImage>();
             Genres = source.Genres != null
                 ? new ObservableCollection<string>(source.Genres)

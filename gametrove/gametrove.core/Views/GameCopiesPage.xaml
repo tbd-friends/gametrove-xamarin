@@ -91,6 +91,10 @@
                     </xForms:SfListView.ItemTemplate>
                 </xForms:SfListView>
             </RefreshView>
+            <StackLayout VerticalOptions="End" Padding="5,2" BackgroundColor="Gray">
+                <Label Text="{Binding Game.LoosePrice, StringFormat='Loose: {0:c}'}" TextColor="White"></Label>
+                <Label Text="{Binding Game.CompleteInBoxPrice, StringFormat='Complete In Box: {0:c}'}" TextColor="White"></Label>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
