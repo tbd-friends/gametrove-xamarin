@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Services;
 using Gametrove.Core.Services.Actions;
 using Gametrove.Core.Services.Models;
-using Gametrove.Core.ViewModels;
 using Gametrove.Core.Views;
 using Xamarin.Forms;
 
@@ -11,10 +10,13 @@ namespace Gametrove.Core.Handlers
     public class SearchGameHandler : SearchHandler
     {
         private readonly APIActionService _service;
+        private readonly RecentGamesList _listing;
 
         public SearchGameHandler()
         {
             _service = DependencyService.Resolve<APIActionService>();
+
+            _listing = DependencyService.Resolve<RecentGamesList>();
         }
 
         protected override async void OnQueryChanged(string oldValue, string newValue)
@@ -40,6 +42,8 @@ namespace Gametrove.Core.Handlers
                 Dispatcher.BeginInvokeOnMainThread(async () =>
                 {
                     var game = await _service.Execute(new GetGameByIdAction(result.Id));
+
+                    await _listing.Track(game);
 
                     await Shell.Current.Navigation.PushAsync(new GameDetailMainPage(game));
                 });

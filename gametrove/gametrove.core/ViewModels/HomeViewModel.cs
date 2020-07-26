@@ -32,6 +32,7 @@ namespace Gametrove.Core.ViewModels
         }
 
         private readonly APIActionService _api;
+        private readonly RecentGamesList _listing;
 
         public HomeViewModel()
         {
@@ -40,14 +41,15 @@ namespace Gametrove.Core.ViewModels
             LoadGamesCommand = new Command(async () => await ExecuteLoadGamesCommand(), () => true);
 
             _api = DependencyService.Resolve<APIActionService>();
+            _listing = DependencyService.Resolve<RecentGamesList>();
 
             _scanButtonOrientation = Preferences.Get(AppPreferences.ScanButtonOrientation, "Right");
 
             MessagingCenter.Unsubscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered");
             MessagingCenter.Subscribe<RegisterGameViewModel, RegistrationResult>(this, "Game:Registered",
-                (vm, result) =>
+                async (vm, result) =>
                 {
-                    Games.Insert(0, result.Model);
+                    await _listing.Track(result.Model);
                 });
 
             MessagingCenter.Unsubscribe<ConfigurationViewModel>(this, "Preferences:Changed");
@@ -64,11 +66,9 @@ namespace Gametrove.Core.ViewModels
 
         private async Task ExecuteLoadGamesCommand()
         {
-            IsBusy = true;
-
             Games.Clear();
 
-            foreach (var game in await _api.Execute(new GetRecentlyAddedGamesAction()))
+            foreach (var game in await _listing.Recent())
             {
                 Games.Add(game);
             }
