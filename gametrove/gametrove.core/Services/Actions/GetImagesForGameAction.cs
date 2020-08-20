@@ -25,7 +25,7 @@ namespace Gametrove.Core.Services.Actions
                 var results =
                     JsonConvert.DeserializeObject<IEnumerable<string>>(await response.Content.ReadAsStringAsync());
 
-                return results.Select(i => $"{i}?size=Large");
+                return results.Select(i => $"{i}?size=medium");
             }
 
             return null;

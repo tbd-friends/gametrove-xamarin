@@ -30,7 +30,7 @@ namespace Gametrove.Core.Services.Actions
                     FileName = _fileName
                 };
 
-            fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
 
             using (var formData = new MultipartFormDataContent())
             {

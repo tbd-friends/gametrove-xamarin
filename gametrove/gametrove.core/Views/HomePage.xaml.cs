@@ -101,8 +101,7 @@ namespace Gametrove.Core.Views
         {
             base.OnAppearing();
 
-            if (_viewModel.Games.Count == 0)
-                _viewModel.IsBusy = true;
+            _viewModel.IsBusy = true;
         }
     }
 }

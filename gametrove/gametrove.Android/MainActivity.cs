@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -30,8 +31,10 @@ namespace gametrove.Droid
 
             base.OnCreate(savedInstanceState);
 
+            ServicePointManager.Expect100Continue = false;
+
             global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
-            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             ZXing.Net.Mobile.Forms.Android.Platform.Init();

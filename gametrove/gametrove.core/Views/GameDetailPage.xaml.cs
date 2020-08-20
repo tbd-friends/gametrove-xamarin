@@ -58,12 +58,15 @@ namespace Gametrove.Core.Views
                 return;
             }
 
-            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+            using (var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
             {
-                Directory = "my_images"
-            });
-
-            await _vm.UploadImageForGame(file.GetStreamWithImageRotatedForExternalStorage());
+                Directory = "my_images",
+                PhotoSize = PhotoSize.Medium,
+                CompressionQuality = 90
+            }))
+            {
+                await _vm.UploadImageForGame(file.GetStreamWithImageRotatedForExternalStorage());
+            }
         }
 
         protected override void OnAppearing()
