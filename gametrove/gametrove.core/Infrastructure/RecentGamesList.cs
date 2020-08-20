@@ -15,19 +15,18 @@ namespace Gametrove.Core.Infrastructure
 
         public async Task<IEnumerable<GameModel>> Recent()
         {
+            await InitializeAsync();
+
             return (from x in await _connection.QueryAsync<TrackedGameModel>("SELECT * FROM [TrackedGameModel] ORDER BY LastVisited DESC LIMIT 10")
                     select x.ToGameModel()).ToList();
         }
 
         public RecentGamesList()
         {
-
             _connection = _connection ?? new SQLiteAsyncConnection(
                               Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                                   "gametrove.db3"),
                               SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.SharedCache);
-
-            InitializeAsync().ConfigureAwait(false);
         }
 
         private async Task InitializeAsync()
@@ -38,7 +37,8 @@ namespace Gametrove.Core.Infrastructure
                 {
                     try
                     {
-                        await _connection.CreateTablesAsync(CreateFlags.AutoIncPK, typeof(TrackedGameModel))
+                        await _connection.CreateTablesAsync(
+                                CreateFlags.AutoIncPK, typeof(TrackedGameModel))
                             .ConfigureAwait(false);
                     }
                     catch (Exception exc)
@@ -53,6 +53,8 @@ namespace Gametrove.Core.Infrastructure
 
         public async Task Track(GameModel game)
         {
+            await InitializeAsync();
+
             var exists =
                 (await _connection.QueryAsync<TrackedGameModel>(
                     "SELECT * FROM [TrackedGameModel] WHERE GameId = ?",
@@ -73,6 +75,7 @@ namespace Gametrove.Core.Infrastructure
 
     public class TrackedGameModel
     {
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public Guid GameId { get; set; }
         public string Name { get; set; }

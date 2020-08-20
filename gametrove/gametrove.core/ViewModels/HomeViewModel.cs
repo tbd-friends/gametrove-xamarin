@@ -5,6 +5,7 @@ using Gametrove.Core.Services;
 using Gametrove.Core.Services.Actions;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels.Results;
+using Syncfusion.DataSource.Extensions;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -68,7 +69,9 @@ namespace Gametrove.Core.ViewModels
         {
             Games.Clear();
 
-            foreach (var game in await _listing.Recent())
+            var recentGames = (await _listing.Recent()).ToList<GameModel>();
+
+            foreach (var game in recentGames)
             {
                 Games.Add(game);
             }
