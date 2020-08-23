@@ -93,6 +93,21 @@
             <Setter Property="Text" Value="{x:Static infrastructure:FontAwesome.Expand}" />
         </Style>
 
+        <Style x:Key="PhotoButton" TargetType="Button">
+            <Setter Property="CornerRadius" Value="100"/>
+            <Setter Property="BackgroundColor" Value="{DynamicResource ButtonSecondary}"/>
+            <Setter Property="HeightRequest" Value="65"/>
+            <Setter Property="WidthRequest" Value="65"/>
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="10,0,10,15"/>
+            <Setter Property="FontFamily" Value="{DynamicResource FontAwesomeSolidFree}" />
+            <Setter Property="FontSize" Value="34" />
+            <Setter Property="Opacity" Value="0.75" />
+            <Setter Property="Text" Value="{x:Static infrastructure:FontAwesome.Photo}" />
+        </Style>
+
         <!-- Shell defaults -->
 
         <Style TargetType="ShellContent">

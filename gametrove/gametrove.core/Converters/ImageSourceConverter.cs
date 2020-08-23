@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Net;
+using Gametrove.Core.Infrastructure;
 using Xamarin.Forms;
 
 namespace Gametrove.Core.Converters
@@ -12,7 +13,9 @@ namespace Gametrove.Core.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var byteArray = Client.DownloadData(value.ToString());
+            string fullUrl = $"{AppSettings.Configuration.Api.Url}/{value}";
+
+            var byteArray = Client.DownloadData(fullUrl);
 
             return ImageSource.FromStream(() => new MemoryStream(byteArray));
         }

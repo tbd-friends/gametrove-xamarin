@@ -6,6 +6,7 @@ using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Services;
 using Gametrove.Core.Services.Actions;
 using Gametrove.Core.Services.Models;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Gametrove.Core.ViewModels
@@ -35,6 +36,22 @@ namespace Gametrove.Core.ViewModels
             }
         }
 
+        private string _scanButtonOrientation;
+
+        public string ScanButtonOrientation
+        {
+            get => _scanButtonOrientation;
+            set
+            {
+                if (value != _scanButtonOrientation)
+                {
+                    _scanButtonOrientation = value;
+
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private readonly APIActionService _api;
 
         public ObservableCollection<GameImage> Images { get; }
@@ -42,7 +59,11 @@ namespace Gametrove.Core.ViewModels
 
         public Command LoadImagesCommand { get; }
 
+        public Command DeleteImageCommand { get; }
+
         public Command ToggleFavoriteCommand { get; }
+
+        public IConfirmationService ConfirmationService { get; }
 
         public GameDetailViewModel(GameModel source)
         {
@@ -60,6 +81,11 @@ namespace Gametrove.Core.ViewModels
                 : new ObservableCollection<string>();
 
             LoadImagesCommand = new Command(async () => await LoadImages());
+            DeleteImageCommand = new Command<string>(async (url) => await DeleteImage(url));
+
+            _scanButtonOrientation = Preferences.Get(AppPreferences.ScanButtonOrientation, "Right");
+
+            ConfirmationService = DependencyService.Get<IConfirmationService>();
 
             ToggleFavoriteCommand = new Command(ToggleFavorite);
 
@@ -83,7 +109,7 @@ namespace Gametrove.Core.ViewModels
 
             foreach (var image in images)
             {
-                Images.Add(new GameImage { Url = image });
+                Images.Add(new GameImage { Url = $"{image.Url}?size=medium" });
             }
 
             IsBusy = false;
@@ -104,6 +130,17 @@ namespace Gametrove.Core.ViewModels
 
                 IsFavorite = !IsFavorite;
             });
+        }
+
+
+        public async Task DeleteImage(string url)
+        {
+            if (await ConfirmationService.Confirm("Are you sure you would like to delete this image?"))
+            {
+                await _api.Execute(new DeleteImageAction(url));
+
+                await LoadImages();
+            }
         }
 
         public class GameImage
