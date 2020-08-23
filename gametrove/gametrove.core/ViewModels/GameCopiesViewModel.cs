@@ -29,6 +29,7 @@ namespace Gametrove.Core.ViewModels
             Id = model.Id;
             Copies = new ObservableCollection<CopyModel>();
             Game = model;
+
             LoadCopiesCommand = new Command(async () => await LoadCopies());
             EditCopyCommand = new Command<CopyModel>(async (m) => await EditCopy(m));
             DeleteCopyCommand = new Command<CopyModel>(async (m) => await DeleteCopy(m));

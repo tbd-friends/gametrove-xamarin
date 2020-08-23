@@ -15,6 +15,7 @@ namespace Gametrove.Core.Converters
                     case "left":
                         return new Rectangle(0, 1, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
                     case "right":
+                    default:
                         return new Rectangle(1, 1, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
                 }
             }

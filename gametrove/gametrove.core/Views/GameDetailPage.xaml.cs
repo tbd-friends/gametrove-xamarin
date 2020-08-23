@@ -65,7 +65,10 @@ namespace Gametrove.Core.Views
                 CompressionQuality = 90
             }))
             {
-                await _vm.UploadImageForGame(file.GetStreamWithImageRotatedForExternalStorage());
+                if (file != null)
+                {
+                    await _vm.UploadImageForGame(file.GetStreamWithImageRotatedForExternalStorage());
+                }
             }
         }
 

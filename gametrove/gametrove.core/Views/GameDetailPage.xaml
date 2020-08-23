@@ -12,30 +12,32 @@
              mc:Ignorable="d"
              x:Class="Gametrove.Core.Views.GameDetailPage"
              Title="Game Details"
+             x:Name="GameDetailsPage"
              Visual="Material">
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <cvt:ScanButtonPositionToRectangleConverter x:Key="FabPositionConverter" />
             <cvt:ImageSourceConverter x:Key="imageConverter" />
             <cvt:FontIsSolidConverter x:Key="fontConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout Spacing="10" Padding="5,5" VerticalOptions="StartAndExpand">
-        <StackLayout>
-            
-            <StackLayout Orientation="Horizontal">
-                <StackLayout>
-                    <Label Style="{DynamicResource HeaderLabel}" FontSize="30" Text="{Binding Name}" d:Text="title"/>
-                    <Label Text="{Binding Subtitle}" d:Text="subtitle" FontSize="20" Padding="5,0" Margin="0,-10"/>
-                    <Label Text="{Binding Platform}" 
+    <ContentPage.Content>
+        <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <StackLayout Spacing="10" Padding="5,5" VerticalOptions="StartAndExpand">
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout>
+                        <Label Style="{DynamicResource HeaderLabel}" FontSize="30" Text="{Binding Name}" d:Text="title"/>
+                        <Label Text="{Binding Subtitle}" d:Text="subtitle" FontSize="20" Padding="5,0" Margin="0,-10"/>
+                        <Label Text="{Binding Platform}" 
                            Style="{StaticResource SubLabel}" 
                            FontSize="42" 
                            Opacity="0.4" 
                            VerticalTextAlignment="Center" 
                            HorizontalTextAlignment="Start" />
-                </StackLayout>
-                <Button HorizontalOptions="EndAndExpand" 
+                    </StackLayout>
+                    <Button HorizontalOptions="EndAndExpand" 
                         VerticalOptions="Start"
                         TextColor="{DynamicResource ButtonPrimary}"
                         FontSize="34"
@@ -46,35 +48,41 @@
                         Text="{x:Static icons:FontAwesome.Heart}"
                         FontFamily="{Binding IsFavorite, Converter={StaticResource fontConverter}}"
                         Command="{Binding ToggleFavoriteCommand}" />
-            </StackLayout>
-            <car:SfCarousel ItemsSource="{Binding Images}"
-                            HeightRequest="250"
-                            ItemHeight="200"
+                </StackLayout>
+                <car:SfCarousel ItemsSource="{Binding Images}"
+                            HeightRequest="320"
+                            ItemHeight="320"
                             ItemSpacing="0"
                             ViewMode="Linear"
-                            HorizontalOptions="CenterAndExpand">
-                <car:SfCarousel.ItemTemplate>
-                    <DataTemplate>
-                        <Image Source="{Binding Url, Converter={StaticResource imageConverter}}" 
-                                       Aspect="AspectFit" />
-                    </DataTemplate>
-                </car:SfCarousel.ItemTemplate>
-            </car:SfCarousel>
-            <Button HorizontalOptions="CenterAndExpand" 
-                    VerticalOptions="Start"
-                    TextColor="{DynamicResource ButtonPrimary}"
-                    FontSize="34"
-                    Padding="0"
-                    Margin="0"
-                    BackgroundColor="White"
-                    WidthRequest="48"
-                    Text="{x:Static icons:FontAwesome.Photo}"
-                    FontFamily="{DynamicResource FontAwesomeSolidFree}" 
-                    Clicked="TakePhoto_Clicked">
-            </Button>
-            <buttons:SfChipGroup ItemsSource="{Binding Genres}" ChipPadding="2,5" Type="Choice">
-                <buttons:SfChipGroup.ChipLayout>
-                    <FlexLayout 
+                            HorizontalOptions="Center">
+                    <car:SfCarousel.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Image Source="{Binding Url, Converter={StaticResource imageConverter}}" 
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                                <Button HorizontalOptions="CenterAndExpand"
+                                    VerticalOptions="Start"
+                                    TextColor="{DynamicResource ButtonPrimary}"
+                                    FontSize="34"
+                                    Padding="0"
+                                    Margin="0"
+                                    BackgroundColor="White"
+                                    WidthRequest="48"
+                                    Text="{x:Static icons:FontAwesome.Delete}"
+                                    FontFamily="{DynamicResource FontAwesomeSolidFree}"
+                                    Command="{Binding BindingContext.DeleteImageCommand, Source={x:Reference GameDetailsPage}}"
+                                    CommandParameter="{Binding Url}"
+                                    >
+                                </Button>
+                            </StackLayout>
+                        </DataTemplate>
+                    </car:SfCarousel.ItemTemplate>
+                </car:SfCarousel>
+
+                <buttons:SfChipGroup ItemsSource="{Binding Genres}" ChipPadding="2,5" Type="Choice">
+                    <buttons:SfChipGroup.ChipLayout>
+                        <FlexLayout 
                         HorizontalOptions="Start" 
                         VerticalOptions="Center"
                         Direction="Row"
@@ -83,8 +91,13 @@
                         AlignContent="Start" 
                         AlignItems="Start" 
                     />
-                </buttons:SfChipGroup.ChipLayout>
-            </buttons:SfChipGroup>
-        </StackLayout>
-    </StackLayout>
+                    </buttons:SfChipGroup.ChipLayout>
+                </buttons:SfChipGroup>
+
+            </StackLayout>
+            <Button AbsoluteLayout.LayoutFlags="PositionProportional"
+                    AbsoluteLayout.LayoutBounds="{Binding ScanButtonOrientation, Converter={StaticResource FabPositionConverter}}"
+                Style="{StaticResource PhotoButton}" Clicked="TakePhoto_Clicked" />
+        </AbsoluteLayout>
+    </ContentPage.Content>
 </ContentPage>
