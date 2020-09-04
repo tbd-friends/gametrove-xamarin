@@ -58,9 +58,8 @@ namespace Gametrove.Core.ViewModels
         public ObservableCollection<string> Genres { get; }
 
         public Command LoadImagesCommand { get; }
-
         public Command DeleteImageCommand { get; }
-
+        public Command ToggleCoverArtCommand { get; }
         public Command ToggleFavoriteCommand { get; }
 
         public IConfirmationService ConfirmationService { get; }
@@ -82,6 +81,7 @@ namespace Gametrove.Core.ViewModels
 
             LoadImagesCommand = new Command(async () => await LoadImages());
             DeleteImageCommand = new Command<string>(async (url) => await DeleteImage(url));
+            ToggleCoverArtCommand = new Command<GameImage>(async (id) => await ToggleCoverArt(id));
 
             _scanButtonOrientation = Preferences.Get(AppPreferences.ScanButtonOrientation, "Right");
 
@@ -109,7 +109,12 @@ namespace Gametrove.Core.ViewModels
 
             foreach (var image in images)
             {
-                Images.Add(new GameImage { Url = $"{image.Url}?size=medium" });
+                Images.Add(new GameImage
+                {
+                    Id = image.Id,
+                    IsCoverArt = image.IsCoverArt,
+                    Url = $"{image.Url}?size=large"
+                });
             }
 
             IsBusy = false;
@@ -132,7 +137,6 @@ namespace Gametrove.Core.ViewModels
             });
         }
 
-
         public async Task DeleteImage(string url)
         {
             if (await ConfirmationService.Confirm("Are you sure you would like to delete this image?"))
@@ -143,9 +147,25 @@ namespace Gametrove.Core.ViewModels
             }
         }
 
+        public async Task ToggleCoverArt(GameImage gameImage)
+        {
+            string message = gameImage.IsCoverArt
+                ? "Are you sure you would like to deselect the image as 'cover art'?"
+                : "Are you sure you would like to make this image the 'cover art'?";
+
+            if (await ConfirmationService.Confirm(message))
+            {
+                await _api.Execute(new ToggleCoverArtAction(gameImage.Id));
+
+                await LoadImages();
+            }
+        }
+
         public class GameImage
         {
             public string Url { get; set; }
+            public Guid Id { get; set; }
+            public bool IsCoverArt { get; set; }
         }
     }
 }

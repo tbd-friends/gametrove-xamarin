@@ -7,7 +7,8 @@ namespace Gametrove.Core.Infrastructure
 {
     public static class JsonExtensions
     {
-        public static StringContent AsStringContent<T>(this T @object, Encoding encoding, string mediaType = "application/json") where T : class
+        public static StringContent AsStringContent<T>(this T @object, Encoding encoding, string mediaType = "application/json") 
+            where T : class
         {
             StringContent result;
 

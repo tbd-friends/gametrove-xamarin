@@ -10,7 +10,7 @@
         <Style x:Key="HeaderLabel" TargetType="Label">
             <Setter Property="TextColor" Value="{DynamicResource NavigationPrimary}" />
             <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="FontSize" Value="28" />
+            <Setter Property="FontSize" Value="26" />
             <Setter Property="Padding" Value="5,0" />
         </Style>
 
