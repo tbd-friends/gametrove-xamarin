@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.ViewModels;
 using Gametrove.Core.ViewModels.Results;
-using Syncfusion.ListView.XForms;
 using Xamarin.Forms;
 using ZXing;
 using ZXing.Net.Mobile.Forms;
@@ -48,17 +47,6 @@ namespace Gametrove.Core.Views
             await Navigation.PushAsync(new RegisterGamePage());
         }
 
-        private async void SfListView_OnSelectionChanged(object sender, ItemSelectionChangedEventArgs e)
-        {
-            if (!(sender is SfListView listView))
-                return;
-
-            var selectedItem = listView.SelectedItem as GameModel;
-
-            await Navigation.PushAsync(new GameDetailMainPage(selectedItem), true);
-
-            listView.SelectedItem = null;
-        }
 
         private async void ScanCode_Clicked(object sender, EventArgs e)
         {
@@ -102,6 +90,21 @@ namespace Gametrove.Core.Views
             base.OnAppearing();
 
             _viewModel.IsBusy = true;
+        }
+
+        private async void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (!(sender is ListView listView))
+                return;
+
+            if (listView.SelectedItem != null)
+            {
+                var selectedItem = listView.SelectedItem as GameModel;
+
+                await Navigation.PushAsync(new GameDetailMainPage(selectedItem), true);
+
+                listView.SelectedItem = null;
+            }
         }
     }
 }

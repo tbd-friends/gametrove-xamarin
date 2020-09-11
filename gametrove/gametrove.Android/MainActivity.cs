@@ -24,8 +24,6 @@ namespace gametrove.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
-
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -40,11 +38,6 @@ namespace gametrove.Droid
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
 
             LoadApplication(new App());
-        }
-
-        private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            SecureStorage.RemoveAll();
         }
 
         protected override void OnNewIntent(Intent intent)

@@ -54,39 +54,32 @@
     <ContentPage.Content>
         <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <RefreshView Command="{Binding LoadGamesCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-                <sf:SfListView ItemsSource="{Binding Games}" 
-                               AutoFitMode="Height"
-                               ItemSpacing="5"
-                               SelectionMode="Single" 
-                               SelectionChanged="SfListView_OnSelectionChanged">
-                    <sf:SfListView.ItemTemplate>
+                <ListView ItemsSource="{Binding Games}" HasUnevenRows="True" 
+                          SelectionMode="Single" ItemSelected="ListView_OnItemSelected">
+                    <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout>
-                                <StackLayout Orientation="Horizontal">
-                                    <StackLayout Orientation="Vertical">
-                                        <Label 
-                                        FontSize="18"
-                                        FontAttributes="Bold"
-                                        Opacity="0.8"
-                                        Text="{Binding Name}"
-                                        TextColor="{DynamicResource Foreground}" />
-                                        <Label FontSize="14"
-                                           Text="{Binding Platform}"
-                                           TextColor="{DynamicResource Foreground}" 
-                                           Opacity="0.75"
-                                    />
+                            <ViewCell>
+                                <Frame Margin="5"
+                                        Padding="5" 
+                                        HasShadow="True" 
+                                        BorderColor="DimGray">
+                                    <StackLayout Padding="0" 
+                                                 Margin="5" 
+                                                 Orientation="Horizontal" 
+                                                 HorizontalOptions="StartAndExpand">
+                                        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
+                                            <Label Text="{Binding Name}" 
+                                                   FontSize="22"
+                                                   FontAttributes="Bold" />
+                                            <Label Text="{Binding Platform}"
+                                                   FontSize="16" />
+                                        </StackLayout>
                                     </StackLayout>
-                                    <Label Style="{StaticResource InlineIconButton}" Text="{x:Static icons:FontAwesome.Heart}"
-                                         HorizontalOptions="FillAndExpand"
-                                         HorizontalTextAlignment="End"
-                                         IsVisible="{Binding IsFavorite}"
-                                         Margin="0,0,5,0"/>
-                                </StackLayout>
-                                <BoxView HeightRequest="0.5" Color="{DynamicResource ListSeparator}"></BoxView>
-                            </StackLayout>
+                                </Frame>
+                            </ViewCell>
                         </DataTemplate>
-                    </sf:SfListView.ItemTemplate>
-                </sf:SfListView>
+                    </ListView.ItemTemplate>
+                </ListView>
             </RefreshView>
             <Button AbsoluteLayout.LayoutFlags="PositionProportional"
                     AbsoluteLayout.LayoutBounds="{Binding ScanButtonOrientation, Converter={StaticResource FabPositionConverter}}"
