@@ -37,7 +37,7 @@ namespace Gametrove.Core.Handlers
         {
             base.OnItemSelected(item);
 
-            if (item is GameModel result)
+            if (item is GameSearchModel result)
             {
                 Dispatcher.BeginInvokeOnMainThread(async () =>
                 {

@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Gametrove.Core.Services.Actions
 {
-    public class SearchForGameAction : IApiAction<IEnumerable<GameModel>>
+    public class SearchForGameAction : IApiAction<IEnumerable<GameSearchModel>>
     {
         private readonly string _term;
         private readonly int? _recentlyAdded;
@@ -18,7 +18,7 @@ namespace Gametrove.Core.Services.Actions
             _recentlyAdded = recentlyAdded;
         }
 
-        public async Task<IEnumerable<GameModel>> DoAsync(APIActionService service)
+        public async Task<IEnumerable<GameSearchModel>> DoAsync(APIActionService service)
         {
             var response = await service.Client.PostAsync("search/games",
                     new
@@ -31,7 +31,7 @@ namespace Gametrove.Core.Services.Actions
             if (response.IsSuccessStatusCode)
             {
                 var results =
-                    JsonConvert.DeserializeObject<IEnumerable<GameModel>>(await response.Content.ReadAsStringAsync());
+                    JsonConvert.DeserializeObject<IEnumerable<GameSearchModel>>(await response.Content.ReadAsStringAsync());
 
                 return results;
             }

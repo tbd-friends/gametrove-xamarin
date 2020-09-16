@@ -33,7 +33,7 @@ namespace Gametrove.Core.Infrastructure
         {
             if (!_initialized)
             {
-                if (_connection.TableMappings.All(m => m.MappedType.Name != typeof(TrackedGameModel).Name))
+                if (_connection.TableMappings.All(m => m.MappedType.Name != nameof(TrackedGameModel)))
                 {
                     try
                     {
