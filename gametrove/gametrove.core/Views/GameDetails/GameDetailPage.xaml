@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:cvt="clr-namespace:Gametrove.Core.Converters;assembly=gametrove.core"
+             xmlns:icons="clr-namespace:Gametrove.Core.Infrastructure;assembly=gametrove.core"
+             mc:Ignorable="d"
+             x:Class="Gametrove.Core.Views.GameDetails.GameDetailPage"
+             Title="Game Details"
+             x:Name="GameDetailsPage"
+             Visual="Material">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <cvt:ScanButtonPositionToRectangleConverter x:Key="FabPositionConverter" />
+            <cvt:ImageSourceConverter x:Key="imageConverter" />
+            <cvt:FontIsSolidConverter x:Key="fontConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Grid RowDefinitions="0,Auto">
+                <StackLayout Orientation="Horizontal" Grid.Row="1">
+                    <StackLayout>
+                        <Label Style="{DynamicResource HeaderLabel}"
+                               HorizontalTextAlignment="Start"
+                               Text="{Binding Name}"
+                               d:Text="title" />
+                        <Label Text="{Binding Subtitle}" d:Text="subtitle" FontSize="20" Padding="5,0" Margin="0,-10" />
+                        <Label Text="{Binding Platform}"
+                               Style="{StaticResource SubLabel}"
+                               FontSize="36"
+                               Opacity="0.4"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Start" />
+                    </StackLayout>
+                    <Button HorizontalOptions="EndAndExpand"
+                            VerticalOptions="Start"
+                            TextColor="{DynamicResource ButtonPrimary}"
+                            FontSize="34"
+                            Padding="0"
+                            Margin="0"
+                            BackgroundColor="White"
+                            WidthRequest="48"
+                            Text="{x:Static icons:FontAwesome.Heart}"
+                            FontFamily="{Binding IsFavorite, Converter={StaticResource fontConverter}}"
+                            Command="{Binding ToggleFavoriteCommand}" />
+                </StackLayout>
+                <StackLayout Grid.Row="2">
+                    <CarouselView
+                        ItemsSource="{Binding Images}"
+                        IndicatorView="indicatorView">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid RowDefinitions="Auto,*">
+                                    <Image Source="{Binding Url, Converter={StaticResource imageConverter}}"
+                                            Grid.Row="1"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="FillAndExpand"/>
+                                    <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto"
+                                          HorizontalOptions="CenterAndExpand">
+                                        <Button Grid.Column="1"
+                                                TextColor="{DynamicResource ButtonPrimary}"
+                                                FontSize="34"
+                                                Padding="0"
+                                                Margin="0"
+                                                BackgroundColor="White"
+                                                WidthRequest="48"
+                                                Text="{x:Static icons:FontAwesome.Delete}"
+                                                FontFamily="{StaticResource FontAwesomeSolidFree}"
+                                                Command="{Binding BindingContext.DeleteImageCommand, Source={x:Reference GameDetailsPage}}"
+                                                CommandParameter="{Binding Url}" />
+                                        <Button Grid.Column="2"
+                                                TextColor="{DynamicResource ButtonPrimary}"
+                                                FontSize="34"
+                                                Padding="0"
+                                                Margin="0"
+                                                BackgroundColor="White"
+                                                WidthRequest="48"
+                                                Text="{x:Static icons:FontAwesome.CheckCircle}"
+                                                FontFamily="{Binding IsCoverArt, Converter={StaticResource fontConverter}}"
+                                                Command="{Binding BindingContext.ToggleCoverArtCommand, Source={x:Reference GameDetailsPage}}"
+                                                CommandParameter="{Binding .}" />
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    <IndicatorView x:Name="indicatorView"
+                                   IndicatorColor="LightGray"
+                                   SelectedIndicatorColor="DarkGray"
+                                   HorizontalOptions="Center"
+                                   IndicatorSize="15" />
+                </StackLayout>
+            </Grid>
+            <Button AbsoluteLayout.LayoutFlags="PositionProportional"
+                    AbsoluteLayout.LayoutBounds="{Binding ScanButtonOrientation, Converter={StaticResource FabPositionConverter}}"
+                    Style="{StaticResource PhotoButton}" Clicked="TakePhoto_Clicked" />
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -14,6 +14,7 @@
              Visual="Material">
     <ContentPage.Resources>
         <ResourceDictionary>
+            <converters:CoverArtImageSourceConverter x:Key="coverArtImageSource" />
             <converters:ScanButtonPositionToRectangleConverter x:Key="FabPositionConverter" />
             <FontImageSource x:Key="SearchIcon" 
                              FontFamily="{StaticResource FontAwesomeSolidFree}"
@@ -67,6 +68,9 @@
                                                  Margin="5" 
                                                  Orientation="Horizontal" 
                                                  HorizontalOptions="StartAndExpand">
+                                        <Image Source="{Binding Images, Converter={StaticResource coverArtImageSource}}"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="FillAndExpand"/>
                                         <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
                                             <Label Text="{Binding Name}" 
                                                    FontSize="22"

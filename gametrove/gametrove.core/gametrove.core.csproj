@@ -28,6 +28,8 @@
   </Choose>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.8" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.1.0.59" />
@@ -38,7 +40,7 @@
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="18.1.0.59" />
     <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="18.1.0.59" />
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1269" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="3.0.0-beta5" />
   </ItemGroup>
@@ -47,28 +49,28 @@
     <Compile Update="Resources\Themes\SuperNintendo.xaml.cs">
       <DependentUpon>SuperNintendo.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\EditTitlePage.xaml.cs">
+    <Compile Update="Views\GameDetails\EditTitlePage.xaml.cs">
       <DependentUpon>EditTitlePage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\GameDetailMainPage.xaml.cs">
+    <Compile Update="Views\GameDetails\GameDetailMainPage.xaml.cs">
       <DependentUpon>GameDetailMainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\GameDetailPage.xaml.cs">
+    <Compile Update="Views\GameDetails\GameDetailPage.xaml.cs">
       <DependentUpon>GameDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\AddCopyPage.xaml.cs">
+    <Compile Update="Views\GameDetails\AddCopyPage.xaml.cs">
       <DependentUpon>AddCopyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\InviteTokenPage.xaml.cs">
+    <Compile Update="Views\Login\InviteTokenPage.xaml.cs">
       <DependentUpon>InviteTokenPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\AcceptInvitationPage.xaml.cs">
+    <Compile Update="Views\Login\AcceptInvitationPage.xaml.cs">
       <DependentUpon>AcceptInvitationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\RegisterGamePage.xaml.cs">
+    <Compile Update="Views\GameDetails\RegisterGamePage.xaml.cs">
       <DependentUpon>RegisterGamePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -83,31 +85,31 @@
     <EmbeddedResource Update="Views\ConfigurationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\EditCopyPage.xaml">
+    <EmbeddedResource Update="Views\GameDetails\EditCopyPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\EditTitlePage.xaml">
+    <EmbeddedResource Update="Views\GameDetails\EditTitlePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\GameCopiesPage.xaml">
+    <EmbeddedResource Update="Views\GameDetails\GameCopiesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\GameDetailMainPage.xaml">
+    <EmbeddedResource Update="Views\GameDetails\GameDetailMainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\InviteTokenPage.xaml">
+    <EmbeddedResource Update="Views\Login\InviteTokenPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\LoginPage.xaml">
+    <EmbeddedResource Update="Views\Login\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\AddCopyPage.xaml">
+    <EmbeddedResource Update="Views\GameDetails\AddCopyPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\AcceptInvitationPage.xaml">
+    <EmbeddedResource Update="Views\Login\AcceptInvitationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\RegisterGamePage.xaml">
+    <EmbeddedResource Update="Views\GameDetails\RegisterGamePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\StatisticsPage.xaml">

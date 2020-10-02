@@ -1,4 +1,4 @@
-﻿using Gametrove.Core.ViewModels;
+﻿using Gametrove.Core.Views.ViewModels;
 
 namespace Gametrove.Core
 {

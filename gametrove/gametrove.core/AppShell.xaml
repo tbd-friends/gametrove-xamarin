@@ -4,7 +4,9 @@
        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
        xmlns:ins="clr-namespace:Gametrove.Core.Infrastructure;assembly=gametrove.core"
-       xmlns:local="clr-namespace:Gametrove.Core.Views;assembly=gametrove.core"
+       xmlns:local="clr-namespace:Gametrove.Core.Views.GameDetails;assembly=gametrove.core"
+       xmlns:base="clr-namespace:Gametrove.Core.Views;assembly=gametrove.core"
+       xmlns:login="clr-namespace:Gametrove.Core.Views.Login;assembly=gametrove.core"
        Title="GameTrove"
        x:Class="Gametrove.Core.AppShell"
        NavBarHasShadow="True"
@@ -49,21 +51,21 @@
     </Shell.MenuItemTemplate>
 
     <FlyoutItem Title="Home" Icon="{x:Static ins:FontAwesome.Home}">
-        <ShellContent ContentTemplate="{DataTemplate local:HomePage}" Route="default" />
+        <ShellContent ContentTemplate="{DataTemplate base:HomePage}" Route="default" />
         <ShellContent ContentTemplate="{DataTemplate local:GameDetailPage}" Route="detail" />
         <ShellContent ContentTemplate="{DataTemplate local:RegisterGamePage}" Route="register" />
     </FlyoutItem>
 
     <FlyoutItem Title="Configuration" Icon="{x:Static ins:FontAwesome.Cog}">
-        <ShellContent ContentTemplate="{DataTemplate local:ConfigurationPage}" Route="configuration" />
+        <ShellContent ContentTemplate="{DataTemplate base:ConfigurationPage}" Route="configuration" />
     </FlyoutItem>
 
     <FlyoutItem Title="Invite" Icon="{x:Static ins:FontAwesome.Users}">
-        <ShellContent ContentTemplate="{DataTemplate local:InviteTokenPage}" Route="invite" />
+        <ShellContent ContentTemplate="{DataTemplate login:InviteTokenPage}" Route="invite" />
     </FlyoutItem>
 
     <FlyoutItem Title="Statistics" Icon="{x:Static ins:FontAwesome.ChartPie}">
-        <ShellContent ContentTemplate="{DataTemplate local:StatisticsPage}" Route="statistics" />
+        <ShellContent ContentTemplate="{DataTemplate base:StatisticsPage}" Route="statistics" />
     </FlyoutItem>
 
     <MenuItem Text="Logout" IconImageSource="{x:Static ins:FontAwesome.Exit}" 

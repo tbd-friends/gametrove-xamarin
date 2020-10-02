@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:Gametrove.Core.Views;assembly=gametrove.core"
+             xmlns:icons="clr-namespace:Gametrove.Core.Infrastructure;assembly=gametrove.core"
+             xmlns:gameDetails="clr-namespace:Gametrove.Core.Views.GameDetails;assembly=gametrove.core"
+             mc:Ignorable="d"
+             x:Class="Gametrove.Core.Views.GameDetails.GameDetailMainPage"
+             Title="{Binding GameModel.Name}">
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Clicked="EditTitle_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                        FontFamily="{DynamicResource FontAwesomeSolidFree}"
+                        Glyph="{x:Static icons:FontAwesome.Edit}"
+                        Size="{DynamicResource ToolbarIconImageSourceSize}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </TabbedPage.ToolbarItems>
+    <gameDetails:GameDetailPage Title="Detail" Model="{Binding GameModel}" />
+    <gameDetails:GameCopiesPage Title="Copies" Model="{Binding GameModel}" />
+</TabbedPage>

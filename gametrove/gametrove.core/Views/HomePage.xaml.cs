@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Gametrove.Core.Infrastructure.Results;
 using Gametrove.Core.Services.Models;
-using Gametrove.Core.ViewModels;
-using Gametrove.Core.ViewModels.Results;
+using Gametrove.Core.Views.GameDetails;
+using Gametrove.Core.Views.GameDetails.ViewModels;
+using Gametrove.Core.Views.ViewModels;
 using Xamarin.Forms;
 using ZXing;
 using ZXing.Net.Mobile.Forms;

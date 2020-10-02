@@ -3,6 +3,7 @@ using Gametrove.Core.Services;
 using Gametrove.Core.Services.Actions;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.Views;
+using Gametrove.Core.Views.GameDetails;
 using Xamarin.Forms;
 
 namespace Gametrove.Core.Handlers

@@ -4,79 +4,117 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Gametrove.Core.Services.Models;
+using Microsoft.EntityFrameworkCore;
 using SQLite;
+using ZXing;
 
 namespace Gametrove.Core.Infrastructure
 {
     public class RecentGamesList
     {
-        private static SQLiteAsyncConnection _connection;
-        private static bool _initialized = false;
-
         public async Task<IEnumerable<GameModel>> Recent()
         {
-            await InitializeAsync();
-
-            return (from x in await _connection.QueryAsync<TrackedGameModel>("SELECT * FROM [TrackedGameModel] ORDER BY LastVisited DESC LIMIT 10")
-                    select x.ToGameModel()).ToList();
-        }
-
-        public RecentGamesList()
-        {
-            _connection = _connection ?? new SQLiteAsyncConnection(
-                              Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                                  "gametrove.db3"),
-                              SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.SharedCache);
-        }
-
-        private async Task InitializeAsync()
-        {
-            if (!_initialized)
+            using (var context = new CacheDataContext())
             {
-                if (_connection.TableMappings.All(m => m.MappedType.Name != nameof(TrackedGameModel)))
-                {
-                    try
+                var myContext = context;
+                
+                return await (from g in context.Games
+                    orderby g.LastVisited descending
+                    select new GameModel
                     {
-                        await _connection.CreateTablesAsync(
-                                CreateFlags.AutoIncPK, typeof(TrackedGameModel))
-                            .ConfigureAwait(false);
-                    }
-                    catch (Exception exc)
-                    {
-                        _initialized = false;
-                    }
-
-                    _initialized = true;
-                }
+                        Id = g.GameId,
+                        Name = g.Name,
+                        Subtitle = g.Subtitle,
+                        IsFavorite = g.IsFavorite,
+                        Code = g.Code,
+                        CompleteInBoxPrice = g.CompleteInBoxPrice,
+                        LoosePrice = g.LoosePrice,
+                        Platform = g.Platform,
+                        Images = (from i in myContext.Images
+                            where i.GameId == g.GameId
+                            select new GameImage
+                            {
+                                Id = i.Id,
+                                Url = i.Url,
+                                IsCoverArt = i.IsCoverArt
+                            }).ToList()
+                    }).ToListAsync();
             }
         }
 
         public async Task Track(GameModel game)
         {
-            await InitializeAsync();
-
-            var exists =
-                (await _connection.QueryAsync<TrackedGameModel>(
-                    "SELECT * FROM [TrackedGameModel] WHERE GameId = ?",
-                    game.Id)).SingleOrDefault();
-
-            if (exists != null)
+            using (var context = new CacheDataContext())
             {
-                exists.LastVisited = DateTime.UtcNow;
+                var exists =
+                    context.Games.SingleOrDefault(g => g.GameId == game.Id);
 
-                await _connection.UpdateAsync(exists);
-            }
-            else
-            {
-                await _connection.InsertAsync(TrackedGameModel.From(game));
+                if (exists != null)
+                {
+                    context.Remove(exists);
+
+                    var gameImages = context.Images.Where(g => g.GameId == game.Id);
+
+                    foreach (var image in gameImages)
+                    {
+                        context.Remove(image);
+                    }
+                }
+                
+                context.Add(TrackedGameModel.From(game));
+
+                foreach (var image in game.Images)
+                {
+                    context.Add(new TrackedGameModelImage
+                    {
+                        Id = image.Id,
+                        GameId = game.Id,
+                        Url = image.Url,
+                        IsCoverArt = image.IsCoverArt
+                    });
+                }
+
+                await context.SaveChangesAsync();
             }
         }
     }
 
+    public class CacheDataContext : DbContext
+    {
+        public DbSet<TrackedGameModel> Games { get; set; }
+        public DbSet<TrackedGameModelImage> Images { get; set; }
+
+        public CacheDataContext()
+        {
+            SQLitePCL.Batteries_V2.Init();
+
+            Database.EnsureCreated();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "gametrove.db3");
+
+            optionsBuilder.UseSqlite($"filename={dbPath}");
+        }
+    }
+
+    public class TrackedGameModelImage
+    {
+        [PrimaryKey, AutoIncrement] public Guid Id { get; set; }
+
+        public Guid GameId { get; set; }
+        public Guid ImageId { get; set; }
+        public string Url { get; set; }
+        public bool IsCoverArt { get; set; }
+
+        public virtual TrackedGameModel Game { get; set; }
+    }
+
     public class TrackedGameModel
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
+        [PrimaryKey, AutoIncrement] public int Id { get; set; }
         public Guid GameId { get; set; }
         public string Name { get; set; }
         public string Subtitle { get; set; }
@@ -87,6 +125,7 @@ namespace Gametrove.Core.Infrastructure
         public decimal? CompleteInBoxPrice { get; set; }
         public decimal? LoosePrice { get; set; }
         public DateTime LastVisited { get; set; }
+        public virtual IEnumerable<TrackedGameModelImage> Images { get; set; }
 
         public static TrackedGameModel From(GameModel model)
         {
@@ -101,21 +140,6 @@ namespace Gametrove.Core.Infrastructure
                 LoosePrice = model.LoosePrice,
                 Platform = model.Platform,
                 LastVisited = DateTime.UtcNow
-            };
-        }
-
-        public GameModel ToGameModel()
-        {
-            return new GameModel
-            {
-                Id = GameId,
-                Name = Name,
-                Subtitle = Subtitle,
-                IsFavorite = IsFavorite,
-                Code = Code,
-                CompleteInBoxPrice = CompleteInBoxPrice,
-                LoosePrice = LoosePrice,
-                Platform = Platform
             };
         }
     }

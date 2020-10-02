@@ -2,6 +2,7 @@
 using Gametrove.Core.Infrastructure;
 using Gametrove.Core.Services;
 using Gametrove.Core.Views;
+using Gametrove.Core.Views.Login;
 using Syncfusion.Licensing;
 using Xamarin.Essentials;
 using Xamarin.Forms;

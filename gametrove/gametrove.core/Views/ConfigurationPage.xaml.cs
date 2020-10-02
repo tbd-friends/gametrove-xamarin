@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Gametrove.Core.Infrastructure;
-using Gametrove.Core.ViewModels;
+using Gametrove.Core.Views.ViewModels;
 using Syncfusion.XForms.Buttons;
 using Syncfusion.XForms.ComboBox;
 using Xamarin.Forms;

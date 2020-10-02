@@ -13,9 +13,9 @@ namespace Gametrove.Core.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string fullUrl = $"{AppSettings.Configuration.Api.Url}/{value}";
+            var url = $"{AppSettings.Configuration.Api.Url}/{value}?size=medium";
 
-            var byteArray = Client.DownloadData(fullUrl);
+            var byteArray = Client.DownloadData(url);
 
             return ImageSource.FromStream(() => new MemoryStream(byteArray));
         }
