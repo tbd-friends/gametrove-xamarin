@@ -10,7 +10,7 @@ namespace Gametrove.Core.Services.Models
         public string Subtitle { get; set; }
         public string Platform { get; set; }
     }
-    
+
     public class GameModel
     {
         public Guid Id { get; set; }
@@ -24,5 +24,6 @@ namespace Gametrove.Core.Services.Models
         public IEnumerable<GameImage> Images { get; set; }
         public decimal? CompleteInBoxPrice { get; set; }
         public decimal? LoosePrice { get; set; }
+        public int CopiesOwned { get; set; }
     }
 }

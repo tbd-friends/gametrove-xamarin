@@ -64,21 +64,30 @@
                                         Padding="5" 
                                         HasShadow="True" 
                                         BorderColor="DimGray">
-                                    <StackLayout Padding="0" 
-                                                 Margin="5" 
-                                                 Orientation="Horizontal" 
-                                                 HorizontalOptions="StartAndExpand">
-                                        <Image Source="{Binding Images, Converter={StaticResource coverArtImageSource}}"
-                                               HorizontalOptions="Center"
-                                               VerticalOptions="FillAndExpand"/>
-                                        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
+                                        <Grid
+                                            Margin="0"
+                                            Padding="0"
+                                            ColumnDefinitions="Auto,*,Auto"
+                                            RowDefinitions="*.*">
+                                            <Image Source="{Binding Images, Converter={StaticResource coverArtImageSource}}"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="FillAndExpand"
+                                                   Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
                                             <Label Text="{Binding Name}" 
                                                    FontSize="22"
-                                                   FontAttributes="Bold" />
+                                                   FontAttributes="Bold" Grid.Column="1" Grid.Row="0" />
                                             <Label Text="{Binding Platform}"
-                                                   FontSize="16" />
-                                        </StackLayout>
-                                    </StackLayout>
+                                                   FontSize="16" 
+                                                   Grid.Column="1" Grid.Row="1"/>
+                                            <Label Text="{Binding CopiesOwned}" 
+                                                   HorizontalOptions="EndAndExpand"
+                                                   FontSize="20"
+                                                   Margin="5"
+                                                   VerticalTextAlignment="Center"
+                                                   VerticalOptions="Center"
+                                                   FontAttributes="Bold"
+                                                   Grid.Column="2" Grid.Row="0" Grid.RowSpan="2"/>
+                                        </Grid>
                                 </Frame>
                             </ViewCell>
                         </DataTemplate>

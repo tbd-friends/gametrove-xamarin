@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Gametrove.Core.Infrastructure;
+using Gametrove.Core.Infrastructure.Cache;
 using Gametrove.Core.Services;
 using Gametrove.Core.Views;
 using Gametrove.Core.Views.Login;

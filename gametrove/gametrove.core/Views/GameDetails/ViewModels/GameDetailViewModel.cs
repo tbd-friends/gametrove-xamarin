@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
 using Gametrove.Core.Infrastructure;
+using Gametrove.Core.Infrastructure.Cache;
 using Gametrove.Core.Services;
 using Gametrove.Core.Services.Actions;
 using Gametrove.Core.Services.Models;
@@ -54,16 +55,34 @@ namespace Gametrove.Core.Views.GameDetails.ViewModels
 
         private readonly APIActionService _api;
 
-        public ObservableCollection<GameImage> Images { get; }
-        public ObservableCollection<string> Genres { get; }
+        public ObservableCollection<GameImage> Images { get; set; }
+        public ObservableCollection<string> Genres { get; set; }
 
         public Command DeleteImageCommand { get; }
         public Command ToggleCoverArtCommand { get; }
         public Command ToggleFavoriteCommand { get; }
 
         public IConfirmationService ConfirmationService { get; }
+        private RecentGamesList _recentGamesList;
 
         public GameDetailViewModel(GameModel source)
+        {
+            PopulateViewModel(source);
+
+            DeleteImageCommand = new Command<string>(async (url) => await DeleteImage(url));
+            ToggleCoverArtCommand = new Command<GameImage>(async (id) => await ToggleCoverArt(id));
+
+            _scanButtonOrientation = Preferences.Get(AppPreferences.ScanButtonOrientation, "Right");
+
+            ConfirmationService = DependencyService.Get<IConfirmationService>();
+
+            ToggleFavoriteCommand = new Command(ToggleFavorite);
+
+            _api = DependencyService.Get<APIActionService>();
+            _recentGamesList = DependencyService.Resolve<RecentGamesList>();
+        }
+
+        private void PopulateViewModel(GameModel source)
         {
             Id = source.Id;
             Name = source.Name;
@@ -79,17 +98,6 @@ namespace Gametrove.Core.Views.GameDetails.ViewModels
             Genres = source.Genres != null
                 ? new ObservableCollection<string>(source.Genres)
                 : new ObservableCollection<string>();
-
-            DeleteImageCommand = new Command<string>(async (url) => await DeleteImage(url));
-            ToggleCoverArtCommand = new Command<GameImage>(async (id) => await ToggleCoverArt(id));
-
-            _scanButtonOrientation = Preferences.Get(AppPreferences.ScanButtonOrientation, "Right");
-
-            ConfirmationService = DependencyService.Get<IConfirmationService>();
-
-            ToggleFavoriteCommand = new Command(ToggleFavorite);
-
-            _api = DependencyService.Get<APIActionService>();
         }
 
         public async Task UploadImageForGame(Stream content)
@@ -130,7 +138,12 @@ namespace Gametrove.Core.Views.GameDetails.ViewModels
 
             if (await ConfirmationService.Confirm(message))
             {
-                await _api.Execute(new ToggleCoverArtAction(gameImage.Id));
+                if (await _api.Execute(new ToggleCoverArtAction(gameImage.Id)))
+                {
+                    gameImage.IsCoverArt = !gameImage.IsCoverArt;
+
+                    await _recentGamesList.UpdateImage(gameImage);
+                }
             }
         }
     }
