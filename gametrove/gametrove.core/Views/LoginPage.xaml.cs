@@ -35,10 +35,7 @@ namespace Gametrove.Core.Views
         {
             await DoLogin(async result =>
             {
-                if (await _api.Execute(new VerifyUserAction()))
-                {
-                    Application.Current.MainPage = new AppShell();
-                }
+                await VerifyUser();
             });
         }
 
@@ -60,10 +57,7 @@ namespace Gametrove.Core.Views
             {
                 if (invitation.Status == InvitationStatus.Accepted)
                 {
-                    if (await _api.Execute(new VerifyUserAction()))
-                    {
-                        Application.Current.MainPage = new AppShell();
-                    }
+                    await VerifyUser();
                 }
                 else
                 {
@@ -98,17 +92,32 @@ namespace Gametrove.Core.Views
                 {
                     var authenticationResult = await _authenticationService.Refresh();
 
-                    _user.Initialize(authenticationResult);
-
-                    if (await _api.Execute(new VerifyUserAction()))
+                    if (authenticationResult != null)
                     {
-                        Application.Current.MainPage = new AppShell();
+                        _user.Initialize(authenticationResult);
+
+                        await VerifyUser();
+                    }
+                    else
+                    {
+                        await DoLogin(async result =>
+                        {
+                            await VerifyUser();
+                        });
                     }
                 }
                 else
                 {
                     _vm.AllowLogin();
                 }
+            }
+        }
+
+        private async Task VerifyUser()
+        {
+            if (await _api.Execute(new VerifyUserAction()))
+            {
+                Application.Current.MainPage = new AppShell();
             }
         }
     }

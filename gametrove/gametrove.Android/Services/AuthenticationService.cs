@@ -48,6 +48,8 @@ namespace gametrove.Droid.Services
                         IdToken = refreshResult.IdentityToken,
                     };
 
+                    await SecureStorage.SetAsync(RefreshToken, refreshResult.RefreshToken);
+
                     return authenticationResult;
                 }
             }
