@@ -1,4 +1,5 @@
 ﻿using System;
+using Gametrove.Core.Infrastructure.Cache;
 using Gametrove.Core.Services.Models;
 using Gametrove.Core.Views.GameDetails.ViewModels;
 using Xamarin.Forms;
@@ -33,14 +34,6 @@ namespace Gametrove.Core.Views.GameDetails
         public GameCopiesPage()
         {
             InitializeComponent();
-
-            MessagingCenter.Unsubscribe<AddCopyViewModel>(this, "Copy:Added");
-            MessagingCenter.Subscribe<AddCopyViewModel>(this, "Copy:Added", _ =>
-            {
-                Navigation.PopAsync(true);
-
-                _vm.LoadCopiesCommand.Execute(this);
-            });
         }
 
         protected override void OnAppearing()

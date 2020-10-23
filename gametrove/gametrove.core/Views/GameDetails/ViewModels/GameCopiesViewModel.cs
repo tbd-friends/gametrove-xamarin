@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Gametrove.Core.Infrastructure;
+using Gametrove.Core.Infrastructure.Cache;
 using Gametrove.Core.Services;
 using Gametrove.Core.Services.Actions;
 using Gametrove.Core.Services.Models;
@@ -35,6 +37,16 @@ namespace Gametrove.Core.Views.GameDetails.ViewModels
 
             ConfirmationService = DependencyService.Get<IConfirmationService>();
 
+            MessagingCenter.Unsubscribe<AddCopyViewModel>(this, "Copy:Added");
+            MessagingCenter.Subscribe<AddCopyViewModel, CopyModel>(this, "Copy:Added", async (sender, added) =>
+            {
+                Copies.Add(added);
+
+                await UpdateTrackedGame();
+
+                await Navigation.PopAsync(true);
+            });
+
             _api = DependencyService.Get<APIActionService>();
         }
 
@@ -54,6 +66,11 @@ namespace Gametrove.Core.Views.GameDetails.ViewModels
             IsBusy = false;
         }
 
+        public async Task UpdateTrackedGame()
+        {
+            await DependencyService.Get<RecentGamesList>().UpdateCopyCountForGame(Id, Copies.Count);
+        }
+
         public async Task EditCopy(CopyModel model)
         {
             await Navigation.PushModalAsync(new EditCopyPage(Id, model));
@@ -65,7 +82,9 @@ namespace Gametrove.Core.Views.GameDetails.ViewModels
             {
                 await _api.Execute(new DeleteCopyAction(Id, model));
 
-                await LoadCopies();
+                Copies.Remove(Copies.Single(m => m.Id == model.Id));
+
+                await UpdateTrackedGame();
             }
         }
     }

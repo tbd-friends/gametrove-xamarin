@@ -10,8 +10,7 @@
              xmlns:converters="clr-namespace:Gametrove.Core.Converters;assembly=gametrove.core"
              mc:Ignorable="d"
              x:Class="Gametrove.Core.Views.HomePage"
-             Title="GameTrove"
-             Visual="Material">
+             Title="GameTrove">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:CoverArtImageSourceConverter x:Key="coverArtImageSource" />
@@ -56,30 +55,32 @@
         <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <RefreshView Command="{Binding LoadGamesCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
                 <ListView ItemsSource="{Binding Games}" HasUnevenRows="True" 
+                          BackgroundColor="Gainsboro"
                           SelectionMode="Single" ItemSelected="ListView_OnItemSelected">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Frame Margin="5"
-                                        Padding="5" 
-                                        HasShadow="True" 
-                                        BorderColor="DimGray">
-                                        <Grid
+                                <Frame Margin="3,6,3,0"
+                                       Padding="5"
+                                       CornerRadius="4"
+                                        HeightRequest="70"
+                                        BorderColor="DarkGray">
+                                    <Grid
                                             Margin="0"
                                             Padding="0"
                                             ColumnDefinitions="Auto,*,Auto"
-                                            RowDefinitions="*.*">
-                                            <Image Source="{Binding Images, Converter={StaticResource coverArtImageSource}}"
+                                            RowDefinitions="*,*">
+                                        <Image Source="{Binding Images, Converter={StaticResource coverArtImageSource}}"
                                                    HorizontalOptions="Center"
                                                    VerticalOptions="FillAndExpand"
                                                    Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
-                                            <Label Text="{Binding Name}" 
+                                        <Label Text="{Binding Name}" 
                                                    FontSize="22"
                                                    FontAttributes="Bold" Grid.Column="1" Grid.Row="0" />
-                                            <Label Text="{Binding Platform}"
+                                        <Label Text="{Binding Platform}"
                                                    FontSize="16" 
                                                    Grid.Column="1" Grid.Row="1"/>
-                                            <Label Text="{Binding CopiesOwned}" 
+                                        <Label Text="{Binding CopiesOwned}" 
                                                    HorizontalOptions="EndAndExpand"
                                                    FontSize="20"
                                                    Margin="5"
@@ -87,7 +88,8 @@
                                                    VerticalOptions="Center"
                                                    FontAttributes="Bold"
                                                    Grid.Column="2" Grid.Row="0" Grid.RowSpan="2"/>
-                                        </Grid>
+
+                                    </Grid>
                                 </Frame>
                             </ViewCell>
                         </DataTemplate>

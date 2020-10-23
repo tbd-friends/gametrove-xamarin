@@ -11,7 +11,7 @@ namespace Gametrove.Core.Views.GameDetails.ViewModels
 {
     public class AddCopyViewModel : BaseViewModel
     {
-        public Guid Id { get; }
+        public Guid GameId { get; }
         public ObservableCollection<string> Tags { get; }
 
         private decimal? _cost;
@@ -65,33 +65,40 @@ namespace Gametrove.Core.Views.GameDetails.ViewModels
 
         private readonly APIActionService _api;
 
-        public AddCopyViewModel(Guid id)
+        public AddCopyViewModel(Guid gameId)
         {
-            Id = id;
+            GameId = gameId;
 
             Tags = new ObservableCollection<string>();
 
-            RegisterCopyCommand = new Command(() =>
+            RegisterCopyCommand = new Command(async () =>
             {
-                RegisterCopy();
+                var copy = await RegisterCopy();
 
-                MessagingCenter.Send(this, "Copy:Added");
+                if (copy.Id != Guid.Empty)
+                {
+                    MessagingCenter.Send(this, "Copy:Added", copy);
+                }
             });
 
             _api = DependencyService.Get<APIActionService>();
         }
 
-        private void RegisterCopy()
+        private async Task<CopyModel> RegisterCopy()
         {
-            Task.Run(() => _api.Execute(
-                new AddGameCopyAction(Id,
-                    new CopyModel
-                    {
-                        Cost = Cost,
-                        Tags = Tags,
-                        IsWanted = IsWanted,
-                        Purchased = Purchased
-                    })));
+            var copyToAdd = new CopyModel
+            {
+                Cost = Cost,
+                Tags = Tags,
+                IsWanted = IsWanted,
+                Purchased = Purchased
+            };
+
+            var result = await _api.Execute(new AddGameCopyAction(GameId, copyToAdd));
+
+            copyToAdd.Id = result;
+
+            return copyToAdd;
         }
 
         public void AddTag(string tag)

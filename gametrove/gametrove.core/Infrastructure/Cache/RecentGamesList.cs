@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Gametrove.Core.Infrastructure.Cache.Models;
 using Gametrove.Core.Services.Models;
+using Gametrove.Core.Views.GameDetails.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Xamarin.Forms;
 
 namespace Gametrove.Core.Infrastructure.Cache
 {
-    public class RecentGamesList
+    public class RecentGamesList : IDisposable
     {
         public async Task<IEnumerable<GameModel>> Recent()
         {
@@ -76,6 +79,18 @@ namespace Gametrove.Core.Infrastructure.Cache
             }
         }
 
+        public async Task UpdateCopyCountForGame(Guid gameId, int copies)
+        {
+            using (var context = new CacheDataContext())
+            {
+                var current = context.Games.Single(i => i.GameId == gameId);
+
+                current.CopiesOwned = copies;
+
+                await context.SaveChangesAsync();
+            }
+        }
+
         public async Task UpdateImage(GameImage image)
         {
             using (var context = new CacheDataContext())
@@ -86,6 +101,11 @@ namespace Gametrove.Core.Infrastructure.Cache
 
                 await context.SaveChangesAsync();
             }
+        }
+
+        public void Dispose()
+        {
+            MessagingCenter.Unsubscribe<AddCopyViewModel>(this, "Copy:Added");
         }
     }
 }
